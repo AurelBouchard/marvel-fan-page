@@ -17,7 +17,7 @@ export default function Header({catName}) {
     
     return (
         <>
-            <div className="absolute fixed top-0 left-0 right-0 flex space-x-8 items-center px-8 bg-dark h-18 shadow shadow-black z-50">
+            <div className="sticky top-0 flex space-x-8 items-center px-8 bg-dark h-18 w-screen shadow-lg shadow-red z-90">
                 <div className={`shrink-0 ${searching ? "text-marvel" : "text-teal"}`}>
                     <svg width="130" height="52" xmlns="http://www.w3.org/2000/svg">
                         <rect fill="currentColor" width="100%" height="100%"/>

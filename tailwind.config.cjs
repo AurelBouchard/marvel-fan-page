@@ -23,7 +23,8 @@ module.exports = {
           DEFAULT: 'rgb(198, 211, 231)',
           alt: 'rgb(146, 171, 207)',
           dark: 'rgb(78, 106, 146)',
-          darker: 'rgba(78, 106, 146, 0.4)'
+          darker: 'rgba(78, 106, 146, 0.4)',
+          slate: 'rgb(29, 38, 54)'
         },
         teal:{
           light: 'rgb(192, 255, 255)',
