@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import SearchModal from "./SearchModal";
+import MainCatSelector from "./MainCatSelector";
 //import tailwindcss from "../../tailwind.config.cjs"
 
-export default function Header({catName}) {
+export default function Header({catIndex, setCatIndex, categories}) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
     
@@ -14,10 +15,12 @@ export default function Header({catName}) {
         setShowLens(!e.target.value)
     }
     
+    const catName = categories[catIndex].name;
+    
     
     return (
         <>
-            <div className="sticky top-0 flex space-x-8 items-center px-8 bg-dark h-18 w-screen shadow-lg shadow-red z-90">
+            <div className="sticky top-0 flex space-x-8 items-center px-8 bg-dark hrr-18 w-screen shadow-lg shadow-red z-90">
                 <div className={`shrink-0 ${searching ? "text-marvel" : "text-teal"}`}>
                     <svg width="130" height="52" xmlns="http://www.w3.org/2000/svg">
                         <rect fill="currentColor" width="100%" height="100%"/>
@@ -31,11 +34,14 @@ export default function Header({catName}) {
                 <div className={`w-36 shrink-0`}>
                     <h1>Marvel Fan Page</h1>
                 </div>
-                <div id="searchBar" className={`flex flex-1 items-center ${searching ? "-translate-x-44" : "translate-0"} duration-300`}>
+                <div id="searchBar" className={`flex flex-1 items-center py-3 ${searching ? "-translate-x-44" : "translate-0"} duration-300`}>
+
+                    <MainCatSelector catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} />
+                    
                     <input id="searchField" name="searchField" onClick={() => {setSearching(true)} }
-                           className={`bg-black border-2 border-grey-darker rounded-lg h-12  transition-all
+                           className={`bg-black border-1.5 border-grey-darker rounded-tr-lg rounded-br-lg h-12  transition-all
                            w-80 origin-left basis-auto ${searching ? "grow placeholder:text-grey-darker" : "placeholder:text-grey-dark"}
-                           px-2 caret-teal
+                           px-2 caret-teal ml-14
                            outline-none`}
                            placeholder={`Search for any Marvel ${catName}`}
                            onChange={(e) => handleInput(e)}

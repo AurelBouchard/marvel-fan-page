@@ -1,6 +1,16 @@
 import React, {useEffect, useState} from 'react';
 
-export default function SideBar({catIndex, setCatIndex, categories}) {
+
+/**
+ * Select the category of data to display in the mainContainer
+ *
+ * @param subCatIndex
+ * @param setSubCatIndex
+ * @param categories
+ * @returns {JSX.Element}
+ * @constructor
+ */
+export default function SideBar({subCatIndex, setSubCatIndex, categories}) {
     const [collapsed, setCollapsed] = useState(false)
     const [hovered, setHovered] = useState(false)
     
@@ -13,6 +23,7 @@ export default function SideBar({catIndex, setCatIndex, categories}) {
         //selected:"flex items-center text-dark-darkest bg-teal hover:bg-teal h-12 pl-4"
         selected:"text-dark-darkest bg-teal hover:bg-teal"
     }
+    
     
     return (
             <div className={`flex bg-dark transition-all ${collapsed ? "w-14" : "w-56"}
@@ -52,9 +63,9 @@ export default function SideBar({catIndex, setCatIndex, categories}) {
                     {/* ITEMS : links */}
                     {categories.map((cat, index) => {
                         return (
-                            <a key={index} className={`${style.item} ${index === catIndex ? style.selected : null}`}
+                            <a key={index} className={`${style.item} ${index === subCatIndex ? style.selected : null}`}
                                onClick={(e) => {
-                                   setCatIndex(index)
+                                   setSubCatIndex(index)
                                }}
                             >
                                 <div className={`mr-2`}>

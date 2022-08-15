@@ -33,7 +33,7 @@ module.exports = {
         },
         dark:{
           DEFAULT: 'rgb(15, 23 ,36)',
-          darkest: 'rgb(6, 9, 15)'
+          darkest: 'rgb(6, 9, 15)',
         },
         lime: 'rgb(95, 239, 124)',
         marvel: '#ec1D24'
@@ -45,6 +45,9 @@ module.exports = {
         '18': '4.5rem',
         '22': '5.5rem',
         '34': '8.5rem'},
+      borderWidth: {
+        '1.5': '1.5px'
+      }
     },
   },
   plugins: [],
