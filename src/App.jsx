@@ -8,7 +8,7 @@ import Related from "./components/Related";
 import Footer from "./components/Footer";
 import {categories} from "./models/categories";
 import axios from "axios";
-import {api} from "../private/credentials";
+import {api} from "./credentials";
 
 
 
