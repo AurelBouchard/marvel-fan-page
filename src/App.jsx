@@ -46,15 +46,17 @@ function App() {
     
     
     useEffect(() => {
-        console.log("specific call")
-        axios.get(`${api.url}${categories[catIndex].name}/${marvelId}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}`)
-            .then( oneItem => {
-                console.log("response : ",oneItem)
-                setSearchResult(oneItem)
-            } )
-        
-        // set view to overview
-        setSubCatIndex(0)
+        if (marvelId) {
+            console.log("specific call")
+            axios.get(`${api.url}${categories[catIndex].name}/${marvelId}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}`)
+                .then( oneItem => {
+                    console.log("response : ",oneItem)
+                    setSearchResult(oneItem)
+                } )
+    
+            // set view to overview
+            setSubCatIndex(0)
+        }
     },[marvelId])
     
     
