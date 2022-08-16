@@ -3,7 +3,7 @@ import SearchModal from "./SearchModal";
 import MainCatSelector from "./MainCatSelector";
 //import tailwindcss from "../../tailwind.config.cjs"
 
-export default function Header({catIndex, setCatIndex, categories}) {
+export default function Header({catIndex, setCatIndex, categories, availableItems}) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
     
@@ -11,8 +11,12 @@ export default function Header({catIndex, setCatIndex, categories}) {
         if (searching) {setSearching(false)}
     }
     
-    function handleInput(e) {
+    function handleInputChange(e) {
         setShowLens(!e.target.value)
+    }
+    
+    function handleSubmit(e) {
+        setUserInput(e.target.value)
     }
     
     const catName = categories[catIndex].name;
@@ -44,7 +48,9 @@ export default function Header({catIndex, setCatIndex, categories}) {
                            px-2 caret-teal ml-14
                            outline-none`}
                            placeholder={`Search for any Marvel ${catName}`}
-                           onChange={(e) => handleInput(e)}
+                           onChange={(e) => handleInputChange(e)}
+                           //onInput={}
+                           onSubmit={(e) => handleSubmit(e)}
                     />
                     {!showLens ? <div className="w-[19px]"/> :
                         <div id="lens" className="relative -left-8 text-grey-dark">

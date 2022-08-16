@@ -9,19 +9,23 @@ import Footer from "./components/Footer";
 import {categories} from "./models/categories";
 import axios from "axios";
 import {api} from "./credentials";
+import backstage from "./helpers/backstage";
 
 
 
 
 function App() {
     const [catIndex, setCatIndex] = useState(0)         // in header
+    //const [userInput, setUserInput] = useState(null)
     const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar
     const [catResult, setCatResult] = useState(null)
     const [searchResult, setSearchResult] = useState(null)
     const [pageOffset, setPageOffset] = useState(0)
     const [marvelId, setMarvelId] = useState(null)
     const [itemCat, setItemCat] = useState(null)
+    const [availableItems, setAvailableItems] = useState([null])    // in backstage
     
+    //backstage(setAvailableItems);
     
     useEffect(() => {setPageOffset(0)}, [catIndex])
     
@@ -41,6 +45,7 @@ function App() {
                 console.log("response : ",allItems)
                 setCatResult(allItems)
             } )
+        
     },[catIndex, pageOffset])
     
     
@@ -58,7 +63,6 @@ function App() {
             setSubCatIndex(0)
         }
     },[marvelId])
-    
     
     
     
