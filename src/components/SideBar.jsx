@@ -7,10 +7,11 @@ import React, {useEffect, useState} from 'react';
  * @param subCatIndex
  * @param setSubCatIndex
  * @param categories
+ * @param category
  * @returns {JSX.Element}
  * @constructor
  */
-export default function SideBar({subCatIndex, setSubCatIndex, categories}) {
+export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCat}) {
     const [collapsed, setCollapsed] = useState(false)
     const [hovered, setHovered] = useState(false)
     
@@ -24,6 +25,11 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories}) {
         selected:"text-dark-darkest bg-teal hover:bg-teal"
     }
     
+    useEffect(() => {
+        console.log("reset menu")
+        setSubCatIndex(0)
+    }, [])
+    
     
     return (
             <div className={`flex bg-dark transition-all ${collapsed ? "w-14" : "w-56"}
@@ -35,7 +41,7 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories}) {
                      setHovered(false)
                  }}
             >
-                <div className={`fixed transition-all ${collapsed ? "w-14" : "w-56"}`}>
+                <div className={`fixed bg-dark transition-all ${collapsed ? "w-14" : "w-56"}`}>
                     {/* TITLE line : MENU with collapse button */}
                     <a className="flex w-full justify-between items-center text-teal h-8 pl-4 pr-2 relative right-0">
                         <p className={collapsed ? 'hidden m-0' : `block mr-12`}>Menu</p>
@@ -61,11 +67,31 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories}) {
                     </a>
         
                     {/* ITEMS : links */}
+                    <a key={0} className={`${style.item} ${0 === subCatIndex ? style.selected : null}`}
+                       onClick={(e) => {
+                           setSubCatIndex(0)
+                       }}
+                    >
+                        <div className={`mr-2`}>
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19.25 12C19.25 13 17.5 18.25 12 18.25C6.5 18.25 4.75 13 4.75 12C4.75 11 6.5 5.75 12 5.75C17.5 5.75 19.25 11 19.25 12Z"/>
+                                <circle cx="12" cy="12" r="2.25" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"/>
+                            </svg>
+
+                        </div>
+                        <p className={`transition-opacity duration-150 ${collapsed ? "opacity-0" : "delay-100 opacity-100"}`}>Overview</p>
+                    </a>
+                    
                     {categories.map((cat, index) => {
+                        if (itemCat === cat.name) {return null}
+                        if ((itemCat === "characters" && cat.name === "creators") ||
+                            (itemCat === "comics" && cat.name === "series") ||
+                            (itemCat === "creators" && cat.name === "characters")) {return null }
+                        
                         return (
-                            <a key={index} className={`${style.item} ${index === subCatIndex ? style.selected : null}`}
+                            <a key={index+1} className={`${style.item} ${index+1 === subCatIndex ? style.selected : null}`}
                                onClick={(e) => {
-                                   setSubCatIndex(index)
+                                   setSubCatIndex(index+1)
                                }}
                             >
                                 <div className={`mr-2`}>
@@ -75,7 +101,8 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories}) {
                             </a>
                             /* ${style.selected}*/
                         )
-                    })}</div>
+                    })}
+                </div>
             </div>
     )
 }

@@ -1,19 +1,24 @@
 import React from 'react';
+import Loading from "./Loading";
 
-export default function ShowAll({catName, listOfAllItems, pageOffset, setPageOffset, setMarvelId}) {
+export default function ShowAll({catName, listOfAllItems, pageOffset, setPageOffset, setMarvelId, setItemCat}) {
     
     console.log("show all : ", listOfAllItems)
     
     return (
         <div className="bg-dark rounded-xl p-4">
             <p className={`uppercase font-bold pb-4`}>all {catName}</p>
-            {listOfAllItems?.map((elt, index)=> {
+            {!listOfAllItems ? <Loading /> :
+                listOfAllItems.map((elt, index)=> {
                 return (
                     <div key={index}
                          className={`uppercase font-light text-sm bg-grey-slate rounded mb-px pl-2 py-0.5
                     hover:bg-teal hover:text-dark-darkest hover:font-bold
                     cursor-pointer`}
-                         onClick={()=> {setMarvelId(elt.id)}}
+                         onClick={()=> {
+                             setMarvelId(elt.id);
+                             setItemCat(catName)}
+                         }
                     >
                         {elt.name || elt.title || elt.fullName}
                     </div>

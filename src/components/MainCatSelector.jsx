@@ -8,7 +8,7 @@ export default function MainCatSelector({catIndex, setCatIndex, categories}) {
     }
     
     return (
-        <div className={`fixed top-3`}
+        <div className={`fixed top-3 z-900`}
              onClick={toggleCollapse}>
             <div className={`bg-black border-1.5 border-grey-darker rounded-tl-lg rounded-bl-lg flex
          h-12 px-2 outline-none cursor-pointer text-grey-alt`}
@@ -26,7 +26,8 @@ export default function MainCatSelector({catIndex, setCatIndex, categories}) {
                 </div>
             </div>
     
-            <div className={`relative ${collapsed ? 'hidden' : 'block'} bg-dark-darkest text-grey-alt rounded-lg`}>
+            <div className={`relative ${collapsed ? 'hidden' : 'block'} bg-dark-darkest text-grey-alt rounded-lg -mt-12 z-1000`}
+            onMouseLeave={() => {setCollapsed(true)}}>
                 {categories.map((cat, index) => {
                     return (
                         <div className={`h-8 flex items-center hover:bg-teal-light hover:text-dark-darkest px-3 cursor-pointer`}

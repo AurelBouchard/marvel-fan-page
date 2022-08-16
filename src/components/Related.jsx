@@ -13,23 +13,27 @@ import Stats from "./Stats";
  * @param searchResult
  * @param category
  * @param setMarvelId
+ * @param setItemCat
  * @returns {JSX.Element}
  * @constructor
  */
-export default function Related({listOfAllItems, setPageOffset, pageOffset, searchResult, category, setMarvelId}) {
-    let data= "data n data"
+export default function Related({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, setItemCat}) {
+    //let data= "available soon"
     
     return (
         <div className={`flex flex-col flex-auto w-24`}>
             
-            <div className={`transition-all duration-300 ${searchResult ? "opacity-100 h-auto mb-6" : "opacity-0 h-0 mb-0" } space-y-6`}>
+            {/*<div className={`transition-all duration-300 ${searchResult ? "opacity-100 h-auto mb-6" : "opacity-0 h-0 mb-0" } space-y-6`}>
                 <Rating data={data} />
                 <Stats data={data} />
-            </div>
+            </div>*/}
             
-            <ShowAll catName={category.name} listOfAllItems={listOfAllItems}
-                     setMarvelId={setMarvelId}
+            <ShowAll catName={catName} listOfAllItems={listOfAllItems}
+                     setMarvelId={setMarvelId} setItemCat={setItemCat}
                      setPageOffset={setPageOffset} pageOffset={pageOffset}/>
+            
+            
+            <div className={`flex-1`}/>
             
         </div>
     )
