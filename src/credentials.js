@@ -12,5 +12,6 @@ const ts = "1"
 // md5 hash
 const hash = "4db3916c5b0900e5fe1ecf15002ae3a0"
 
+const credentials = `?apikey=${pubKey}&hash=${hash}&ts=${ts}`
 
-export const api = {url, pubKey, ts, hash}
+export const api = {url, credentials}

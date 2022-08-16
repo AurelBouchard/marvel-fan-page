@@ -36,7 +36,7 @@ function App() {
         //console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
         
         // renew results
-        axios.get(`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
+        axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&offset=${pageOffset}`)
             .then( allItems => {
                 console.log("response : ",allItems)
                 setCatResult(allItems)
@@ -48,7 +48,7 @@ function App() {
     useEffect(() => {
         if (marvelId) {
             console.log("specific call")
-            axios.get(`${api.url}${categories[catIndex].name}/${marvelId}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}`)
+            axios.get(`${api.url}${categories[catIndex].name}/${marvelId}${api.credentials}`)
                 .then( oneItem => {
                     console.log("response : ",oneItem)
                     setSearchResult(oneItem)
