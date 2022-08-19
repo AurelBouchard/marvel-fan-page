@@ -11,9 +11,15 @@ import React, {useEffect, useState} from 'react';
  * @returns {JSX.Element}
  * @constructor
  */
-export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCat}) {
+export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCat, searchResult}) {
     const [collapsed, setCollapsed] = useState(false)
     const [hovered, setHovered] = useState(false)
+    
+    //console.log("sidebar")
+    //console.log(searchResult)
+    
+    
+    
     
     function toggleCollapse() {
         if (collapsed) {setCollapsed(false); return 0; } else {setCollapsed(true); }
@@ -97,7 +103,13 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
                                 <div className={`mr-2`}>
                                     {(cat.logo)}
                                 </div>
-                                <p className={`transition-opacity duration-150 ${collapsed ? "opacity-0" : "delay-100 opacity-100"}`}>{cat.name}</p>
+                                <div className={`flex flex-1 pr-4 justify-between items-center transition-opacity duration-150 ${collapsed ? "opacity-0" : "delay-100 opacity-100"}`}>
+                                    <p>{cat.name}</p>
+                                    {!searchResult ? null :
+                                        <span className={`text-teal text-xs py-0.5 px-2 border border-teal rounded-full bg-dark-darkest`}>
+                                            {searchResult[cat.name]?.available}</span>}
+                                    
+                                </div>
                             </a>
                             /* ${style.selected}*/
                         )

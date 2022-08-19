@@ -1,7 +1,12 @@
 import React from 'react';
 import Loading from "./Loading";
 
-export default function ShowAll({catName, listOfAllItems, pageOffset, setPageOffset, setMarvelId, setItemCat}) {
+export default function ShowAll({
+                                    catName,
+                                    listOfAllItems,
+                                    pageOffset,
+                                    setPageOffset,
+                                    setMarvelId, setItemCat}) {
     
     console.log("show all : ", listOfAllItems)
     
@@ -15,15 +20,17 @@ export default function ShowAll({catName, listOfAllItems, pageOffset, setPageOff
                          className={`uppercase font-light text-sm bg-grey-slate rounded mb-px pl-2 py-0.5
                     hover:bg-teal hover:text-dark-darkest hover:font-bold
                     cursor-pointer`}
-                         onClick={()=> {
+                         onClick={() => {
+                             console.log("select an item in show all")
                              setMarvelId(elt.id);
-                             setItemCat(catName)}
-                         }
+                             setItemCat(catName);
+                         }}
                     >
                         {elt.name || elt.title || elt.fullName}
                     </div>
                 )
-            })}
+            }
+            )}
             
             <div className={`flex justify-center items-center text-lime pt-2`}>
                 <div id="previousPage" onClick={()=>{setPageOffset(Math.max(0, pageOffset-20))}}>

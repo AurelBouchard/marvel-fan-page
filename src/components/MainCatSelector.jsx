@@ -1,7 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useGetAvailableItemsList} from "../helpers/useGetAvailableItemsList";
 
-export default function MainCatSelector({catIndex, setCatIndex, categories}) {
+
+
+export default function MainCatSelector({catIndex, setCatIndex, categories, setCatResult}) {
     const [collapsed, setCollapsed] = useState(true)
+    
+    
+    
+    /* const {availableItems, requesting} = useGetAvailableItemsList(categories[0].name)    // in backstage
+     if (!requesting) {console.log("availableItems :")
+         console.log(availableItems[572])}*/
+    
+    
     
     function toggleCollapse() {
         if (collapsed) {setCollapsed(false); return 0; } else {setCollapsed(true); }
@@ -25,13 +36,17 @@ export default function MainCatSelector({catIndex, setCatIndex, categories}) {
                     </svg>
                 </div>
             </div>
-    
+            
             <div className={`relative ${collapsed ? 'hidden' : 'block'} bg-dark-darkest text-grey-alt rounded-lg -mt-12 z-1000`}
-            onMouseLeave={() => {setCollapsed(true)}}>
+                 onMouseLeave={() => {setCollapsed(true)}}>
                 {categories.map((cat, index) => {
                     return (
-                        <div className={`h-8 flex items-center hover:bg-teal-light hover:text-dark-darkest px-3 cursor-pointer`}
-                             onClick={()=>{setCatIndex(index)}}
+                        <div key={index} className={`h-8 flex items-center hover:bg-teal-light hover:text-dark-darkest px-3 cursor-pointer`}
+                             onClick={()=>{
+                                 console.log("mainCatSelkector setCatIndex")
+                                 setCatIndex(index)
+                                 setCatResult(null)
+                             }}
                         >
                             {cat.logo}
                             <div className={`ml-2 capitalize`}>{cat.name}</div>
@@ -40,5 +55,6 @@ export default function MainCatSelector({catIndex, setCatIndex, categories}) {
                 })}
             </div>
         </div>
+        
     )
 }

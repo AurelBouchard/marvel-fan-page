@@ -19,6 +19,7 @@ import Stats from "./Stats";
  */
 export default function Related({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, setItemCat}) {
     //let data= "available soon"
+    console.log("related")
     
     return (
         <div className={`flex flex-col flex-auto w-24`}>

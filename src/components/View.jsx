@@ -19,8 +19,7 @@ import Stories from "./views/Stories";
  */
 export default function View({searchResult, subCatIndex, itemCat}) {
     
-    const data = searchResult?.data.data.results[0]
-    const defaultView = <Overview data={data} itemCat={itemCat}/>
+    const defaultView = <Overview data={searchResult} itemCat={itemCat}/>
     const [showView, setShowView] = useState(defaultView)
     
     
@@ -29,12 +28,12 @@ export default function View({searchResult, subCatIndex, itemCat}) {
         console.log("show ",subCatIndex)
         if (searchResult) {
             switch(subCatIndex) {
-                case 1: setShowView( <Characters data={data} itemCat={itemCat}/>); break;
-                case 2: setShowView( <Comics data={data} itemCat={itemCat}/>); break;
-                case 3: setShowView( <Creators data={data} itemCat={itemCat}/>); break;
-                case 4: setShowView( <Events data={data} itemCat={itemCat}/>); break;
-                case 5: setShowView( <Series data={data} itemCat={itemCat}/>); break;
-                case 6: setShowView( <Stories data={data} itemCat={itemCat}/>); break;
+                case 1: setShowView( <Characters data={searchResult} itemCat={itemCat}/>); break;
+                case 2: setShowView( <Comics data={searchResult} itemCat={itemCat}/>); break;
+                case 3: setShowView( <Creators data={searchResult} itemCat={itemCat}/>); break;
+                case 4: setShowView( <Events data={searchResult} itemCat={itemCat}/>); break;
+                case 5: setShowView( <Series data={searchResult} itemCat={itemCat}/>); break;
+                case 6: setShowView( <Stories data={searchResult} itemCat={itemCat}/>); break;
                 default: setShowView(defaultView ); break;
             }
             }

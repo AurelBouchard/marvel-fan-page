@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import SearchModal from "./SearchModal";
 import MainCatSelector from "./MainCatSelector";
-//import tailwindcss from "../../tailwind.config.cjs"
+
 
 export default function Header({catIndex, setCatIndex, categories, availableItems}) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
+    
+    console.log("header")
     
     function closeSearchModal() {
         if (searching) {setSearching(false)}
@@ -19,7 +21,7 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
         setUserInput(e.target.value)
     }
     
-    const catName = categories[catIndex].name;
+    const catName = categories[catIndex || 0].name;
     
     
     return (
@@ -38,9 +40,10 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
                 <div className={`w-36 shrink-0`}>
                     <h1>Marvel Fan Page</h1>
                 </div>
+
                 <div id="searchBar" className={`flex flex-1 items-center py-3 z-90 ${searching ? "-translate-x-44" : "translate-0"} duration-300`}>
 
-                    <MainCatSelector catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} />
+                    <MainCatSelector catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} setCatResult={setCatResult}/>
                     
                     <input id="searchField" name="searchField" onClick={() => {setSearching(true)} }
                            className={`bg-black border-1.5 border-grey-darker rounded-tr-lg rounded-br-lg h-12  transition-all
@@ -71,6 +74,7 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
                         
                     </div>
                 </div>
+
             </div>
             { !searching ? null : <SearchModal catName={catName} onClick={closeSearchModal} /> }
         </>
