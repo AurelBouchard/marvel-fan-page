@@ -17,7 +17,7 @@ import Stories from "./views/Stories";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function View({searchResult, subCatIndex, itemCat}) {
+export default function MainView({searchResult, subCatIndex, itemCat, setCatIndex, setMarvelId, setItemCat}) {
     
     const defaultView = <Overview data={searchResult} itemCat={itemCat}/>
     const [showView, setShowView] = useState(defaultView)
@@ -28,12 +28,12 @@ export default function View({searchResult, subCatIndex, itemCat}) {
         console.log("show ",subCatIndex)
         if (searchResult) {
             switch(subCatIndex) {
-                case 1: setShowView( <Characters data={searchResult} itemCat={itemCat}/>); break;
-                case 2: setShowView( <Comics data={searchResult} itemCat={itemCat}/>); break;
-                case 3: setShowView( <Creators data={searchResult} itemCat={itemCat}/>); break;
-                case 4: setShowView( <Events data={searchResult} itemCat={itemCat}/>); break;
-                case 5: setShowView( <Series data={searchResult} itemCat={itemCat}/>); break;
-                case 6: setShowView( <Stories data={searchResult} itemCat={itemCat}/>); break;
+                case 1: setShowView( <Characters data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 2: setShowView( <Comics data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 3: setShowView( <Creators data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 4: setShowView( <Events data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 5: setShowView( <Series data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 6: setShowView( <Stories data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
                 default: setShowView(defaultView ); break;
             }
             }

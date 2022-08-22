@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react'
 import './App.css'
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
-import View from "./components/View";
+import MainView from "./components/MainView";
 import MainContainer from "./components/MainContainer";
-import Related from "./components/Related";
+import LinksAndMore from "./components/LinksAndMore";
 import Footer from "./components/Footer";
 import {categories} from "./models/categories";
 import axios from "axios";
@@ -89,10 +89,11 @@ function App() {
                 <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex} categories={categories} itemCat={itemCat} searchResult={searchResult}/>
                 
                 <MainContainer>
-                    <View searchResult={searchResult} subCatIndex={subCatIndex} itemCat={itemCat}/>
-                    <Related listOfAllItems={catResult} setPageOffset={setPageOffset} pageOffset={pageOffset}
-                             catName={categories[catIndex || 0].name}
-                             setMarvelId={setMarvelId} setItemCat={setItemCat}
+                    <MainView searchResult={searchResult} subCatIndex={subCatIndex} itemCat={itemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}
+                              setItemCat={setItemCat} />
+                    <LinksAndMore listOfAllItems={catResult} setPageOffset={setPageOffset} pageOffset={pageOffset}
+                                  catName={categories[catIndex || 0].name}
+                                  setMarvelId={setMarvelId} setItemCat={setItemCat}
                     />
                 </MainContainer>
                 

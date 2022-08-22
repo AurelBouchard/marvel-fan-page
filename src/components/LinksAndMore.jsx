@@ -17,7 +17,7 @@ import Stats from "./Stats";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function Related({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, setItemCat}) {
+export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, setItemCat}) {
     //let data= "available soon"
     console.log("related")
     
