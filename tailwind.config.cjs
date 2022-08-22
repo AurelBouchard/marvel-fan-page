@@ -48,10 +48,16 @@ module.exports = {
       borderWidth: {
         '1.5': '1.5px'
       },
+      transitionProperty: {
+        'h': 'height',
+        'w': 'width',
+        'hw': 'height, width'
+      },
       animation: {
         'spin-slow': 'spin 3s linear infinite',
         wiggle: 'wiggle 1s ease-in-out infinite',
-        horiBounce: 'horiBounce 1s infinite'
+        horiBounce: 'horiBounce 1s infinite',
+        appear: 'appear 2s forwards'
       },
       keyframes: {
         wiggle: {
@@ -67,6 +73,17 @@ module.exports = {
             transform: 'translateX(0)',
             'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)'
           }
+        },
+        itemListAppear: {
+          '0%': {transform: 'scaleY(0)', opacity:'0'},
+          '20%': {opacity:'0'},
+          '40%': {transform: 'scale(1)'},
+          '100%': {opacity:'1'}
+        },
+        appear: {
+          '0%': {opacity:'0'},
+          '25%': {opacity:'0'},
+          '100%': {opacity:'1'}
         }
       }
     },
