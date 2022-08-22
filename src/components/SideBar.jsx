@@ -89,10 +89,12 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
                     </a>
                     
                     {categories.map((cat, index) => {
-                        if (itemCat === cat.name) {return null}
+                       /* if (itemCat === cat.name) {return null}
                         if ((itemCat === "characters" && cat.name === "creators") ||
                             (itemCat === "comics" && cat.name === "series") ||
-                            (itemCat === "creators" && cat.name === "characters")) {return null }
+                            (itemCat === "creators" && cat.name === "characters")) {return null }*/
+                        
+                        if (searchResult && !searchResult[cat.name]) {return null}
                         
                         return (
                             <a key={index+1} className={`${style.item} ${index+1 === subCatIndex ? style.selected : null}`}
@@ -106,8 +108,12 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
                                 <div className={`flex flex-1 pr-4 justify-between items-center transition-opacity duration-150 ${collapsed ? "opacity-0" : "delay-100 opacity-100"}`}>
                                     <p>{cat.name}</p>
                                     {!searchResult ? null :
-                                        <span className={`text-teal text-xs py-0.5 px-2 border border-teal rounded-full bg-dark-darkest`}>
-                                            {searchResult[cat.name]?.available}</span>}
+                                        searchResult[cat.name].available ?
+                                            <span className={`text-teal text-xs py-0.5 px-2 border border-teal rounded-full bg-dark-darkest`}>
+                                            {searchResult[cat.name].available}</span>
+                                            :
+                                            <span className={`text-teal text-xs py-0.5 px-2 border border-teal rounded-full bg-dark-darkest`}>1</span>
+                                    }
                                     
                                 </div>
                             </a>
