@@ -48,6 +48,23 @@ module.exports = {
       borderWidth: {
         '1.5': '1.5px'
       },
+      screen: {
+        //sm : 640
+        //md : 768
+        //lg : 1024
+        //xl : 1280
+        '1440': '1440px',
+        //2xl : 1536
+        '3xl': '1600px',
+        '4xl': '2000px'
+      },
+      zIndex: {
+        '60':'60',
+        '70':'70',
+        '80':'80',
+        '90':'90',
+        '100':'100',
+      },
       transitionProperty: {
         'h': 'height',
         'w': 'width',
@@ -57,7 +74,8 @@ module.exports = {
         'spin-slow': 'spin 3s linear infinite',
         wiggle: 'wiggle 1s ease-in-out infinite',
         horiBounce: 'horiBounce 1s infinite',
-        appear: 'appear 2s forwards'
+        appear: 'appear-delay 2s forwards',
+        'appear-slow': 'appear 5s forwards'
       },
       keyframes: {
         wiggle: {
@@ -80,9 +98,13 @@ module.exports = {
           '40%': {transform: 'scale(1)'},
           '100%': {opacity:'1'}
         },
-        appear: {
+        'appear-delay': {
           '0%': {opacity:'0'},
           '25%': {opacity:'0'},
+          '100%': {opacity:'1'}
+        },
+        appear: {
+          '0%': {opacity:'0'},
           '100%': {opacity:'1'}
         }
       }

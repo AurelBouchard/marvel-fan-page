@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ShowAll from "./ShowAll";
 import Rating from "./Rating";
 import Stats from "./Stats";
@@ -21,8 +21,10 @@ export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset,
     //let data= "available soon"
     console.log("related")
     
+    const width = catName==="stories" ? 'w-6/12' : 'w-3/12';
+    
     return (
-        <div className={`flex flex-col flex-auto w-24`}>
+        <div className={`flex flex-col ${width} shrink-0`}>
             
             {/*<div className={`transition-all duration-300 ${searchResult ? "opacity-100 h-auto mb-6" : "opacity-0 h-0 mb-0" } space-y-6`}>
                 <Rating data={data} />

@@ -31,7 +31,7 @@ export default function ShowAll({
             {!list || !list[0] ? <Loading/> : null}
             {list?.map((elt, index) => {
                 return (
-                    <p
+                    <p key={index}
                         className={`uppercase font-light text-sm rounded pl-2 py-0.5
                 hover:bg-teal hover:text-dark-darkest hover:font-bold hover:normal-case cursor-pointer
                 transition-h delay-0 duration-700 text-ellipsis overflow-hidden break-normal

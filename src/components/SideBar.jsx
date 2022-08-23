@@ -38,7 +38,7 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
     
     
     return (
-            <div className={`flex bg-dark transition-all ${collapsed ? "w-14" : "w-56"}
+            <div className={`flex bg-dark transition-all ${collapsed ? "w-14" : "w-56"} shrink-0
         pt-8 pb-12 font-bold text-sm uppercase`}
                  onMouseEnter={() => {
                      setHovered(true)
