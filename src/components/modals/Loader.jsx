@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 
-export default function Loader({categories, setReady, ready, setNVAM, NVAM, setDico}) {
+export default function Loader({categories, ready, setNVAM, NVAM, setDico}) {
     const [tempDico, setTempDico] = useState([]);
     
     useEffect(()=> {
@@ -92,7 +92,7 @@ export default function Loader({categories, setReady, ready, setNVAM, NVAM, setD
          */
         let extractData = async function (bunch) {
             return await bunch.map(item => {
-                return {marvelId: item.id, name: item.name || item.title || item.fullName}
+                return {id: item.id, name: item.name || item.title || item.fullName}
             })
         }
         
@@ -138,7 +138,7 @@ export default function Loader({categories, setReady, ready, setNVAM, NVAM, setD
                 .catch(err => console.log(err))
         }
         
-        let i = 100
+        let i = 10
         while (full && i) {
             //console.log("while full")
             await getAllOfOneCategory(catName, offset, bunchSize)
@@ -153,8 +153,9 @@ export default function Loader({categories, setReady, ready, setNVAM, NVAM, setD
     
     return (
         <div className={`h-screen w-screen fixed top-0 left-0 md:flex justify-center items-center animate-appear-slow z-100`}>
-            <img src='../../src/assets/short_comp.webp' alt="" className={`flex-1 md:hidden`}/>
-            <img src='../../src/assets/full_no_loss.webp' alt="" className={`flex-1 hidden md:block`}/>
+      {/*      <img src='../../../src/assets/short_comp.webp' alt="" className={`flex-1 md:hidden`}/>
+            <img src='../../../src/assets/full_no_loss.webp' alt="" className={`flex-1 hidden md:block`}/>*/}
+            <Loader/>
         </div>
     )
 }
