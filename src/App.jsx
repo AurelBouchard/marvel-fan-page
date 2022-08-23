@@ -10,7 +10,6 @@ import {categories} from "./models/categories";
 import axios from "axios";
 import {api} from "./credentials";
 import Loader from "./components/modals/Loader";
-import createDico from "./helpers/createDico";
 
 
 
@@ -25,15 +24,17 @@ function App() {
     const [marvelId, setMarvelId] = useState(null)
     const [itemCat, setItemCat] = useState(null)
     
+    const [NVAM, setNVAM] = useState(false)
+    const [dico, setDico] = useState(null)
     
     
-    console.log("app et rot")
+    console.log("apéro !")
     
     /**
      * http request the API each time a new category is selected in the header
      * or pageOffset change
      */
-    useEffect(()=> {refreshCatResult()})
+    //useEffect(()=> {refreshCatResult()})
     
     useEffect(() => {
         setPageOffset(0)
@@ -83,7 +84,10 @@ function App() {
     
     return (
 
-        !ready ? <Loader categories={categories} setReady={setReady}/> :
+        !dico ? <Loader categories={categories}
+                         setNVAM={setNVAM} NVAM={NVAM}
+                         setDico={setDico}
+            /> :
         
         <div className="text-grey animate-appear">
             <Header catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} setUserInput={setUserInput} setCatResult={setCatResult}/>
@@ -109,3 +113,4 @@ function App() {
 }
 
 export default App
+

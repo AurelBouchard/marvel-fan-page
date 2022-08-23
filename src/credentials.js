@@ -14,4 +14,9 @@ const hash = "4db3916c5b0900e5fe1ecf15002ae3a0"
 
 const credentials = `?apikey=${pubKey}&hash=${hash}&ts=${ts}`
 
-export const api = {url, credentials}
+const security = 50; //
+
+const fetchLimit = 20; //20
+
+
+export const api = {url, credentials, security, fetchLimit}

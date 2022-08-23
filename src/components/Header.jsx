@@ -3,7 +3,7 @@ import SearchModal from "./modals/SearchModal";
 import MainCatSelector from "./MainCatSelector";
 
 
-export default function Header({catIndex, setCatIndex, categories, availableItems}) {
+export default function Header({catIndex, setCatIndex, categories, availableItems, setCatResult, setUserInput}) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
     
@@ -26,7 +26,7 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
     
     return (
         <>
-            <div className="sticky top-0 flex space-x-8 items-center px-8 bg-dark hrr-18 w-screen shadow-lg shadow-red">
+            <div className="sticky top-0 flex space-x-8 items-center px-8 bg-dark hrr-18 w-screen shadow-md shadow-black z-50">
                 <div className={`shrink-0 ${searching ? "text-marvel" : "text-teal"}`}>
                     <svg width="130" height="52" xmlns="http://www.w3.org/2000/svg">
                         <rect fill="currentColor" width="100%" height="100%"/>
