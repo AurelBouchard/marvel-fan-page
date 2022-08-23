@@ -9,6 +9,8 @@ import Footer from "./components/Footer";
 import {categories} from "./models/categories";
 import axios from "axios";
 import {api} from "./credentials";
+import Loader from "./components/modals/Loader";
+import createDico from "./helpers/createDico";
 
 
 
@@ -80,25 +82,27 @@ function App() {
     
     
     return (
-        <div className="text-grey">
-            
+
+        !ready ? <Loader categories={categories} setReady={setReady}/> :
+        
+        <div className="text-grey animate-appear">
             <Header catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} setUserInput={setUserInput} setCatResult={setCatResult}/>
-            
-            <main className="static flex w-full z-0">
-                
+    
+            <main className="flex w-full">
+        
                 <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex} categories={categories} itemCat={itemCat} searchResult={searchResult}/>
-                
+        
                 <MainContainer>
                     <MainView searchResult={searchResult} subCatIndex={subCatIndex} itemCat={itemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}
-                              setItemCat={setItemCat} />
+                              setItemCat={setItemCat}/>
                     <LinksAndMore listOfAllItems={catResult} setPageOffset={setPageOffset} pageOffset={pageOffset}
                                   catName={categories[catIndex || 0].name}
                                   setMarvelId={setMarvelId} setItemCat={setItemCat}
                     />
                 </MainContainer>
-                
+    
             </main>
-            
+    
             <Footer/>
         </div>
     )
