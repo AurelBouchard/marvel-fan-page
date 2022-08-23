@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import SearchModal from "./SearchModal";
+import SearchModal from "./modals/SearchModal";
 import MainCatSelector from "./MainCatSelector";
 
 
