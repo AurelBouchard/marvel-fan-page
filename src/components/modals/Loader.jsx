@@ -92,7 +92,7 @@ export default function Loader({categories, setReady, ready, setNVAM, NVAM, setD
          */
         let extractData = async function (bunch) {
             return await bunch.map(item => {
-                return {marvelId: item.id, name: item.name || item.title || item.fullName}
+                return {id: item.id, name: item.name || item.title || item.fullName}
             })
         }
         
