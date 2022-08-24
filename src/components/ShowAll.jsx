@@ -56,11 +56,9 @@ export default function ShowAll({
     
     
     
-    console.log("show all : ")//, catResult)
+    console.log("show all")
     
     function nullArray(n) {
-        //const arr = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-        //for(let i=0; i<n; i++) {arr.push(null)}
         return new Array(n)
     }
     

@@ -2,27 +2,23 @@ import React, {useEffect, useState} from 'react';
 
 
 
-export default function MainCatSelector({catIndex, setCatIndex, categories}) {
+export default function MainCatSelector({catIndex, setCatIndex, categories, expandable}) {
     const [collapsed, setCollapsed] = useState(true)
     
     
-    
-    /* const {availableItems, requesting} = useGetAvailableItemsList(categories[0].name)    // in backstage
-     if (!requesting) {console.log("availableItems :")
-         console.log(availableItems[572])}*/
-    
-    
-    
     function toggleCollapse() {
-        if (collapsed) {setCollapsed(false); return 0; } else {setCollapsed(true); }
+        if (expandable && collapsed) { setCollapsed(false) }
+        else {setCollapsed(true)}
     }
     
     return (
-        <div className={`fixed top-3 z-900`}
+        <div id="catSelector_Button"
+             className={`fixed top-3 z-900`}
              onClick={toggleCollapse}>
-            <div className={`bg-black border-1.5 border-grey-darker rounded-tl-lg rounded-bl-lg flex
-         h-12 px-2 outline-none cursor-pointer text-grey-alt`}
-            >
+            
+            <div id="catSelector_Img"
+                 className={`bg-black border-1.5 border-grey-darker rounded-tl-lg rounded-bl-lg flex
+                 h-12 px-2 outline-none cursor-pointer text-grey-alt`}>
                 <div className={`flex items-center justify-between w-10 `}>
                     <div>
                         {categories[catIndex].logo}
@@ -36,15 +32,15 @@ export default function MainCatSelector({catIndex, setCatIndex, categories}) {
                 </div>
             </div>
             
-            <div className={`relative ${collapsed ? 'hidden' : 'block'} bg-dark-darkest text-grey-alt rounded-lg -mt-12 z-1000`}
+            <div id="catSelector_DropDown"
+                 className={`relative ${collapsed ? 'hidden' : 'block'} bg-dark-darkest text-grey-alt rounded-lg -mt-12 z-1000`}
                  onMouseLeave={() => {setCollapsed(true)}}>
                 {categories.map((cat, index) => {
                     return (
                         <div key={index} className={`h-8 flex items-center hover:bg-teal-light hover:text-dark-darkest px-3 cursor-pointer`}
                              onClick={()=>{
-                                 console.log("mainCatSelkector setCatIndex")
+                                 console.log("mainCatSelector setCatIndex")
                                  setCatIndex(index)
-                                 //setCatResult(null)
                              }}
                         >
                             {cat.logo}

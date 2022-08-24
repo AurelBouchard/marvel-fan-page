@@ -1,11 +1,18 @@
 import React, {useState} from 'react';
 import SearchModal from "./modals/SearchModal";
 import MainCatSelector from "./MainCatSelector";
+import axios from "axios";
+import {api} from "../credentials";
+import {categories} from "../models/categories";
 
 
-export default function Header({catIndex, setCatIndex, categories, setUserInput }) {
+export default function Header({catIndex, setCatIndex, categories, dico, setMarvelId }) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
+    const [matches, setMatches] = useState([])
+    const [errorMessage, setErrorMessage] = useState(null)
+    
+    const catName = categories[catIndex || 0].name;
     
     console.log("header")
     
@@ -13,15 +20,74 @@ export default function Header({catIndex, setCatIndex, categories, setUserInput 
         if (searching) {setSearching(false)}
     }
     
-    function handleInputChange(e) {
-        setShowLens(!e.target.value)
+    /**
+     * search for input into dico then update matches state
+     * don't try fetch because of too much queries
+     *
+     * @param name {string}
+     */
+    function handleInputChange(name) {
+        //console.log("input change", name)
+        setShowLens(!name)
+        
+        // cleaning
+        if (!searching) { setSearching(true) }
+        if (errorMessage) { setErrorMessage(null) }
+        
+        setMatches(dico[catIndex].filter(item => item.name.toLowerCase().includes(name.toLowerCase())))
     }
     
-    function handleSubmit(e) {
-        setUserInput(e.target.value)
+    /**
+     * search for input into dico then show possible matches in the modal
+     * if nothing to show : maybe dico is not complete so
+     * fetch API and return response on modal
+     *
+     * @param name {string}
+     */
+    function handleSubmit(name) {
+        console.log("input submit", name)
+        
+        
+        let itemInDico = dico[catIndex].filter(item => item.name.toLowerCase() === name.toLowerCase())
+        
+        if (itemInDico[0]) {
+            setMarvelId(itemInDico[0].id)
+            setSearching(false)
+        }
+        else {
+            let nameOrTitle = catIndex === 1 ? "title" : "name"; // only comics endpoint uses titleStartsWith
+            
+            axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
+                .then( response => {
+                    //console.log("searchResult => ",response.data?.data?.results[0])
+                    if (response.data?.data?.results[0]?.id) {
+                        setMarvelId(response.data?.data?.results[0].id)
+                        setSearching(false)
+                    } else {
+                        throw {response:"or are you miserably confusing with DC comics ?"}
+                    }
+                })
+                .then()
+                .catch(function(err) {
+                    console.log(err)
+                    if (err.response) {
+                        // response but not found
+                        setErrorMessage({main:"What you're looking for must have vanished because of the Snap ...", details:err.response})
+                        
+                    } else if (err.request) {
+                        // no response
+                        setErrorMessage({main:"Your request must have gotten lost in multiverse ...", details:err})
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        setErrorMessage({main:"Something fu***d up !", details:err})
+                    }
+                })
+        }
+        
+        
     }
     
-    const catName = categories[catIndex || 0].name;
+    
     
     
     return (
@@ -46,7 +112,7 @@ export default function Header({catIndex, setCatIndex, categories, setUserInput 
                     <MainCatSelector
                         categories={categories}
                         catIndex={catIndex} setCatIndex={setCatIndex}
-                        //setCatResult={setCatResult}
+                        expandable={!searching}
                          />
                     
                     <input id="searchField" name="searchField" onClick={() => {setSearching(true)} }
@@ -55,9 +121,13 @@ export default function Header({catIndex, setCatIndex, categories, setUserInput 
                            px-2 caret-teal ml-14
                            outline-none`}
                            placeholder={`Search for any Marvel ${catName}`}
-                           onChange={(e) => handleInputChange(e)}
-                           //onInput={}
-                           onSubmit={(e) => handleSubmit(e)}
+                           onChange={(e) => {
+                               e.preventDefault()
+                               handleInputChange(e.target.value)
+                           }}
+                           onKeyPress={(e) => {
+                               if (e.key === 'Enter' ) {handleSubmit(e.target.value)}
+                           }}
                     />
                     {!showLens ? <div className="w-[19px]"/> :
                         <div id="lens" className="relative -left-8 text-grey-dark">
@@ -80,7 +150,7 @@ export default function Header({catIndex, setCatIndex, categories, setUserInput 
                 </div>
 
             </div>
-            { !searching ? null : <SearchModal catName={catName} onClick={closeSearchModal} /> }
+            { !searching ? null : <SearchModal catName={catName} onClick={closeSearchModal} matches={matches} setMarvelId={setMarvelId} errorMessage={errorMessage}/> }
         </>
         
     )

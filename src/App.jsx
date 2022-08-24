@@ -16,7 +16,7 @@ import Loader from "./components/modals/Loader";
 
 function App() {
     const [catIndex, setCatIndex] = useState(0)         // in header
-    const [userInput, setUserInput] = useState(null)
+    //const [userInput, setUserInput] = useState(null)
     const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar
     const [searchResult, setSearchResult] = useState(null)
     const [pageOffset, setPageOffset] = useState(0)
@@ -59,7 +59,10 @@ function App() {
         <div id="wholePage" className="text-grey animate-appear">
             <Header categories={categories}
                     catIndex={catIndex} setCatIndex={setCatIndex}
-                    setUserInput={setUserInput}
+                    dico={dico}
+                    setMarvelId={setMarvelId}
+                    //setUserInput={setUserInput}
+                    
             />
     
             <main className="flex w-full">
