@@ -3,7 +3,7 @@ import SearchModal from "./modals/SearchModal";
 import MainCatSelector from "./MainCatSelector";
 
 
-export default function Header({catIndex, setCatIndex, categories, availableItems, setCatResult, setUserInput}) {
+export default function Header({catIndex, setCatIndex, categories, setUserInput }) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
     
@@ -43,7 +43,11 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
 
                 <div id="searchBar" className={`flex flex-1 items-center py-3 z-90 ${searching ? "-translate-x-44" : "translate-0"} duration-300`}>
 
-                    <MainCatSelector catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} setCatResult={setCatResult}/>
+                    <MainCatSelector
+                        categories={categories}
+                        catIndex={catIndex} setCatIndex={setCatIndex}
+                        //setCatResult={setCatResult}
+                         />
                     
                     <input id="searchField" name="searchField" onClick={() => {setSearching(true)} }
                            className={`bg-black border-1.5 border-grey-darker rounded-tr-lg rounded-br-lg h-12  transition-all

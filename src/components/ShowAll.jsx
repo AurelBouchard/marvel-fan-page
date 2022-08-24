@@ -1,25 +1,62 @@
 import React, {useEffect, useState} from 'react';
 import Loading from "./Loading";
+import {api} from "../credentials";
+import {categories} from "../models/categories";
+import axios from "axios";
 
 export default function ShowAll({
                                     catName,
-                                    listOfAllItems,
                                     pageOffset,
                                     setPageOffset,
                                     setMarvelId, setItemCat,
                                     dico, catIndex, listSize
 }) {
-    
+    const [catResult, setCatResult] = useState([])
     const [list, setList] = useState(nullArray(listSize))
     
     useEffect(()=> {
         if (dico) {setList(dico[catIndex].slice(pageOffset,pageOffset+listSize)); return }
-        if (listOfAllItems) { setList(listOfAllItems.slice(pageOffset,pageOffset+listSize)) }
-    }, [listOfAllItems, dico, catIndex, pageOffset])
+        //if (catResult) { setList(catResult.slice(pageOffset,pageOffset+listSize)) }
+    }, [//catResult,
+        dico, catIndex, pageOffset])
+    
+    /**
+     * http request the API each time a new category is selected in the header
+     * or pageOffset change
+     */
+    //useEffect(()=> {refreshCatResult()})
+    
+    useEffect(() => {
+        setPageOffset(0)
+        //setCatResult(null);
+    }, [catIndex])
+    
+    useEffect(()=> {
+        //setCatResult(null)
+    }, [pageOffset])
+    
+    function refreshCatResult() {
+        if (!catResult) {
+            console.log("refreshCatResult")
+            // purge old results
+            //setCatResult(null)
+            
+            console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
+            
+            // renew results
+            axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&offset=${pageOffset}`)
+                .then( response => {
+                    console.log("catResult => ",response.data?.data?.results)
+                    setCatResult(response.data?.data?.results)
+                } ).catch(err => {
+                console.log("error while fetching data :", err)
+            })
+        }
+    }
     
     
     
-    console.log("show all : ", listOfAllItems)
+    console.log("show all : ")//, catResult)
     
     function nullArray(n) {
         //const arr = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -50,6 +87,7 @@ export default function ShowAll({
                         {elt.name || elt.title || elt.fullName}
                     </p>
                 )
+                
             })}
             
             

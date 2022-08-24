@@ -18,7 +18,6 @@ function App() {
     const [catIndex, setCatIndex] = useState(0)         // in header
     const [userInput, setUserInput] = useState(null)
     const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar
-    const [catResult, setCatResult] = useState([])
     const [searchResult, setSearchResult] = useState(null)
     const [pageOffset, setPageOffset] = useState(0)
     const [marvelId, setMarvelId] = useState(null)
@@ -31,39 +30,6 @@ function App() {
     
     console.log("apéro !")
     
-    /**
-     * http request the API each time a new category is selected in the header
-     * or pageOffset change
-     */
-    //useEffect(()=> {refreshCatResult()})
-    
-    useEffect(() => {
-        setPageOffset(0)
-        setCatResult(null);
-    }, [catIndex])
-    
-    useEffect(()=> {
-        setCatResult(null)
-    }, [pageOffset])
-    
-    function refreshCatResult() {
-        if (!catResult) {
-            console.log("refreshCatResult")
-            // purge old results
-            //setCatResult(null)
-    
-            console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
-    
-            // renew results
-            axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&offset=${pageOffset}`)
-                .then( response => {
-                    console.log("catResult => ",response.data?.data?.results)
-                    setCatResult(response.data?.data?.results)
-                } ).catch(err => {
-                    console.log("error while fetching data :", err)
-            })
-        }
-    }
     
     
 
@@ -86,23 +52,36 @@ function App() {
     return (
 
         !dico ? <Loader categories={categories}
-                         setNVAM={setNVAM} NVAM={NVAM}
-                         setDico={setDico}
+                        NVAM={NVAM} setNVAM={setNVAM}
+                        setDico={setDico}
             /> :
         
-        <div className="text-grey animate-appear">
-            <Header catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} setUserInput={setUserInput} setCatResult={setCatResult}/>
+        <div id="wholePage" className="text-grey animate-appear">
+            <Header categories={categories}
+                    catIndex={catIndex} setCatIndex={setCatIndex}
+                    setUserInput={setUserInput}
+            />
     
             <main className="flex w-full">
         
-                <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex} categories={categories} itemCat={itemCat} searchResult={searchResult}/>
+                <SideBar categories={categories}
+                         subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
+                         itemCat={itemCat}
+                         searchResult={searchResult}
+                />
         
                 <MainContainer>
-                    <MainView searchResult={searchResult} subCatIndex={subCatIndex} itemCat={itemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}
-                              setItemCat={setItemCat}/>
-                    <LinksAndMore listOfAllItems={catResult} setPageOffset={setPageOffset} pageOffset={pageOffset}
+                    <MainView searchResult={searchResult}
+                              subCatIndex={subCatIndex}
+                              setCatIndex={setCatIndex}
+                              setMarvelId={setMarvelId}
+                              itemCat={itemCat} setItemCat={setItemCat}
+                    />
+                    <LinksAndMore setPageOffset={setPageOffset}
+                                  pageOffset={pageOffset}
                                   catName={categories[catIndex || 0].name}
-                                  setMarvelId={setMarvelId} setItemCat={setItemCat}
+                                  setMarvelId={setMarvelId}
+                                  setItemCat={setItemCat}
                                   dico={dico} catIndex={catIndex} listSize={listSize}
                     />
                 </MainContainer>

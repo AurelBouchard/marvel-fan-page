@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 
 
-export default function MainCatSelector({catIndex, setCatIndex, categories, setCatResult}) {
+export default function MainCatSelector({catIndex, setCatIndex, categories}) {
     const [collapsed, setCollapsed] = useState(true)
     
     
@@ -44,7 +44,7 @@ export default function MainCatSelector({catIndex, setCatIndex, categories, setC
                              onClick={()=>{
                                  console.log("mainCatSelkector setCatIndex")
                                  setCatIndex(index)
-                                 setCatResult(null)
+                                 //setCatResult(null)
                              }}
                         >
                             {cat.logo}
