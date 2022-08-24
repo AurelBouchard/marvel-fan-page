@@ -17,7 +17,7 @@ import Stats from "./Stats";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, setItemCat}) {
+export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, setItemCat, dico, catIndex, listSize}) {
     //let data= "available soon"
     console.log("related")
     
@@ -33,7 +33,9 @@ export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset,
             
             <ShowAll catName={catName} listOfAllItems={listOfAllItems}
                      setMarvelId={setMarvelId} setItemCat={setItemCat}
-                     setPageOffset={setPageOffset} pageOffset={pageOffset}/>
+                     setPageOffset={setPageOffset} pageOffset={pageOffset}
+                     dico={dico} catIndex={catIndex} listSize={listSize}
+            />
             
             
             <div className={`flex-1`}/>

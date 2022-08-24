@@ -27,6 +27,7 @@ function App() {
     const [NVAM, setNVAM] = useState(false)
     const [dico, setDico] = useState(null)
     
+    const listSize = 20;
     
     console.log("apéro !")
     
@@ -102,6 +103,7 @@ function App() {
                     <LinksAndMore listOfAllItems={catResult} setPageOffset={setPageOffset} pageOffset={pageOffset}
                                   catName={categories[catIndex || 0].name}
                                   setMarvelId={setMarvelId} setItemCat={setItemCat}
+                                  dico={dico} catIndex={catIndex} listSize={listSize}
                     />
                 </MainContainer>
     
