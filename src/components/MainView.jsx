@@ -51,9 +51,10 @@ export default function MainView({searchResult, subCatIndex, itemCat, setCatInde
         </div>
     </div>
     
+    
     return (
-        <div className={`flex flex-col flex-auto w-36`}>
-            <div id="showView" className="bg-dark rounded-xl p-4">
+        <div className={`flex flex-col flex-1`}>
+            <div id="showView" className="bg-dark rounded-xl p-4 z-0">
                 {!searchResult ? alternative : showView}
             </div>
             <div className={`flex-1`}/>

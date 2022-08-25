@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ShowAll from "./ShowAll";
 import Rating from "./Rating";
 import Stats from "./Stats";
@@ -17,21 +17,25 @@ import Stats from "./Stats";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, setItemCat}) {
+export default function LinksAndMore({setPageOffset, pageOffset, catName, setMarvelId, setItemCat, dico, catIndex, listSize}) {
     //let data= "available soon"
     console.log("related")
     
+    const width = catName==="stories" ? 'w-6/12' : 'w-3/12';
+    
     return (
-        <div className={`flex flex-col flex-auto w-24`}>
+        <div className={`flex flex-col ${width} shrink-0`}>
             
             {/*<div className={`transition-all duration-300 ${searchResult ? "opacity-100 h-auto mb-6" : "opacity-0 h-0 mb-0" } space-y-6`}>
                 <Rating data={data} />
                 <Stats data={data} />
             </div>*/}
             
-            <ShowAll catName={catName} listOfAllItems={listOfAllItems}
+            <ShowAll catName={catName}
                      setMarvelId={setMarvelId} setItemCat={setItemCat}
-                     setPageOffset={setPageOffset} pageOffset={pageOffset}/>
+                     setPageOffset={setPageOffset} pageOffset={pageOffset}
+                     dico={dico} catIndex={catIndex} listSize={listSize}
+            />
             
             
             <div className={`flex-1`}/>

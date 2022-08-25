@@ -9,57 +9,27 @@ import Footer from "./components/Footer";
 import {categories} from "./models/categories";
 import axios from "axios";
 import {api} from "./credentials";
+import Loader from "./components/modals/Loader";
 
 
 
 
 function App() {
     const [catIndex, setCatIndex] = useState(0)         // in header
-    const [userInput, setUserInput] = useState(null)
+    //const [userInput, setUserInput] = useState(null)
     const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar
-    const [catResult, setCatResult] = useState([])
     const [searchResult, setSearchResult] = useState(null)
     const [pageOffset, setPageOffset] = useState(0)
     const [marvelId, setMarvelId] = useState(null)
     const [itemCat, setItemCat] = useState(null)
     
+    const [NVAM, setNVAM] = useState(false)
+    const [dico, setDico] = useState(null)
     
+    const listSize = 20;
     
-    console.log("app et rot")
+    console.log("apéro !")
     
-    /**
-     * http request the API each time a new category is selected in the header
-     * or pageOffset change
-     */
-    useEffect(()=> {refreshCatResult()})
-    
-    useEffect(() => {
-        setPageOffset(0)
-        setCatResult(null);
-    }, [catIndex])
-    
-    useEffect(()=> {
-        setCatResult(null)
-    }, [pageOffset])
-    
-    function refreshCatResult() {
-        if (!catResult) {
-            console.log("refreshCatResult")
-            // purge old results
-            //setCatResult(null)
-    
-            console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
-    
-            // renew results
-            axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&offset=${pageOffset}`)
-                .then( response => {
-                    console.log("catResult => ",response.data?.data?.results)
-                    setCatResult(response.data?.data?.results)
-                } ).catch(err => {
-                    console.log("error while fetching data :", err)
-            })
-        }
-    }
     
     
 
@@ -80,28 +50,51 @@ function App() {
     
     
     return (
-        <div className="text-grey">
-            
-            <Header catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} setUserInput={setUserInput} setCatResult={setCatResult}/>
-            
-            <main className="static flex w-full z-0">
-                
-                <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex} categories={categories} itemCat={itemCat} searchResult={searchResult}/>
-                
+
+        !dico ? <Loader categories={categories}
+                        NVAM={NVAM} setNVAM={setNVAM}
+                        setDico={setDico}
+            /> :
+        
+        <div id="wholePage" className="text-grey animate-appear">
+            <Header categories={categories}
+                    catIndex={catIndex} setCatIndex={setCatIndex}
+                    dico={dico}
+                    setMarvelId={setMarvelId}
+                    //setUserInput={setUserInput}
+                    
+            />
+    
+            <main className="flex w-full">
+        
+                <SideBar categories={categories}
+                         subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
+                         itemCat={itemCat}
+                         searchResult={searchResult}
+                />
+        
                 <MainContainer>
-                    <MainView searchResult={searchResult} subCatIndex={subCatIndex} itemCat={itemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}
-                              setItemCat={setItemCat} />
-                    <LinksAndMore listOfAllItems={catResult} setPageOffset={setPageOffset} pageOffset={pageOffset}
+                    <MainView searchResult={searchResult}
+                              subCatIndex={subCatIndex}
+                              setCatIndex={setCatIndex}
+                              setMarvelId={setMarvelId}
+                              itemCat={itemCat} setItemCat={setItemCat}
+                    />
+                    <LinksAndMore setPageOffset={setPageOffset}
+                                  pageOffset={pageOffset}
                                   catName={categories[catIndex || 0].name}
-                                  setMarvelId={setMarvelId} setItemCat={setItemCat}
+                                  setMarvelId={setMarvelId}
+                                  setItemCat={setItemCat}
+                                  dico={dico} catIndex={catIndex} listSize={listSize}
                     />
                 </MainContainer>
-                
+    
             </main>
-            
+    
             <Footer/>
         </div>
     )
 }
 
 export default App
+
