@@ -6,6 +6,7 @@ import Creators from "./views/Creators";
 import Events from "./views/Events";
 import Series from "./views/Series";
 import Stories from "./views/Stories";
+import GridView from "./views/GridView";
 
 /**
  * Show main data of the selected item.
@@ -27,7 +28,7 @@ export default function MainView({searchResult, subCatIndex, itemCat, setCatInde
     useEffect(() => {
         console.log("show ",subCatIndex)
         if (searchResult) {
-            switch(subCatIndex) {
+/*            switch(subCatIndex) {
                 case 1: setShowView( <Characters data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
                 case 2: setShowView( <Comics data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
                 case 3: setShowView( <Creators data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
@@ -35,9 +36,13 @@ export default function MainView({searchResult, subCatIndex, itemCat, setCatInde
                 case 5: setShowView( <Series data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
                 case 6: setShowView( <Stories data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
                 default: setShowView(defaultView ); break;
+            }*/
+            
+            setShowView(<GridView data={searchResult} subCatIndex={subCatIndex} setItemCat={setItemCat} setMarvelId={setMarvelId} setCatIndex={setCatIndex}/>)
+            
+            
             }
-            }
-    }, [subCatIndex, searchResult])
+    }, [subCatIndex])
     
     
     
@@ -52,10 +57,13 @@ export default function MainView({searchResult, subCatIndex, itemCat, setCatInde
     </div>
     
     
+    
     return (
         <div className={`flex flex-col flex-1`}>
             <div id="showView" className="bg-dark rounded-xl p-4 z-0">
-                {!searchResult ? alternative : showView}
+                {!searchResult ? alternative :
+                    showView
+                }
             </div>
             <div className={`flex-1`}/>
         </div>

@@ -61,8 +61,6 @@ function App() {
                     catIndex={catIndex} setCatIndex={setCatIndex}
                     dico={dico}
                     setMarvelId={setMarvelId}
-                    //setUserInput={setUserInput}
-                    
             />
     
             <main className="flex w-full">

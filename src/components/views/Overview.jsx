@@ -12,7 +12,7 @@ export default function Overview({data, itemCat}) {
             if (obj.type.toString() === type) {output = obj.url.toString()}
         })
         
-        console.log("link : ",output)
+        //console.log("link : ",output)
         return output;
     }
     

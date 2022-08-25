@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function Card({key, id, name, setMarvelId, setItemCat, setCatIndex}) {
-    const cardCatValue = 1; // find index in categories
+export default function Card({key, id, name, setMarvelId, setItemCat, setCatIndex, ressource, subCat}) {
+    //const cardCatValue = 1; // find index in categories
     
     const cardStyle = [
         {   // characters
@@ -26,20 +26,20 @@ export default function Card({key, id, name, setMarvelId, setItemCat, setCatInde
         `text-red-600`, // stories
     ]
     
-    
+    let imgSrc = null
     
     return (
         <div key={key}
              className={cardStyle[cardCatValue].main}
                 onClick={() => {
                     setMarvelId(id);
-                    setCatIndex(cardCatValue);
-                    setItemCat(cardCatValue)
+                    if (setCatIndex) {setCatIndex(cardCatValue)}
+                    if (setItemCat) {setItemCat(cardCatValue)}
                 }}
             >
             <div className={`flex border-b`}>
                 <div className={`p-2 shrink-0`}>
-                    <img src="" alt="" className={cardStyle[cardCatValue].img}/>
+                    <img src={imgSrc || ``} alt="" className={cardStyle[cardCatValue].img}/>
                 </div>
                 <p className={cardStyle[cardCatValue].title}>
                     {name}

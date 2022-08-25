@@ -9,7 +9,7 @@ export default function Comics({data, setItemCat, setCatIndex, setMarvelId}) {
     
     return (
         <div className={`rr`}>
-            <p className={`font-bold uppercase mb-6`}>{data[subCat].available} comics</p>
+            <p className={`font-bold uppercase mb-6`}>{data[subCat].available} {subCat}</p>
             <div className={`grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-4`}>
                 {data[subCat].items.map((elt, index) => {
                     return (

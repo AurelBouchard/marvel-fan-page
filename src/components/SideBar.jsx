@@ -110,9 +110,9 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
                                     {!searchResult ? null :
                                         searchResult[cat.name].available ?
                                             <span className={`text-teal text-xs py-0.5 px-2 border border-teal rounded-full bg-dark-darkest`}>
-                                            {searchResult[cat.name].available}</span>
+                                            {searchResult[cat.name].available }</span>
                                             :
-                                            <span className={`text-teal text-xs py-0.5 px-2 border border-teal rounded-full bg-dark-darkest`}>1</span>
+                                            <span className={`text-teal text-xs py-0.5 px-2 border border-teal rounded-full bg-dark-darkest`}>0</span>
                                     }
                                     
                                 </div>
