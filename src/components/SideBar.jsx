@@ -31,10 +31,10 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
         selected:"text-dark-darkest bg-teal hover:bg-teal"
     }
     
-    useEffect(() => {
+/*    useEffect(() => {
         console.log("reset menu")
         setSubCatIndex(0)
-    }, [])
+    }, [])*/
     
     
     return (
@@ -72,7 +72,7 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
                         </div>
                     </a>
         
-                    {/* ITEMS : links */}
+                    {/* 1st ITEM : overview */}
                     <a key={0} className={`${style.item} ${0 === subCatIndex ? style.selected : null}`}
                        onClick={(e) => {
                            setSubCatIndex(0)

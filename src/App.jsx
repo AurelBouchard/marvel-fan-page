@@ -15,16 +15,16 @@ import Loader from "./components/modals/Loader";
 
 
 function App() {
-    const [catIndex, setCatIndex] = useState(0)         // in header
+    const [catIndex, setCatIndex] = useState(0)         // in header {number}
     //const [userInput, setUserInput] = useState(null)
-    const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar
-    const [searchResult, setSearchResult] = useState(null)
-    const [pageOffset, setPageOffset] = useState(0)
-    const [marvelId, setMarvelId] = useState(null)
-    const [itemCat, setItemCat] = useState(null)
+    const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar {number}
+    const [searchResult, setSearchResult] = useState(null)  // {object}
+    const [pageOffset, setPageOffset] = useState(0)     // {number}
+    const [marvelId, setMarvelId] = useState(null)      // {number}
+    const [itemCatName, setItemCatName] = useState(null)    // catName {string}
     
-    const [NVAM, setNVAM] = useState(false)
-    const [dico, setDico] = useState(null)
+    const [NVAM, setNVAM] = useState(false)     // boolean
+    const [dico, setDico] = useState(null)      // [[{object}...{}]...[]]
     
     const listSize = 20;
     
@@ -34,13 +34,16 @@ function App() {
     
 
     useEffect(() => {
-        if (marvelId) {
+        if (marvelId > 0) {
             console.log("specific call with marvel ID")
+            console.log(`${api.url}${categories[catIndex].name}/${marvelId}${api.credentials}`)
+            
             axios.get(`${api.url}${categories[catIndex].name}/${marvelId}${api.credentials}`)
                 .then( response => {
                     console.log("searchResult => ",response.data?.data?.results[0])
                     setSearchResult(response.data?.data?.results[0])
                 } )
+            // NEED ERROR HANDLING !!!!!!!!!!!!!!!!!
     
             // set view to overview
             setSubCatIndex(0)
@@ -67,7 +70,7 @@ function App() {
         
                 <SideBar categories={categories}
                          subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
-                         itemCat={itemCat}
+                         itemCat={itemCatName}
                          searchResult={searchResult}
                 />
         
@@ -76,13 +79,13 @@ function App() {
                               subCatIndex={subCatIndex}
                               setCatIndex={setCatIndex}
                               setMarvelId={setMarvelId}
-                              itemCat={itemCat} setItemCat={setItemCat}
+                              itemCatName={itemCatName} setItemCatName={setItemCatName}
                     />
                     <LinksAndMore setPageOffset={setPageOffset}
                                   pageOffset={pageOffset}
                                   catName={categories[catIndex || 0].name}
                                   setMarvelId={setMarvelId}
-                                  setItemCat={setItemCat}
+                                  setItemCatName={setItemCatName}
                                   dico={dico} catIndex={catIndex} listSize={listSize}
                     />
                 </MainContainer>
