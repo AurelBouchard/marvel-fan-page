@@ -39,8 +39,8 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
     
     const alternative = <div className={`flex justify-between items-center`}>
         <p>Please select an item</p>
-        <div className={`animate-horiBounce`}>
-            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <div className={`animate-bounce md:animate-horiBounce`}>
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className={`rotate-90 md:rotate-0`}>
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13.75 6.75L19.25 12L13.75 17.25"/>
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 12H4.75"/>
             </svg>
@@ -50,13 +50,13 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
     
     
     return (
-        <div className={`flex flex-col flex-1`}>
+        <div className={`flex flex-col flex-1 ml-14 md:ml-auto`}>
             <div id="showView" className="bg-dark rounded-xl p-4 z-0">
                 {!searchResult ? alternative :
                     showView
                 }
             </div>
-            <div className={`flex-1`}/>
+            <div className={`hidden md:block md:flex-1`}/>
         </div>
     )
 }

@@ -59,14 +59,14 @@ function App() {
                         setDico={setDico}
             /> :
         
-        <div id="wholePage" className="text-grey animate-appear">
+        <div id="wholePage" className="text-grey animate-appear text-left">
             <Header categories={categories}
                     catIndex={catIndex} setCatIndex={setCatIndex}
                     dico={dico}
                     setMarvelId={setMarvelId}
             />
     
-            <main className="flex w-full">
+            <main className="flex w-full relative">
         
                 <SideBar categories={categories}
                          subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
