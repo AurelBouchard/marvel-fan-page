@@ -1,20 +1,24 @@
 import React from 'react';
 import Card from "../views/Card";
 
-export default function SearchModal({catName, onClick, matches, setMarvelId, errorMessage}) {
+export default function SearchModal({catName, catIndex, onClick, matches, setMarvelId, errorMessage}) {
     
     return (
         <div className="z-50 bg-dark/60 backdrop-filter backdrop-blur-md h-full w-full fixed top-18
                 flex flex-col justify-start items-center overflow-hidden"
         onClick={onClick}>
-            <p className="pt-24 text-5xl text-grey-alt font-light mb-12">
+            <p className="pt-16 text-5xl text-grey-alt font-light mb-12">
                 Search for any Marvel {catName}
             </p>
             {matches && matches[0] ?
-                <div className={`grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-4 overflow-scroll h-1/2`}>
+                <div className={`mx-8 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-4 overflow-scroll max-h-1/2`}>
                     {matches.map((item, index)=> {
                         return (
-                            <Card key={index} name={item.name} id={item.id} setMarvelId={setMarvelId}/>
+                            <Card name={item.name}
+                                  resource={item.resource}
+                                  setMarvelId={setMarvelId}
+                                  subCatIndex={catIndex} subCatName={catName}
+                            />
                         )
                     })}
                 </div>

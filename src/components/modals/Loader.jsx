@@ -76,10 +76,28 @@ export default function Loader({categories, setReady, ready, setNVAM, NVAM, setD
                         if (result.length !== bunchSize  || needOfFetch > fetchLimit) {
                             full = false
                         }
-                        return {isFull: full, bunch: result}
+                        if (result) {return {isFull: full, bunch: result}}
+                        throw  {response:"no data"}
                     })
-                    .catch(err => {
-                        console.log("error while fetching data :", err)
+                    .then()
+                    .catch(error => {
+                        console.log("error while fetching data :")
+                        if (error.response) {
+                            // The request was made and the server responded with a status code
+                            // that falls out of the range of 2xx
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            console.log(error.response.headers);
+                        } else if (error.request) {
+                            // The request was made but no response was received
+                            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                            // http.ClientRequest in node.js
+                            console.log(error.request);
+                        } else {
+                            // Something happened in setting up the request that triggered an Error
+                            console.log('Error', error.message);
+                        }
+                        console.log(error.config);
                     })
             }
         }
@@ -92,7 +110,7 @@ export default function Loader({categories, setReady, ready, setNVAM, NVAM, setD
          */
         let extractData = async function (bunch) {
             return await bunch.map(item => {
-                return {id: item.id, name: item.name || item.title || item.fullName}
+                return {id: item.id, name: item.name || item.title || item.fullName, resource: item.resourceURI}
             })
         }
         

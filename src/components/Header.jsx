@@ -34,7 +34,11 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
         if (!searching) { setSearching(true) }
         if (errorMessage) { setErrorMessage(null) }
         
-        setMatches(dico[catIndex].filter(item => item.name.toLowerCase().includes(name.toLowerCase())))
+        if (name) {
+            setMatches(dico[catIndex].filter(item => item.name.toLowerCase().includes(name.toLowerCase())))
+        } else {
+            setMatches(null)
+        }
     }
     
     /**
@@ -150,7 +154,7 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                 </div>
 
             </div>
-            { !searching ? null : <SearchModal catName={catName} onClick={closeSearchModal} matches={matches} setMarvelId={setMarvelId} errorMessage={errorMessage}/> }
+            { !searching ? null : <SearchModal catName={catName} catIndex={catIndex} onClick={closeSearchModal} matches={matches} setMarvelId={setMarvelId} errorMessage={errorMessage}/> }
         </>
         
     )
