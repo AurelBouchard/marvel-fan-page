@@ -7,7 +7,7 @@ export default function SearchModal({catName, catIndex, onClick, matches, setMar
         <div className="z-50 bg-dark/60 backdrop-filter backdrop-blur-md h-full w-screen fixed top-36 sm:top-18
                 flex flex-col justify-start items-center overflow-hidden"
         onClick={onClick}>
-            <p className="pt-16 text-3xl sm:text-5xl text-grey-alt font-light mb-12">
+            <p className="pt-16 text-center text-3xl sm:text-5xl text-grey-alt font-light mb-12">
                 Search for any Marvel {catName}
             </p>
             {matches && matches[0] ?

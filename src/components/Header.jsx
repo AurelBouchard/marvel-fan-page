@@ -113,7 +113,7 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                         </svg>
                     </div>
     
-                    <div id="title" className={`flex items-center justify-center mx-2 w-40 shrink-0 text-xl`}>
+                    <div id="title" className={`flex items-center justify-center mx-2 w-9/12 sm:w-40 shrink-0 text-xl`}>
                         <h1>Marvel Fan Page</h1>
                     </div>
                 </div>
@@ -131,8 +131,8 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                         setSearching(true)
                     }}
                               className={`bg-black border-1.5 border-grey-darker rounded-tr-lg rounded-br-lg h-12  transition-all overflow-hidden
-                           w-full origin-left basis-auto ${searching ? "placeholder:text-grey-darker" : "placeholder:text-grey-dark"}
-                           px-2 caret-teal
+                           w-full origin-left basis-auto ${searching ? "placeholder:text-grey-darker mr-6" : "placeholder:text-grey-dark mr-2"}
+                           px-2 caret-teal sm:mr-auto
                            outline-none`}
                               placeholder={`Search for any Marvel ${catName}`}
                               onChange={(e) => {

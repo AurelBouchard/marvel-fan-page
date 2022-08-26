@@ -47,6 +47,9 @@ function App() {
     
             // set view to overview
             setSubCatIndex(0)
+    
+    
+            window.scrollTo(0, 0);
         }
     },[marvelId])
     
