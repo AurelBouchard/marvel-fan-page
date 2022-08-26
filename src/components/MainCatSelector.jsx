@@ -13,7 +13,7 @@ export default function MainCatSelector({catIndex, setCatIndex, categories, expa
     
     return (
         <div id="catSelector_Button"
-             className={`fixed top-3 z-900`}
+             className={`fixed top-21 left-2 sm:top-3 sm:left-auto`}
              onClick={toggleCollapse}>
             
             <div id="catSelector_Img"

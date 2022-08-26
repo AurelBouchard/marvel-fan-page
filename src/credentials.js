@@ -16,7 +16,7 @@ const credentials = `?apikey=${pubKey}&hash=${hash}&ts=${ts}`
 
 const security = 50; //
 
-const fetchLimit = 20; //20
+const fetchLimit = 2; //20
 
 
 export const api = {url, credentials, security, fetchLimit}
