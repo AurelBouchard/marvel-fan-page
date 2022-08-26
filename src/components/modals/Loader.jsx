@@ -7,7 +7,7 @@ import Loading from "../Loading";
 
 
 
-export default function Loader({categories, setReady, ready, setNVAM, NVAM, setDico}) {
+export default function Loader({categories, setNVAM, NVAM, setDico}) {
     const [tempDico, setTempDico] = useState([]);
     
     useEffect(()=> {
@@ -24,7 +24,7 @@ export default function Loader({categories, setReady, ready, setNVAM, NVAM, setD
     
     
     useEffect(()=> {
-        if (NVAM && !ready) {
+        if (NVAM) {
             console.log("call a very long function")
             
             async function createAllDicos() {

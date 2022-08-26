@@ -13,27 +13,32 @@ export default function ShowAll({
 }) {
     const [catResult, setCatResult] = useState([])
     const [list, setList] = useState(nullArray(listSize))
+    const [dicoCatSize, setDicoCatSize] = useState(0)
+    
     
     useEffect(()=> {
-        if (dico) {setList(dico[catIndex].slice(pageOffset,pageOffset+listSize)); return }
-        //if (catResult) { setList(catResult.slice(pageOffset,pageOffset+listSize)) }
-    }, [//catResult,
-        dico, catIndex, pageOffset])
+        if (dico) { setDicoCatSize(dico[catIndex].length )}
+    }, [])
     
-    /**
-     * http request the API each time a new category is selected in the header
-     * or pageOffset change
-     */
-    //useEffect(()=> {refreshCatResult()})
+    useEffect(()=> {
+        if (dico) {setList(dico[catIndex].slice(pageOffset,pageOffset+listSize)) }
+    }, [dico, catIndex, pageOffset])
     
+
     useEffect(() => {
         setPageOffset(0)
-        //setCatResult(null);
     }, [catIndex])
     
-    useEffect(()=> {
-        //setCatResult(null)
-    }, [pageOffset])
+    /**
+     * check if dico is full
+     */
+    function handleNextPage() {
+        if (pageOffset+listSize > dicoCatSize) {
+            // need fetch
+        } else {
+            setPageOffset(Math.min(dicoCatSize, pageOffset+listSize))
+        }
+    }
     
     function refreshCatResult() {
         if (!catResult) {
@@ -91,7 +96,8 @@ export default function ShowAll({
             
             <div className={`flex justify-center items-center text-lime pt-2`}>
                 <div id="previousPage"
-                     onClick={()=>{
+                     onClick={(e)=>{
+                         e.preventDefault()
                          setPageOffset(Math.max(0, pageOffset-listSize))
                          setList(nullArray(listSize))
                 }}>
@@ -100,9 +106,12 @@ export default function ShowAll({
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5.75 5.75V18.25"/>
                     </svg>
                 </div>
-                <p className={`text-sm pb-0.5 mx-1`}>{`${pageOffset+1} ... ${pageOffset+listSize}`}</p>
-                <div id="nextPage" onClick={()=>{
-                    setPageOffset(Math.min(100000, pageOffset+listSize))
+                
+                <p className={`text-sm pb-0.5 mx-1`}>{`${pageOffset+1} ... ${Math.min(dicoCatSize, pageOffset+listSize)}`}</p>
+                
+                <div id="nextPage" onClick={(e)=>{
+                    e.preventDefault()
+                    handleNextPage()
                     setList(nullArray(listSize))
                 }}>
                     <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
