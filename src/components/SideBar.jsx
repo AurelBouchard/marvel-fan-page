@@ -33,7 +33,12 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
     useEffect(() => {
         console.log("reset menu")
         setSubCatIndex(0)
+        window.scrollTo(0, 0);
     }, [])
+    
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [subCatIndex])
     
     
     return (
@@ -46,7 +51,7 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
                      setHovered(false)
                  }}
             >
-                <div className={`fixed bg-dark transition-all ${collapsed ? "w-14" : "w-56"} `}>
+                <div className={`fixed bg-dark transition-all ${collapsed ? "w-14" : "w-56"} overflow-hidden`}>
                     {/* TITLE line : MENU with collapse button */}
                     <a className="flex w-full justify-between items-center text-teal h-8 pl-4 pr-2 relative right-0">
                         
