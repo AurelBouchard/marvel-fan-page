@@ -18,9 +18,8 @@ import GridView from "./views/GridView";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function MainView({searchResult, subCatIndex, itemCat, setCatIndex, setMarvelId, setItemCat}) {
-    
-    const defaultView = <Overview data={searchResult} itemCat={itemCat}/>
+export default function MainView({searchResult, subCatIndex, itemCatName, setCatIndex, setMarvelId, setItemCatName}) {
+    const defaultView = <Overview data={searchResult} itemCat={itemCatName}/>
     const [showView, setShowView] = useState(defaultView)
     
     
@@ -28,21 +27,13 @@ export default function MainView({searchResult, subCatIndex, itemCat, setCatInde
     useEffect(() => {
         console.log("show ",subCatIndex)
         if (searchResult) {
-/*            switch(subCatIndex) {
-                case 1: setShowView( <Characters data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 2: setShowView( <Comics data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 3: setShowView( <Creators data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 4: setShowView( <Events data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 5: setShowView( <Series data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 6: setShowView( <Stories data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                default: setShowView(defaultView ); break;
-            }*/
-            
-            setShowView(<GridView data={searchResult} subCatIndex={subCatIndex} setItemCat={setItemCat} setMarvelId={setMarvelId} setCatIndex={setCatIndex}/>)
-            
-            
+            if (subCatIndex) {
+                setShowView(<GridView data={searchResult} subCatIndex={subCatIndex-1} setItemCatName={setItemCatName} setMarvelId={setMarvelId} setCatIndex={setCatIndex}/>)
+            } else {
+                setShowView(defaultView)
             }
-    }, [subCatIndex])
+        }
+    }, [subCatIndex, searchResult])
     
     
     
@@ -69,3 +60,14 @@ export default function MainView({searchResult, subCatIndex, itemCat, setCatInde
         </div>
     )
 }
+
+
+/*            switch(subCatIndex) {
+                case 1: setShowView( <Characters data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 2: setShowView( <Comics data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 3: setShowView( <Creators data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 4: setShowView( <Events data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 5: setShowView( <Series data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                case 6: setShowView( <Stories data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
+                default: setShowView(defaultView ); break;
+            }*/
