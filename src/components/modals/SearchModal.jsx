@@ -18,6 +18,7 @@ export default function SearchModal({catName, catIndex, onClick, matches, setMar
                                   resource={item.resource}
                                   setMarvelId={setMarvelId}
                                   subCatIndex={catIndex} subCatName={catName}
+                                  latency={300+index*500}
                             />
                         )
                     })}

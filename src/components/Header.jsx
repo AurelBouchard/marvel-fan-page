@@ -34,7 +34,7 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
         if (!searching) { setSearching(true) }
         if (errorMessage) { setErrorMessage(null) }
         
-        if (name) {
+        if (name.length > 1) {
             setMatches(dico[catIndex].filter(item => item.name.toLowerCase().includes(name.toLowerCase())))
         } else {
             setMatches(null)

@@ -24,6 +24,7 @@ export default function GridView({data, setItemCatName, setCatIndex, setMarvelId
                               name={elt.name || elt.title || elt.fullName}
                               setMarvelId={setMarvelId}
                               setItemCatName={setItemCatName} setCatIndex={setCatIndex}
+                              latency={100+index*300}
                         />
                     )
                 })}
