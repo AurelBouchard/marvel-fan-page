@@ -145,8 +145,8 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                                   }
                               }}
                     />
-                        {!showLens ? <div className="wg-[19px]"/> :
-                            <div id="lens" className="relative -left-8 top-4 text-grey-dark">
+                        {!showLens ? <div/> :
+                            <div id="lens" className="relative -left-4 sm:-left-8 top-4 text-grey-dark">
                                 <svg width="18.748" height="18.749" fill="currentColor">
                                     <path
                                         d="M12.52 2.145a7.337 7.337 0 10-1 11.207 1.545 1.545 0 00.419.778l4.16 4.165a1.552 1.552 0 002.194-2.195l-4.165-4.167a1.55 1.55 0 00-.777-.418 7.344 7.344 0 00-.831-9.37zm-1.315 9.061a5.477 5.477 0 110-7.745 5.483 5.483 0 010 7.745z"/>
