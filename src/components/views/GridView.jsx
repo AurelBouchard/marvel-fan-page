@@ -16,7 +16,7 @@ export default function GridView({data, setItemCatName, setCatIndex, setMarvelId
         <div className={`rr`}>
             <p className={`font-bold uppercase mb-6`}>{data[subCatName]?.available} {subCatName}</p>
             <div className={`grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-4`}>
-                {data[subCatName]?.items.map((elt, index) => {
+                {data[subCatName]?.items?.map((elt, index) => {
                     return (
                         <Card subCatIndex={subCatIndex} subCatName={subCatName}
                               //id={elt.resourceURI.substring(elt.resourceURI.lastIndexOf("/")+1)}
