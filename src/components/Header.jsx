@@ -1,26 +1,102 @@
 import React, {useState} from 'react';
-import SearchModal from "./SearchModal";
+import SearchModal from "./modals/SearchModal";
 import MainCatSelector from "./MainCatSelector";
-//import tailwindcss from "../../tailwind.config.cjs"
+import axios from "axios";
+import {api} from "../credentials";
+import {categories} from "../models/categories";
 
-export default function Header({catIndex, setCatIndex, categories}) {
+
+export default function Header({catIndex, setCatIndex, categories, dico, setMarvelId }) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
+    const [matches, setMatches] = useState([])
+    const [errorMessage, setErrorMessage] = useState(null)
+    
+    const catName = categories[catIndex || 0].name;
+    
+    console.log("header")
     
     function closeSearchModal() {
         if (searching) {setSearching(false)}
     }
     
-    function handleInput(e) {
-        setShowLens(!e.target.value)
+    /**
+     * search for input into dico then update matches state
+     * don't try fetch because of too much queries
+     *
+     * @param name {string}
+     */
+    function handleInputChange(name) {
+        //console.log("input change", name)
+        setShowLens(!name)
+        
+        // cleaning
+        if (!searching) { setSearching(true) }
+        if (errorMessage) { setErrorMessage(null) }
+        
+        if (name) {
+            setMatches(dico[catIndex].filter(item => item.name.toLowerCase().includes(name.toLowerCase())))
+        } else {
+            setMatches(null)
+        }
     }
     
-    const catName = categories[catIndex].name;
+    /**
+     * search for input into dico then show possible matches in the modal
+     * if nothing to show : maybe dico is not complete so
+     * fetch API and return response on modal
+     *
+     * @param name {string}
+     */
+    function handleSubmit(name) {
+        console.log("input submit", name)
+        
+        
+        let itemInDico = dico[catIndex].filter(item => item.name.toLowerCase() === name.toLowerCase())
+        
+        if (itemInDico[0]) {
+            setMarvelId(itemInDico[0].id)
+            setSearching(false)
+        }
+        else {
+            let nameOrTitle = catIndex === 1 ? "title" : "name"; // only comics endpoint uses titleStartsWith
+            
+            axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
+                .then( response => {
+                    //console.log("searchResult => ",response.data?.data?.results[0])
+                    if (response.data?.data?.results[0]?.id) {
+                        setMarvelId(response.data?.data?.results[0].id)
+                        setSearching(false)
+                    } else {
+                        throw {response:"or are you miserably confusing with DC comics ?"}
+                    }
+                })
+                .then()
+                .catch(function(err) {
+                    console.log(err)
+                    if (err.response) {
+                        // response but not found
+                        setErrorMessage({main:"What you're looking for must have vanished because of the Snap ...", details:err.response})
+                        
+                    } else if (err.request) {
+                        // no response
+                        setErrorMessage({main:"Your request must have gotten lost in multiverse ...", details:err})
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        setErrorMessage({main:"Something fu***d up !", details:err})
+                    }
+                })
+        }
+        
+        
+    }
+    
+    
     
     
     return (
         <>
-            <div className="sticky top-0 flex space-x-8 items-center px-8 bg-dark hrr-18 w-screen shadow-lg shadow-red">
+            <div className="sticky top-0 flex space-x-8 items-center px-8 bg-dark hrr-18 w-screen shadow-md shadow-black z-50">
                 <div className={`shrink-0 ${searching ? "text-marvel" : "text-teal"}`}>
                     <svg width="130" height="52" xmlns="http://www.w3.org/2000/svg">
                         <rect fill="currentColor" width="100%" height="100%"/>
@@ -34,9 +110,14 @@ export default function Header({catIndex, setCatIndex, categories}) {
                 <div className={`w-36 shrink-0`}>
                     <h1>Marvel Fan Page</h1>
                 </div>
+
                 <div id="searchBar" className={`flex flex-1 items-center py-3 z-90 ${searching ? "-translate-x-44" : "translate-0"} duration-300`}>
 
-                    <MainCatSelector catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} />
+                    <MainCatSelector
+                        categories={categories}
+                        catIndex={catIndex} setCatIndex={setCatIndex}
+                        expandable={!searching}
+                         />
                     
                     <input id="searchField" name="searchField" onClick={() => {setSearching(true)} }
                            className={`bg-black border-1.5 border-grey-darker rounded-tr-lg rounded-br-lg h-12  transition-all
@@ -44,7 +125,13 @@ export default function Header({catIndex, setCatIndex, categories}) {
                            px-2 caret-teal ml-14
                            outline-none`}
                            placeholder={`Search for any Marvel ${catName}`}
-                           onChange={(e) => handleInput(e)}
+                           onChange={(e) => {
+                               e.preventDefault()
+                               handleInputChange(e.target.value)
+                           }}
+                           onKeyPress={(e) => {
+                               if (e.key === 'Enter' ) {handleSubmit(e.target.value)}
+                           }}
                     />
                     {!showLens ? <div className="w-[19px]"/> :
                         <div id="lens" className="relative -left-8 text-grey-dark">
@@ -65,8 +152,9 @@ export default function Header({catIndex, setCatIndex, categories}) {
                         
                     </div>
                 </div>
+
             </div>
-            { !searching ? null : <SearchModal catName={catName} onClick={closeSearchModal} /> }
+            { !searching ? null : <SearchModal catName={catName} catIndex={catIndex} onClick={closeSearchModal} matches={matches} setMarvelId={setMarvelId} errorMessage={errorMessage}/> }
         </>
         
     )

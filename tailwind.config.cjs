@@ -48,10 +48,34 @@ module.exports = {
       borderWidth: {
         '1.5': '1.5px'
       },
+      screen: {
+        //sm : 640
+        //md : 768
+        //lg : 1024
+        //xl : 1280
+        '1440': '1440px',
+        //2xl : 1536
+        '3xl': '1600px',
+        '4xl': '2000px'
+      },
+      zIndex: {
+        '60':'60',
+        '70':'70',
+        '80':'80',
+        '90':'90',
+        '100':'100',
+      },
+      transitionProperty: {
+        'h': 'height',
+        'w': 'width',
+        'hw': 'height, width'
+      },
       animation: {
         'spin-slow': 'spin 3s linear infinite',
         wiggle: 'wiggle 1s ease-in-out infinite',
-        horiBounce: 'horiBounce 1s infinite'
+        horiBounce: 'horiBounce 1s infinite',
+        appear: 'appear-delay 2s forwards',
+        'appear-slow': 'appear 5s forwards'
       },
       keyframes: {
         wiggle: {
@@ -67,6 +91,21 @@ module.exports = {
             transform: 'translateX(0)',
             'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)'
           }
+        },
+        itemListAppear: {
+          '0%': {transform: 'scaleY(0)', opacity:'0'},
+          '20%': {opacity:'0'},
+          '40%': {transform: 'scale(1)'},
+          '100%': {opacity:'1'}
+        },
+        'appear-delay': {
+          '0%': {opacity:'0'},
+          '25%': {opacity:'0'},
+          '100%': {opacity:'1'}
+        },
+        appear: {
+          '0%': {opacity:'0'},
+          '100%': {opacity:'1'}
         }
       }
     },

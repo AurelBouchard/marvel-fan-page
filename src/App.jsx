@@ -1,58 +1,49 @@
-import {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './App.css'
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
-import View from "./components/View";
+import MainView from "./components/MainView";
 import MainContainer from "./components/MainContainer";
-import Related from "./components/Related";
+import LinksAndMore from "./components/LinksAndMore";
 import Footer from "./components/Footer";
 import {categories} from "./models/categories";
 import axios from "axios";
 import {api} from "./credentials";
+import Loader from "./components/modals/Loader";
 
 
 
 
 function App() {
-    const [catIndex, setCatIndex] = useState(0)         // in header
-    const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar
-    const [catResult, setCatResult] = useState(null)
-    const [searchResult, setSearchResult] = useState(null)
-    const [pageOffset, setPageOffset] = useState(0)
-    const [marvelId, setMarvelId] = useState(null)
-    const [itemCat, setItemCat] = useState(null)
+    const [catIndex, setCatIndex] = useState(0)         // in header {number}
+    //const [userInput, setUserInput] = useState(null)
+    const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar {number}
+    const [searchResult, setSearchResult] = useState(null)  // {object}
+    const [pageOffset, setPageOffset] = useState(0)     // {number}
+    const [marvelId, setMarvelId] = useState(null)      // {number}
+    const [itemCatName, setItemCatName] = useState(null)    // catName {string}
     
+    const [NVAM, setNVAM] = useState(false)     // boolean
+    const [dico, setDico] = useState(null)      // [[{object}...{}]...[]]
     
-    useEffect(() => {setPageOffset(0)}, [catIndex])
+    const listSize = 20;
     
-    /**
-     * http request the API each time a new category is selected in the header
-     * or pageOffset change
-     */
-    useEffect(()=>{
-        // purge old results
-        setCatResult(null)
-        
-        //console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
-        
-        // renew results
-        axios.get(`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
-            .then( allItems => {
-                console.log("response : ",allItems)
-                setCatResult(allItems)
-            } )
-    },[catIndex, pageOffset])
+    console.log("apéro !")
     
     
     
+
     useEffect(() => {
-        if (marvelId) {
-            console.log("specific call")
-            axios.get(`${api.url}${categories[catIndex].name}/${marvelId}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}`)
-                .then( oneItem => {
-                    console.log("response : ",oneItem)
-                    setSearchResult(oneItem)
+        if (marvelId > 0) {
+            console.log("specific call with marvel ID")
+            console.log(`${api.url}${categories[catIndex].name}/${marvelId}${api.credentials}`)
+            
+            axios.get(`${api.url}${categories[catIndex].name}/${marvelId}${api.credentials}`)
+                .then( response => {
+                    console.log("searchResult => ",response.data?.data?.results[0])
+                    setSearchResult(response.data?.data?.results[0])
                 } )
+            // NEED ERROR HANDLING !!!!!!!!!!!!!!!!!
     
             // set view to overview
             setSubCatIndex(0)
@@ -61,24 +52,50 @@ function App() {
     
     
     
-    
-    
     return (
-        <div className="text-grey">
-            <Header catIndex={catIndex} setCatIndex={setCatIndex} categories={categories}/>
-            <main className="static flex w-full z-0">
-                <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex} categories={categories} itemCat={itemCat}/>
+
+        !dico ? <Loader categories={categories}
+                        NVAM={NVAM} setNVAM={setNVAM}
+                        setDico={setDico}
+            /> :
+        
+        <div id="wholePage" className="text-grey animate-appear">
+            <Header categories={categories}
+                    catIndex={catIndex} setCatIndex={setCatIndex}
+                    dico={dico}
+                    setMarvelId={setMarvelId}
+            />
+    
+            <main className="flex w-full">
+        
+                <SideBar categories={categories}
+                         subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
+                         itemCat={itemCatName}
+                         searchResult={searchResult}
+                />
+        
                 <MainContainer>
-                    <View searchResult={searchResult} subCatIndex={subCatIndex} itemCat={itemCat}/>
-                    <Related listOfAllItems={catResult?.data?.data.results} setPageOffset={setPageOffset} pageOffset={pageOffset}
-                             catName={categories[catIndex].name}
-                             setMarvelId={setMarvelId} setItemCat={setItemCat}
+                    <MainView searchResult={searchResult}
+                              subCatIndex={subCatIndex}
+                              setCatIndex={setCatIndex}
+                              setMarvelId={setMarvelId}
+                              itemCatName={itemCatName} setItemCatName={setItemCatName}
+                    />
+                    <LinksAndMore setPageOffset={setPageOffset}
+                                  pageOffset={pageOffset}
+                                  catName={categories[catIndex || 0].name}
+                                  setMarvelId={setMarvelId}
+                                  setItemCatName={setItemCatName}
+                                  dico={dico} catIndex={catIndex} listSize={listSize}
                     />
                 </MainContainer>
+    
             </main>
+    
             <Footer/>
         </div>
     )
 }
 
 export default App
+
