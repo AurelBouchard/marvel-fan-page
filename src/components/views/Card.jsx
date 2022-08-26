@@ -59,21 +59,29 @@ export default function Card({name, setMarvelId, setItemCatName, setCatIndex, re
             bottom:`flex flex-1 w-full items-center space-x-8 p-1 text-xs`}
     ]
     
-    let imgSrc = null
+    //let imgSrc = null
     
     
     useEffect(() => {
         setTimeout(()=>{
             if (resource) {
-            console.log("card fetch")
-            console.log(`${resource}${api.credentials}`)
-    
-            axios.get(`${resource}${api.credentials}`)
-                .then( response => {
-                    console.log("searchResult => ",response.data?.data?.results[0])
-                    setData(response.data?.data?.results[0])
-                } )
-            // NEED ERROR HANDLING !!!!!!!!!!!!!!!!!
+                console.log("card fetch")
+                let uri = resource;
+            
+                // use https
+                if (uri.indexOf('https')!==0) {
+                    uri = 'https'+resource.substring(4)
+                }
+                
+                
+                console.log(`${uri}${api.credentials}`)
+                
+                axios.get(`${uri}${api.credentials}`)
+                    .then( response => {
+                        console.log("searchResult => ",response.data?.data?.results[0])
+                        setData(response.data?.data?.results[0])
+                    } )
+                // NEED ERROR HANDLING !!!!!!!!!!!!!!!!!
         }}, latency)
     },[resource])
     
