@@ -131,7 +131,7 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                         setSearching(true)
                     }}
                               className={`bg-black border-1.5 border-grey-darker rounded-tr-lg rounded-br-lg h-12  transition-all overflow-hidden
-                           w-full origin-left basis-auto ${searching ? "placeholder:text-grey-darker mr-6" : "placeholder:text-grey-dark mr-2"}
+                           w-full origin-left basis-auto ${searching ? "placeholder:text-grey-darker mr-2" : "placeholder:text-grey-dark -mr-2"}
                            px-2 caret-teal sm:mr-auto
                            outline-none`}
                               placeholder={`Search for any Marvel ${catName}`}
