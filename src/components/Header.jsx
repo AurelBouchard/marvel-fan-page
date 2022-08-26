@@ -99,7 +99,8 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
     
     return (
         <>
-            <div className="sticky top-0 flex flex-col flex-nowrap sm:flex-row sm:items-center flex-wrap px-8 bg-dark h-36 sm:h-18 w-screen shadow-md shadow-black z-50">
+            <div className={`sticky top-0 flex flex-col flex-nowrap sm:flex-row sm:items-center flex-wrap overflow-x-hidden
+             px-8 bg-dark h-36 sm:h-18 w-screen shadow-md shadow-black z-50`}>
                 
                 <div className={`flex items-center h-18`}>
                     <div id="logo" className={`shrink-0 ${searching ? "text-marvel" : "text-teal"}`}>
@@ -118,7 +119,8 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                     </div>
                 </div>
 
-                <div id="searchBar" className={`flex flex-nowrap items-center py-3 z-90 flex-1 sm:flex-none ${searching ? "sm:flex-1 sm:-translate-x-42" : "sm:translate-0"} duration-300`}>
+                <div id="searchBar" className={`flex flex-nowrap items-center py-3 z-90 flex-1 sm:flex-none
+                ${searching ? "sm:flex-1 sm:-translate-x-42 sm:-mr-44" : "sm:translate-0"} duration-300`}>
 
                     <MainCatSelector
                         categories={categories}
@@ -126,12 +128,12 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                         expandable={!searching}
                          />
     
-                    <div className={`flex w-full sm:w-full ml-8 -mr-12 sm:ml-14 sm:mr-auto ${searching ? "grow" : null}`}>
+                    <div className={`flex w-full sm:w-full ml-16 sm:ml-14 sm:mr-auto ${searching ? "grow" : null}`}>
                         <input id="searchField" name="searchField" onClick={() => {
                         setSearching(true)
                     }}
                               className={`bg-black border-1.5 border-grey-darker rounded-tr-lg rounded-br-lg h-12  transition-all overflow-hidden
-                           w-full origin-left basis-auto ${searching ? "placeholder:text-grey-darker mr-2" : "placeholder:text-grey-dark -mr-2"}
+                           w-full origin-left basis-auto ${searching ? "placeholder:text-grey-darker mir-2" : "placeholder:text-grey-dark -kmr-16"}
                            px-2 caret-teal sm:mr-auto
                            outline-none`}
                               placeholder={`Search for any Marvel ${catName}`}
@@ -146,7 +148,7 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                               }}
                     />
                         {!showLens ? <div/> :
-                            <div id="lens" className="relative -left-4 sm:-left-8 top-4 text-grey-dark">
+                            <div id="lens" className="relative -left-8 top-4 text-grey-dark">
                                 <svg width="18.748" height="18.749" fill="currentColor">
                                     <path
                                         d="M12.52 2.145a7.337 7.337 0 10-1 11.207 1.545 1.545 0 00.419.778l4.16 4.165a1.552 1.552 0 002.194-2.195l-4.165-4.167a1.55 1.55 0 00-.777-.418 7.344 7.344 0 00-.831-9.37zm-1.315 9.061a5.477 5.477 0 110-7.745 5.483 5.483 0 010 7.745z"/>
