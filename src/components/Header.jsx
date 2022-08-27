@@ -156,10 +156,10 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                             </div>
                         }</div>
                     
-                    <div id="closeBtn" className={`hidden ${searching ? "sm:block transition opacity-100 delay-150" : "transition-none opacity-0"}
-                     text-teal-light w-8 h-8`}
+                    <div id="closeBtn" className={`hidden ${searching ? "sm:block sm:ml-2 transition opacity-100 delay-150" : "transition-none opacity-0"}
+                     text-teal-light w-8 h-8 flex justify-center items-center`}
                          onClick={closeSearchModal}>
-                        <svg viewBox="0 0 100 100">
+                        <svg viewBox="0 0 100 100" height="32" width="32">
                             <g fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="10">
                                 <line x1="10" y1="10" x2="90" y2="90" />
                                 <line x1="10" y1="90" x2="90" y2="10" />

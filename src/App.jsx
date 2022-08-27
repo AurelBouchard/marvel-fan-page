@@ -59,7 +59,7 @@ function App() {
 
         !dico ? <Loader categories={categories}
                         NVAM={NVAM} setNVAM={setNVAM}
-                        setDico={setDico}
+                        dico={dico} setDico={setDico}
             /> :
         
         <div id="wholePage" className="text-grey animate-appear text-left">
@@ -89,7 +89,8 @@ function App() {
                                   catName={categories[catIndex || 0].name}
                                   setMarvelId={setMarvelId}
                                   setItemCatName={setItemCatName}
-                                  dico={dico} catIndex={catIndex} listSize={listSize}
+                                  dico={dico} setDico={setDico}
+                                  catIndex={catIndex} listSize={listSize}
                     />
                 </MainContainer>
     

@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function Card({name, setMarvelId, setItemCatName, setCatIndex, resource, subCatName, subCatIndex, latency}) {
     const [data, setData] = useState(null)
-    const id = resource.substring(resource.lastIndexOf("/")+1);
+    const [id, setId] = useState(resource.substring(resource.lastIndexOf("/")+1))
     
     const cardStyle = [
         {   // characters

@@ -7,12 +7,15 @@ import Loading from "../Loading";
 
 
 
-export default function Loader({categories, setNVAM, NVAM, setDico}) {
+export default function Loader({categories, setNVAM, NVAM, dico, setDico}) {
     const [tempDico, setTempDico] = useState([]);
     
+    console.log("loader")
+    
     useEffect(()=> {
-        //console.log("comparing length",categories.length, tempDico.length )
+        console.log("comparing length",categories.length, tempDico.length )
         if (categories.length === tempDico.length) {
+            console.log("setDico to", tempDico)
             setDico(tempDico)
         }
     }, [tempDico])
@@ -24,7 +27,7 @@ export default function Loader({categories, setNVAM, NVAM, setDico}) {
     
     
     useEffect(()=> {
-        if (NVAM) {
+        if (NVAM && dico===null) {
             console.log("call a very long function")
             
             async function createAllDicos() {
@@ -146,7 +149,7 @@ export default function Loader({categories, setNVAM, NVAM, setDico}) {
                 .then(res => {
                     offset += bunchSize;
                     full = res.isFull;
-                    //console.log(res.bunch)
+                    console.log(res.bunch)
                     return extractData(res.bunch)
                 })
                 .then((array) => {
@@ -154,7 +157,7 @@ export default function Loader({categories, setNVAM, NVAM, setDico}) {
                     return dicoPart
                 })
                 .then((dico)=> {
-                    //console.log("dico", dico)
+                    console.log("dico", dico)
                 })
                 .catch(err => console.log(err))
         }
