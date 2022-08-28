@@ -4,17 +4,34 @@ import axios from "axios";
 import lowBandWidthLoader from '../../assets/short_comp.webp';
 import highBandWidthLoader from '../../assets/full_no_loss.webp'
 import Loading from "../Loading";
+import SkipBtn from "./SkipBtn";
 
 
 
 export default function Loader({categories, setNVAM, NVAM, dico, setDico}) {
     const [tempDico, setTempDico] = useState([]);
+    const [allowSkip, setAllowSkip] = useState(false)
+    const [skipped, setSkipped] = useState(false)
+    
     
     console.log("loader")
     
     useEffect(()=> {
+        if (skipped) {
+            let fakeDico = []
+            console.log("prepare to skip", tempDico)
+            if (categories.length !== tempDico.length ) {
+                for (let i=0; i<categories.length; i++) {
+                    fakeDico.push(tempDico[i] || [])
+                }
+            }
+            setTempDico(fakeDico)
+        }
+    }, [skipped])
+    
+    useEffect(()=> {
         console.log("comparing length",categories.length, tempDico.length )
-        if (categories.length === tempDico.length) {
+        if (categories.length === tempDico.length ) {
             console.log("setDico to", tempDico)
             setDico(tempDico)
         }
@@ -23,6 +40,7 @@ export default function Loader({categories, setNVAM, NVAM, dico, setDico}) {
     // not virgin anymore
     useEffect(() => {
         if (!NVAM) {setTimeout(()=>{setNVAM(true)},0)}
+        setTimeout(()=> {setAllowSkip(true)}, 2500)
     })
     
     
@@ -61,7 +79,7 @@ export default function Loader({categories, setNVAM, NVAM, dico, setDico}) {
         
         /**
          * Give a bunch of data and if the length is equal to limit (full)
-         * Full mean that an order request can be performed after increment of offset
+         * Full mean that an other request can be performed after increment of offset
          *
          * @param catName
          * @param pageOffset
@@ -120,21 +138,6 @@ export default function Loader({categories, setNVAM, NVAM, dico, setDico}) {
             })
         }
         
-        /*    /!**
-             * Concat arrays as async function
-             *
-             * @param arr
-             * @param add
-             * @returns {Promise<*>}
-             *!/
-            let concaten = async function (arr =[], add=[]) {
-                console.log("concat",arr,add)
-                let output = []
-                await arr.forEach(elt => output.push(elt))
-                await add.forEach(elt => output.push(elt))
-                return output
-            }*/
-        
         
         /**
          * Fetch bunch of data and concat it to dicoPart array
@@ -156,15 +159,17 @@ export default function Loader({categories, setNVAM, NVAM, dico, setDico}) {
                     dicoPart = dicoPart.concat(array)
                     return dicoPart
                 })
-                .then((dico)=> {
-                    console.log("dico", dico)
+                .then((dicoPart)=> {
+                    console.log("dico", dicoPart)
+                    setTempDico((d) => [...d, dicoPart])
                 })
                 .catch(err => console.log(err))
+            
         }
         
         let i = 100
         while (full && i) {
-            //console.log("while full")
+            console.log("while full")
             await getAllOfOneCategory(catName, offset, bunchSize)
             offset += bunchSize;
             i--
@@ -172,7 +177,7 @@ export default function Loader({categories, setNVAM, NVAM, dico, setDico}) {
         
         
         console.log("end of this cat", catName)
-        setTempDico((d) => [...d, dicoPart])
+        //setTempDico((d) => [...d, dicoPart])
     }
     
     return (
@@ -182,6 +187,7 @@ export default function Loader({categories, setNVAM, NVAM, dico, setDico}) {
                 <Loading/>
             </div>
             <img src={highBandWidthLoader} alt="Marvel Fan Page loading" className={`flex-1 hidden md:block`}/>
+            {allowSkip ? <SkipBtn setSkipped={setSkipped} skipped={skipped} /> : null}
         </div>
     )
 }

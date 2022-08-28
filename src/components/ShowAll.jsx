@@ -25,8 +25,11 @@ export default function ShowAll({
     
     useEffect(()=> {
         console.log("useSeffect dico, catIndex, pageOffset ")
+        console.log(dico)
         if (dico) {
+            console.log("reset list")
             setList(dico[catIndex].slice(pageOffset,pageOffset+listSize))
+            console.log("reset DicoCatSize")
             setDicoCatSize(dico[catIndex].length)
         }
     }, [dico, catIndex, pageOffset])

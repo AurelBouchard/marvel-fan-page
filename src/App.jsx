@@ -9,14 +9,13 @@ import Footer from "./components/Footer";
 import {categories} from "./models/categories";
 import axios from "axios";
 import {api} from "./credentials";
-import Loader from "./components/modals/Loader";
+import Loader from "./components/loader/Loader";
 
 
 
 
 function App() {
     const [catIndex, setCatIndex] = useState(0)         // in header {number}
-    //const [userInput, setUserInput] = useState(null)
     const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar {number}
     const [searchResult, setSearchResult] = useState(null)  // {object}
     const [pageOffset, setPageOffset] = useState(0)     // {number}
