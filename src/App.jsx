@@ -14,18 +14,20 @@ import {api} from "./credentials";
 
 
 function App() {
-    const [catIndex, setCatIndex] = useState(0)         // in header
-    const [userInput, setUserInput] = useState(null)
-    const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar
-    const [catResult, setCatResult] = useState([])
-    const [searchResult, setSearchResult] = useState(null)
-    const [pageOffset, setPageOffset] = useState(0)
-    const [marvelId, setMarvelId] = useState(null)
-    const [itemCat, setItemCat] = useState(null)
+    const [catIndex, setCatIndex] = useState(0)         // in header {number}
+    const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar {number}
+    const [searchResult, setSearchResult] = useState(null)  // {object}
+    const [catResult, setCatResult] = useState()
+    const [pageOffset, setPageOffset] = useState(0)     // {number}
+    const [marvelId, setMarvelId] = useState(null)      // {number}
+    const [itemCatName, setItemCatName] = useState(null)    // catName {string}
     
+    //const [NVAM, setNVAM] = useState(false)     // boolean
+    //const [dico, setDico] = useState(null)      // [[{object}...{}]...[]]
     
+    const listSize = 20;
     
-    console.log("app et rot")
+    console.log("apéro !")
     
     /**
      * http request the API each time a new category is selected in the header
@@ -46,7 +48,7 @@ function App() {
         if (!catResult) {
             console.log("refreshCatResult")
             // purge old results
-            //setCatResult(null)
+            setCatResult(null)
     
             console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
     
@@ -72,33 +74,49 @@ function App() {
                     setSearchResult(response.data?.data?.results[0])
                 } )
     
-            // set view to overview
+            // set view to top of overview
             setSubCatIndex(0)
+            window.scrollTo(0, 0);
         }
     },[marvelId])
     
     
     
     return (
-        <div className="text-grey">
+        <div id="wholePage" className="text-grey animate-appear text-left">
+            <Header categories={categories}
+                    catIndex={catIndex} setCatIndex={setCatIndex}
+                    //dico={dico}
+                    setMarvelId={setMarvelId}
+            />
+        
+            <main className="flex w-full relative">
             
-            <Header catIndex={catIndex} setCatIndex={setCatIndex} categories={categories} setUserInput={setUserInput} setCatResult={setCatResult}/>
+                <SideBar categories={categories}
+                         subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
+                         itemCat={itemCatName}
+                         searchResult={searchResult}
+                />
             
-            <main className="static flex w-full z-0">
-                
-                <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex} categories={categories} itemCat={itemCat} searchResult={searchResult}/>
-                
                 <MainContainer>
-                    <MainView searchResult={searchResult} subCatIndex={subCatIndex} itemCat={itemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}
-                              setItemCat={setItemCat} />
-                    <LinksAndMore listOfAllItems={catResult} setPageOffset={setPageOffset} pageOffset={pageOffset}
+                    <MainView searchResult={searchResult}
+                              subCatIndex={subCatIndex}
+                              setCatIndex={setCatIndex}
+                              setMarvelId={setMarvelId}
+                              itemCatName={itemCatName} setItemCatName={setItemCatName}
+                    />
+                    <LinksAndMore setPageOffset={setPageOffset}
+                                  pageOffset={pageOffset}
                                   catName={categories[catIndex || 0].name}
-                                  setMarvelId={setMarvelId} setItemCat={setItemCat}
+                                  setMarvelId={setMarvelId}
+                                  setItemCatName={setItemCatName}
+                                  //dico={dico} setDico={setDico}
+                                  catIndex={catIndex} listSize={listSize}
                     />
                 </MainContainer>
-                
+        
             </main>
-            
+        
             <Footer/>
         </div>
     )
