@@ -50,10 +50,10 @@ function App() {
             // purge old results
             setCatResult(null)
     
-            console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
+            //console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
     
             // renew results
-            axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&offset=${pageOffset}`)
+            axios.get(`${api.url}${categories[catIndex||0].name}${api.credentials}&offset=${pageOffset}`)
                 .then( response => {
                     console.log("catResult => ",response.data?.data?.results)
                     setCatResult(response.data?.data?.results)
@@ -86,7 +86,7 @@ function App() {
     return (
         <div id="wholePage" className="text-grey animate-appear text-left">
             <Header categories={categories}
-                    catIndex={catIndex} setCatIndex={setCatIndex}
+                    catIndex={catIndex || 0} setCatIndex={setCatIndex}
                     //dico={dico}
                     setMarvelId={setMarvelId}
             />
@@ -95,7 +95,7 @@ function App() {
             
                 <SideBar categories={categories}
                          subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
-                         itemCat={itemCatName}
+                         itemCatName={itemCatName}
                          searchResult={searchResult}
                 />
             
@@ -112,7 +112,7 @@ function App() {
                                   setMarvelId={setMarvelId}
                                   setItemCatName={setItemCatName}
                                   //dico={dico} setDico={setDico}
-                                  catIndex={catIndex} listSize={listSize}
+                                  catIndex={catIndex} listSize={listSize} itemCatName={itemCatName}
                                   listOfAllItems={catResult}
                     />
                 </MainContainer>

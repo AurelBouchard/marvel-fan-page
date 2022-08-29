@@ -17,15 +17,15 @@ import Stats from "./Stats";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, //setItemCat,
+export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, itemCatName, setMarvelId, //setItemCat,
                                      dico, setDico, catIndex, listSize, setItemCatName}) {
     //let data= "available soon"
-    console.log("related")
+    console.log("related", catIndex)
     
     const width = catName==="stories" ? 'md:w-6/12 w-auto' : 'md:w-3/12 w-auto';
     
     return (
-        <div className={`flex flex-col ${width} shrink-0 ml-14 md:ml-0 flex-1 md:flex-none`}>
+        <div className={`flex flex-col ${width} shrink-0 ${itemCatName ? 'ml-14' : null} md:ml-0 flex-1 md:flex-none`}>
             
             {/*<div className={`transition-all duration-300 ${searchResult ? "opacity-100 h-auto mb-6" : "opacity-0 h-0 mb-0" } space-y-6`}>
                 <Rating data={data} />
