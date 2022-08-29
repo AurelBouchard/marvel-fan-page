@@ -47,7 +47,7 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
     
     
     return (
-        <div className={`${!visible ? 'w-0':null} fixed md:static flex bg-dark transition-all ${visible&&collapsed ? "w-14" : "w-56"} shrink-0 z-30
+        <div className={`fixed md:static flex bg-dark transition-all ${visible ? collapsed ? "w-14" : "w-56" : 'w-0'} shrink-0 z-30
         pt-8 pb-12 font-bold text-sm uppercase`}
              onMouseEnter={() => {
                  setHovered(true)
@@ -56,7 +56,7 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
                  setHovered(false)
              }}
         >
-            <div className={`${!visible ? 'w-0':null}fixed bg-dark transition-all ${visible&&collapsed ? "w-14" : "w-56"} overflow-hidden`}>
+            <div className={`${!visible ? 'w-0':null}fixed bg-dark transition-all ${visible ? collapsed ? "w-14" : "w-56" : 'w-0'} overflow-hidden`}>
                 {/* TITLE line : MENU with collapse button */}
                 <a className="flex w-full justify-between items-center text-teal h-8 pl-4 pr-2 relative right-0">
                     
