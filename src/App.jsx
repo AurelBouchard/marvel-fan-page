@@ -77,6 +77,7 @@ function App() {
             // set view to top of overview
             setSubCatIndex(0)
             window.scrollTo(0, 0);
+            
         }
     },[marvelId])
     
@@ -112,6 +113,7 @@ function App() {
                                   setItemCatName={setItemCatName}
                                   //dico={dico} setDico={setDico}
                                   catIndex={catIndex} listSize={listSize}
+                                  listOfAllItems={catResult}
                     />
                 </MainContainer>
         

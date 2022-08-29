@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Overview from "./views/Overview";
 import GridView from "./views/GridView";
+import {categories} from "../models/categories";
 /*import Comics from "./views/Comics";
 import Characters from "./views/Characters";
 import Creators from "./views/Creators";
@@ -25,10 +26,14 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
     
     
     useEffect(() => {
-        console.log("show ",subCatIndex)
         if (searchResult) {
             if (subCatIndex) {
-                setShowView(<GridView data={searchResult} subCatIndex={subCatIndex-1} setItemCatName={setItemCatName} setMarvelId={setMarvelId} setCatIndex={setCatIndex}/>)
+                console.log("show",categories[subCatIndex-1].name, "of",searchResult.name)
+                setShowView(<GridView data={searchResult}
+                                      subCatIndex={subCatIndex-1}
+                                      setItemCatName={setItemCatName}
+                                      setMarvelId={setMarvelId}
+                                      setCatIndex={setCatIndex}/>)
             } else {
                 setShowView(defaultView)
             }

@@ -17,7 +17,7 @@ import Stats from "./Stats";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, setItemCat,
+export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, setMarvelId, //setItemCat,
                                      dico, setDico, catIndex, listSize, setItemCatName}) {
     //let data= "available soon"
     console.log("related")
@@ -33,7 +33,8 @@ export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset,
             </div>*/}
             
             <ShowAll catName={catName} listOfAllItems={listOfAllItems}
-                     setMarvelId={setMarvelId} setItemCat={setItemCat} setItemCatName={setItemCatName}
+                     setMarvelId={setMarvelId} //setItemCat={setItemCat}
+                     setItemCatName={setItemCatName}
                      setPageOffset={setPageOffset} pageOffset={pageOffset}
                      //dico={dico} setDico={setDico}
                      catIndex={catIndex} listSize={listSize}

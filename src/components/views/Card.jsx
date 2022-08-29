@@ -4,10 +4,11 @@ import {api} from "../../credentials";
 import axios from "axios";
 
 
-export default function Card({key, id, name, setMarvelId, setItemCat, setCatIndex,
+export default function Card({name, setMarvelId, setCatIndex, setItemCatName, dataId,
                              subCatIndex, resource, subCatName, latency}) {
     const [data, setData] = useState(null)
-    const [id, setId] = useState(resource.substring(resource.lastIndexOf("/")+1))       // should be a const but bug
+    const [id, setId] = useState(dataId || resource.substring(resource.lastIndexOf("/")+1))       // should be a const but bug
+    
     
     const cardStyle = [
         {   // characters
@@ -73,16 +74,14 @@ export default function Card({key, id, name, setMarvelId, setItemCat, setCatInde
                     uri = 'https'+resource.substring(4)
                 }
                 
-                
-                console.log(`${uri}${api.credentials}`)
-                
+                //console.log(`${uri}${api.credentials}`)
                 axios.get(`${uri}${api.credentials}`)
                     .then( response => {
-                        console.log("searchResult => ",response.data?.data?.results[0])
+                        //console.log("searchResult => ",response.data?.data?.results[0])
                         setData(response.data?.data?.results[0])
                     } )
                 // NEED ERROR HANDLING !!!!!!!!!!!!!!!!!
-            }}, latency)
+            }}, (latency))
     },[resource])
     
     
@@ -111,11 +110,11 @@ export default function Card({key, id, name, setMarvelId, setItemCat, setCatInde
             <div className={cardStyle[subCatIndex].bottom}>
                 <div className={`flex justify-start`}>
                     <p className={`uppercase mr-1`}>Date :</p>
-                    <p className={``}>{resource.substring(resource.lastIndexOf("/")+1)}</p>
+                    <p className={``}>{resource.modified}</p>
                 </div>
                 <div className={`flex justify-start justify-self-end`}>
                     <p className={`uppercase text-2xs mr-1`}>marvel id: </p>
-                    <p className={`text-lime text-2xs`}>{resource.substring(resource.lastIndexOf("/")+1)}</p>
+                    <p className={`text-lime text-2xs`}>{id}</p>
                 </div>
                 <div className={`flex justify-self-end`}>
                     <a className={`normal-case hover:text-teal`}>MM</a>

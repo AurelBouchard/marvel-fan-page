@@ -23,7 +23,7 @@ export default function Overview({data, itemCat}) {
                 <img className={`h-auto`}
                      src={`${data.thumbnail?.path}.${data.thumbnail?.extension}`} alt={data.name || data.title || data.fullName}/>
             </div>
-            <p className={`font-light`}><span className={`underline font-bold mr-1`}>Description:</span>{data.description || "No description yet"}</p>
+            <p className={`font-light tracking-wide`}><span className={`underline font-bold mr-1`}>Description:</span>{data.description || "No description yet"}</p>
             <a href={findLink(data.urls, "detail")} className={`text-teal`}
             >More about {data.name || data.title || data.fullName} on marvel.com if available</a>
             <div className={`flex justify-start`}>

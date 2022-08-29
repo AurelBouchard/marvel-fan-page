@@ -6,12 +6,12 @@ export default function ShowAll({
                                     listOfAllItems, // delete
                                     pageOffset,
                                     setPageOffset,
-                                    setMarvelId, setItemCat,
+                                    setMarvelId, setItemCatName,
                                     //dico, setDico,
                                     catIndex, listSize
                                 }) {
     
-    const [catResult, setCatResult] = useState([])
+    //const [catResult, setCatResult] = useState([])
     const [list, setList] = useState(nullArray(listSize))
     const [dicoCatSize, setDicoCatSize] = useState(0)
     
@@ -19,7 +19,9 @@ export default function ShowAll({
     
     
     useEffect(()=> {
-        if (listOfAllItems) {setList(listOfAllItems)}
+        if (listOfAllItems) {
+            console.log("listOfAllItems",listOfAllItems)
+            setList(listOfAllItems)}
     }, [listOfAllItems])
     
     useEffect(() => {
@@ -46,7 +48,7 @@ export default function ShowAll({
                         onClick={() => {
                             console.log("select an item in show all")
                             setMarvelId(elt.id);
-                            setItemCat(catName);
+                            setItemCatName(catName);
                         }}
                     >
                         {elt.name || elt.title || elt.fullName}
@@ -69,7 +71,7 @@ export default function ShowAll({
                     </svg>
                 </div>
     
-                <p className={`text-sm pb-0.5 mx-1`}>{`${pageOffset+1} ... ${Math.min(dicoCatSize, pageOffset+listSize)}`}</p>
+                <p className={`text-sm pb-0.5 mx-1`}>{`${pageOffset+1} ... ${Math.min(100000, pageOffset+listSize)}`}</p>
     
                 <div id="nextPage"
                      onClick={(e)=>{

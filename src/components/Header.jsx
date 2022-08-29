@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import SearchModal from "./SearchModal";
 import MainCatSelector from "./MainCatSelector";
 import axios from "axios";
+import {api} from "../credentials";
 
 
 export default function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId, dico}) {
@@ -51,14 +52,15 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
         console.log("input submit", name)
         
         
-        let itemInDico = dico[catIndex].filter(item => item.name.toLowerCase() === name.toLowerCase())
+        //let itemInDico = dico[catIndex].filter(item => item.name.toLowerCase() === name.toLowerCase())
+        const itemInDico = [false]
         
         if (itemInDico[0]) {
             setMarvelId(itemInDico[0].id)
             setSearching(false)
         }
         else {
-            let nameOrTitle = catIndex === 1 ? "title" : "name"; // only comics endpoint uses titleStartsWith
+            let nameOrTitle = catIndex === (1 || 5) ? "title" : "name"; // only comics and stories endpoint uses titleStartsWith
             
             axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
                 .then( response => {
@@ -166,7 +168,9 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
                 </div>
             
             </div>
-            { !searching ? null : <SearchModal catName={catName} catIndex={catIndex} onClick={closeSearchModal} matches={matches} setMarvelId={setMarvelId} errorMessage={errorMessage}/> }
+            { !searching ? null : <SearchModal catName={catName} catIndex={catIndex} onClick={closeSearchModal}
+                                               //matches={matches}
+                                               setMarvelId={setMarvelId} errorMessage={errorMessage}/> }
         </>
     
     )
