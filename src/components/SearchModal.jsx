@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorMessage from "./ErrorMessage";
 // will import card later
 
 export default function SearchModal({catName, onClick,
@@ -8,8 +9,10 @@ export default function SearchModal({catName, onClick,
     return (
         <div className="z-50 bg-dark/60 backdrop-filter backdrop-blur-md h-full w-screen fixed top-36 sm:top-18
                 flex flex-col justify-start items-center overflow-hidden"
-             onClick={onClick}>
-            <p className="pt-16 text-center text-3xl sm:text-5xl text-grey-alt font-light mb-12">
+             onClick={(e)=> {
+                 onClick(e)
+             }}>
+            <p className={`${errorMessage ? 'hidden sm:block' : null} pt-16 text-center text-3xl sm:text-5xl text-grey-alt font-light mb-12`}>
                 Search for any Marvel {catName}
             </p>
 {/*            {matches && matches[0] ?
@@ -26,11 +29,7 @@ export default function SearchModal({catName, onClick,
                     })}
                 </div>
                 : null}*/}
-            {errorMessage ?
-                <div>
-                    <p className={`text-red-600`}>{errorMessage.main}</p>
-                    {errorMessage.details.toString()}
-                </div> : null }
+            {errorMessage ? <ErrorMessage errorMessage={errorMessage} /> : null }
         </div>
     )
 }
