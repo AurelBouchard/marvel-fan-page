@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Overview from "./views/Overview";
-import Comics from "./views/Comics";
+import GridView from "./views/GridView";
+import {categories} from "../models/categories";
+/*import Comics from "./views/Comics";
 import Characters from "./views/Characters";
 import Creators from "./views/Creators";
 import Events from "./views/Events";
 import Series from "./views/Series";
-import Stories from "./views/Stories";
-import GridView from "./views/GridView";
+import Stories from "./views/Stories";*/
 
 /**
  * Show main data of the selected item.
@@ -25,10 +26,14 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
     
     
     useEffect(() => {
-        console.log("show ",subCatIndex)
         if (searchResult) {
             if (subCatIndex) {
-                setShowView(<GridView data={searchResult} subCatIndex={subCatIndex-1} setItemCatName={setItemCatName} setMarvelId={setMarvelId} setCatIndex={setCatIndex}/>)
+                console.log("show",categories[subCatIndex-1].name, "of",searchResult.name)
+                setShowView(<GridView data={searchResult}
+                                      subCatIndex={subCatIndex-1}
+                                      setItemCatName={setItemCatName}
+                                      setMarvelId={setMarvelId}
+                                      setCatIndex={setCatIndex}/>)
             } else {
                 setShowView(defaultView)
             }
@@ -60,14 +65,3 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
         </div>
     )
 }
-
-
-/*            switch(subCatIndex) {
-                case 1: setShowView( <Characters data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 2: setShowView( <Comics data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 3: setShowView( <Creators data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 4: setShowView( <Events data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 5: setShowView( <Series data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                case 6: setShowView( <Stories data={searchResult} setItemCat={setItemCat} setCatIndex={setCatIndex} setMarvelId={setMarvelId}/>); break;
-                default: setShowView(defaultView ); break;
-            }*/

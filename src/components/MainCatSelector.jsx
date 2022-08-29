@@ -50,6 +50,6 @@ export default function MainCatSelector({catIndex, setCatIndex, categories, expa
                 })}
             </div>
         </div>
-        
+    
     )
 }

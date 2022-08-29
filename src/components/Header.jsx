@@ -1,18 +1,14 @@
 import React, {useState} from 'react';
-import SearchModal from "./modals/SearchModal";
+import SearchModal from "./SearchModal";
 import MainCatSelector from "./MainCatSelector";
 import axios from "axios";
 import {api} from "../credentials";
-import {categories} from "../models/categories";
 
-/*
-* sm:
-* */
 
-export default function Header({catIndex, setCatIndex, categories, dico, setMarvelId }) {
+export default function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId, dico}) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
-    const [matches, setMatches] = useState([])
+    //const [matches, setMatches] = useState([])
     const [errorMessage, setErrorMessage] = useState(null)
     
     const catName = categories[catIndex || 0].name;
@@ -36,12 +32,13 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
         // cleaning
         if (!searching) { setSearching(true) }
         if (errorMessage) { setErrorMessage(null) }
-        
-        if (name.length > 1) {
+
+        // future feature : dico
+/*        if (name.length > 1) {
             setMatches(dico[catIndex].filter(item => item.name.toLowerCase().includes(name.toLowerCase())))
         } else {
             setMatches(null)
-        }
+        }*/
     }
     
     /**
@@ -55,14 +52,15 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
         console.log("input submit", name)
         
         
-        let itemInDico = dico[catIndex].filter(item => item.name.toLowerCase() === name.toLowerCase())
+        //let itemInDico = dico[catIndex].filter(item => item.name.toLowerCase() === name.toLowerCase())
+        const itemInDico = [false]
         
         if (itemInDico[0]) {
             setMarvelId(itemInDico[0].id)
             setSearching(false)
         }
         else {
-            let nameOrTitle = catIndex === 1 ? "title" : "name"; // only comics endpoint uses titleStartsWith
+            let nameOrTitle = catIndex === (1 || 5) ? "title" : "name"; // only comics and stories endpoint uses titleStartsWith
             
             axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
                 .then( response => {
@@ -113,40 +111,40 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                         */}
                         </svg>
                     </div>
-    
+                    
                     <div id="title" className={`flex items-center justify-center mx-2 w-9/12 sm:w-40 shrink-0 text-xl`}>
                         <h1>Marvel Fan Page</h1>
                     </div>
                 </div>
-
+                
                 <div id="searchBar" className={`flex flex-nowrap items-center py-3 z-90 flex-1 sm:flex-none
                 ${searching ? "sm:flex-1 sm:-translate-x-42 sm:-mr-44" : "sm:translate-0"} duration-300`}>
-
+                    
                     <MainCatSelector
                         categories={categories}
                         catIndex={catIndex} setCatIndex={setCatIndex}
                         expandable={!searching}
-                         />
-    
+                    />
+                    
                     <div className={`flex w-full sm:w-full ml-16 sm:ml-14 sm:mr-auto ${searching ? "grow" : null}`}>
                         <input id="searchField" name="searchField" onClick={() => {
-                        setSearching(true)
-                    }}
-                              className={`bg-black border-1.5 border-grey-darker rounded-tr-lg rounded-br-lg h-12  transition-all overflow-hidden
+                            setSearching(true)
+                        }}
+                               className={`bg-black border-1.5 border-grey-darker rounded-tr-lg rounded-br-lg h-12  transition-all overflow-hidden
                            w-full origin-left basis-auto ${searching ? "placeholder:text-grey-darker mir-2" : "placeholder:text-grey-dark -kmr-16"}
                            px-2 caret-teal sm:mr-auto
                            outline-none`}
-                              placeholder={`Search for any Marvel ${catName}`}
-                              onChange={(e) => {
-                                  e.preventDefault()
-                                  handleInputChange(e.target.value)
-                              }}
-                              onKeyPress={(e) => {
-                                  if (e.key === 'Enter') {
-                                      handleSubmit(e.target.value)
-                                  }
-                              }}
-                    />
+                               placeholder={`Search for any Marvel ${catName}`}
+                               onChange={(e) => {
+                                   e.preventDefault()
+                                   handleInputChange(e.target.value)
+                               }}
+                               onKeyPress={(e) => {
+                                   if (e.key === 'Enter') {
+                                       handleSubmit(e.target.value)
+                                   }
+                               }}
+                        />
                         {!showLens ? <div/> :
                             <div id="lens" className="relative -left-8 top-4 text-grey-dark">
                                 <svg width="18.748" height="18.749" fill="currentColor">
@@ -165,13 +163,15 @@ export default function Header({catIndex, setCatIndex, categories, dico, setMarv
                                 <line x1="10" y1="90" x2="90" y2="10" />
                             </g>
                         </svg>
-                        
+                    
                     </div>
                 </div>
-
+            
             </div>
-            { !searching ? null : <SearchModal catName={catName} catIndex={catIndex} onClick={closeSearchModal} matches={matches} setMarvelId={setMarvelId} errorMessage={errorMessage}/> }
+            { !searching ? null : <SearchModal catName={catName} catIndex={catIndex} onClick={closeSearchModal}
+                                               //matches={matches}
+                                               setMarvelId={setMarvelId} errorMessage={errorMessage}/> }
         </>
-        
+    
     )
 }
