@@ -113,13 +113,13 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
                         </svg>
                     </div>
                     
-                    <div id="title" className={`flex items-center justify-center mx-2 w-9/12 sm:w-40 shrink-0 text-xl`}>
+                    <div id="title" className={`flex items-center justify-center w-full sm:w-40 sm:mx-4 md:mx-8 text-xl`}>
                         <h1>Marvel Fan Page</h1>
                     </div>
                 </div>
                 
                 <div id="searchBar" className={`flex flex-nowrap items-center py-3 z-90 flex-1 sm:flex-none
-                ${searching ? "sm:flex-1 sm:-translate-x-42 sm:-mr-44" : "sm:translate-0"} duration-300`}>
+                ${searching ? "sm:flex-1 sm:-translate-x-44 md:-translate-x-52 sm:-mr-44" : "sm:translate-0"} duration-300`}>
                     
                     <MainCatSelector
                         categories={categories}
