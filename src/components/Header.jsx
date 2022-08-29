@@ -5,7 +5,7 @@ import axios from "axios";
 import {api} from "../credentials";
 
 
-export default function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId, dico}) {
+export default function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId, dico, setItemCatName}) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
     //const [matches, setMatches] = useState([])
@@ -73,7 +73,9 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
                         throw {response:"or are you miserably confusing with DC comics ?"}
                     }
                 })
-                .then()
+                .then(()=> {
+                    setItemCatName(categories[catIndex||0].name)
+                })
                 .catch(function(err) {
                     console.log(err)
                     if (err.response) {

@@ -89,6 +89,7 @@ function App() {
                     catIndex={catIndex || 0} setCatIndex={setCatIndex}
                     //dico={dico}
                     setMarvelId={setMarvelId}
+                    setItemCatName={setItemCatName}
             />
         
             <main className="flex w-full relative">
