@@ -1,4 +1,7 @@
 import {useEffect, useReducer} from "react";
+import axios from "axios";
+import {api} from "../credentials";
+import {categories} from "../models/categories";
 
 
 const axiosReducer = (state, action) => {
@@ -14,7 +17,7 @@ const axiosReducer = (state, action) => {
     }
 }
 
-export default function useAxiosGet(url, ...queryParam) {
+export default function useAxiosGet(callback) {
     const [state, dispatch] = useReducer(axiosReducer, {
         data: null,
         //status: null,
@@ -22,20 +25,23 @@ export default function useAxiosGet(url, ...queryParam) {
     }, a=>a)
     
     useEffect(()=> {
-        if (!url) { return }
+        const promise = callback()
+        if (!promise) { return }
         
         dispatch({type: 'fetching'})
         
-        console.log(url, ...queryParam)
+        console.log("useAxiosGet callback")
+        
+        axios.get(`${api.url}${categories[catIndex||0].name}${api.credentials}&offset=${pageOffset}`)
+            .then( response => {
+                console.log("catResult => ",response.data?.data?.results)
+                setCatResult(response.data?.data?.results)
+            } ).catch(err => {
+                console.log("error while fetching data :", err)
+            })
         
         // eslint-disable-next-line
-    }, [url, queryParam])
+    }, [callback])
     
     return state
 }
-
-
-// ADD TO APP :
-/*
-*     const {data, error} = useAxiosGet(api.url.concat(categories[catIndex || 0].name), api.credentials, '&offset=${pageOffset}' )
-* */

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useReducer, useState} from 'react'
 import './App.css'
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
@@ -9,6 +9,8 @@ import Footer from "./components/Footer";
 import {categories} from "./models/categories";
 import axios from "axios";
 import {api} from "./credentials";
+import useAxiosGet from "./utils/useAxiosGet";
+import useFindCategory from "./utils/useFindCategory";
 
 
 
@@ -33,7 +35,7 @@ function App() {
      * http request the API each time a new category is selected in the header
      * or pageOffset change
      */
-    useEffect(()=> {refreshCatResult()})
+    useEffect(()=> {refreshCatResult()}, [])
     
     useEffect(() => {
         setPageOffset(0)
@@ -63,6 +65,10 @@ function App() {
         }
     }
     
+    
+    //const {data, error} = useAxiosGet(api.url.concat(categories[catIndex || 0].name), api.credentials, '&offset=${pageOffset}' )
+    //const {data, error} = useFindCategory(api.url.concat(categories[catIndex || 0].name), api.credentials, '&offset=${pageOffset}' )
+    //console.log('data', JSON.stringify(data))
     
 
     useEffect(() => {
