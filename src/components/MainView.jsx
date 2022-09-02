@@ -20,11 +20,26 @@ import Stories from "./views/Stories";*/
  * @constructor
  */
 export default function MainView({searchResult, subCatIndex, itemCatName, setCatIndex, setMarvelId, setItemCatName}) {
-    const defaultView = <Overview data={searchResult} itemCat={itemCatName}/>
-    const [showView, setShowView] = useState(defaultView)
+    //const defaultView = <Overview data={searchResult} itemCat={itemCatName}/>
+    //const [showView, setShowView] = useState(defaultView)
     
     
     
+/*    useEffect(() => {
+        if (searchResult) {
+            if (subCatIndex && searchResult) {
+                console.log("show",categories[subCatIndex-1].name, "of",searchResult.name)
+                setShowView(<GridView data={searchResult[categories[subCatIndex-1].name].items}
+                                      subCatIndex={subCatIndex-1}
+                                      setItemCatName={setItemCatName}
+                                      setMarvelId={setMarvelId}
+                                      setCatIndex={setCatIndex}/>)
+            } else {
+                setShowView(defaultView)
+            }
+        }
+    }, [subCatIndex])*/
+/*
     useEffect(() => {
         if (searchResult) {
             if (subCatIndex) {
@@ -38,8 +53,8 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
                 setShowView(defaultView)
             }
         }
-    }, [subCatIndex, searchResult])
-    
+    }, [searchResult])
+    */
     
     
     const alternative = <div className={`flex justify-between items-center`}>
@@ -58,10 +73,17 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
         <div className={`flex flex-col flex-1 ${itemCatName ? 'ml-14' : null} md:ml-auto`}>
             <div id="showView" className="bg-dark rounded-xl p-4 z-0">
                 {!searchResult ? alternative :
-                    showView
+                    subCatIndex === 0 ? <Overview data={searchResult} itemCat={itemCatName}/> :
+                        <GridView data={searchResult[categories[subCatIndex-1].name].items}
+                                  subCatIndex={subCatIndex-1}
+                                  setItemCatName={setItemCatName}
+                                  setMarvelId={setMarvelId}
+                                  setCatIndex={setCatIndex}/>
                 }
             </div>
             <div className={`hidden md:block md:flex-1`}/>
         </div>
     )
 }
+
+//export default React.memo(MainView)

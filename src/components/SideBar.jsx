@@ -11,7 +11,7 @@ import React, {useEffect, useState} from 'react';
  * @returns {JSX.Element}
  * @constructor
  */
-export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCatName, searchResult}) {
+function SideBar({subCatIndex, setSubCatIndex, categories, itemCatName, searchResult}) {
     const [visible, setVisible] = useState(false)
     const [collapsed, setCollapsed] = useState(true)
     const [hovered, setHovered] = useState(false)
@@ -35,13 +35,14 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
         selected:"text-dark-darkest bg-teal hover:bg-teal"
     }
     
-    useEffect(() => {
+/*    useEffect(() => {
         console.log("reset menu")
         setSubCatIndex(0)
         window.scrollTo(0, 0);
-    }, [])
+    }, [])*/
     
     useEffect(() => {
+        if (subCatIndex === null) {setSubCatIndex(0)}
         window.scrollTo(0, 0);
     }, [subCatIndex])
     
@@ -137,3 +138,6 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
         </div>
     )
 }
+
+
+export default React.memo(SideBar)

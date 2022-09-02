@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Loading from "./Loading";
 
-export default function ShowAll({
+function ShowAll({
                                     catName,
                                     listOfAllItems, // delete
                                     pageOffset,
@@ -90,3 +90,5 @@ export default function ShowAll({
         </div>
     )
 }
+
+export default React.memo(ShowAll)

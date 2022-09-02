@@ -1,13 +1,65 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import noImgSrc from "../../assets/image_not_available.jpg"
 import {api} from "../../credentials";
 import axios from "axios";
 
 
-export default function Card({name, setMarvelId, setCatIndex, setItemCatName, dataId,
+/*
+const genericStateReducer = (state, action) => ({...state, ...action})
+
+
+function useFetchResource(resource) {
+    const [state, dispatch] = useReducer(genericStateReducer, {
+        data: null,
+        error: null
+    }, a=>a)
+    
+    useEffect(()=>{
+        if (!resource) { return }
+        
+        dispatch({data: null, error: null})
+
+        fetchMarvel(resource)
+            .then( res => dispatch({data: res}))
+            .catch(e => dispatch({error: e.toString()}))
+        
+    }, [resource])
+    
+    return state
+}
+
+async function fetchMarvel(resource, param) {
+    if (!resource) {return}
+    
+    // use https
+    let uri = resource;
+    if (uri.indexOf('https')!==0) {
+        uri = 'https'+resource.substring(4)
+    }
+    
+    console.log(`fetching ${uri}${api.credentials}`)
+    await axios.get(`${uri}${api.credentials}`)
+        .then( response => {
+            //console.log("fetchMarvel resp => ",response.data?.data?.results[0])
+            return response.data?.data?.results[0]
+        })
+        .catch(e => {
+            return Promise.reject(
+                new Error(`erreur lors de la requete : ${e}`),
+            )
+        })
+}*/
+
+
+function Card({id, name, setMarvelId, setCatIndex, setItemCatName,
                              subCatIndex, resource, subCatName, latency}) {
-    const [data, setData] = useState(null)
-    const [id, setId] = useState(dataId || resource.substring(resource.lastIndexOf("/")+1))       // should be a const but bug
+    
+    const [freshData, setFreshData] = useState(null)
+    const [allowFetching, setAllowFetching] = useState(false)
+    
+    useEffect(() => {
+        setTimeout(() => { setAllowFetching(true) }, latency)
+    }, [])
     
     
     const cardStyle = [
@@ -61,37 +113,37 @@ export default function Card({name, setMarvelId, setCatIndex, setItemCatName, da
             bottom:`flex flex-1 w-full items-center space-x-8 p-1 text-xs`}
     ]
     
+    console.log("card render", id)
     
-    
+
     useEffect(() => {
-        setTimeout(()=>{
-            if (resource) {
-                console.log("card fetch")
-                let uri = resource;
-                
+            setAllowFetching(false)
+            if (resource && allowFetching) {
                 // use https
+                let uri = resource;
                 if (uri.indexOf('https')!==0) {
                     uri = 'https'+resource.substring(4)
                 }
-                
-                //console.log(`${uri}${api.credentials}`)
+            
+                console.log(`fetching ${uri}${api.credentials}`)
                 axios.get(`${uri}${api.credentials}`)
                     .then( response => {
-                        //console.log("searchResult => ",response.data?.data?.results[0])
-                        setData(response.data?.data?.results[0])
-                    } )
-                // NEED ERROR HANDLING !!!!!!!!!!!!!!!!!
-            }}, (latency))
-    },[resource])
-    
-    
+                        console.log("fetchMarvel resp => ",response.data?.data?.results[0])
+                        setFreshData(response.data?.data?.results[0])
+                    })
+                    .catch(e => {
+                        return Promise.reject(
+                            new Error(`erreur lors de la requete : ${e}`),
+                        )
+                    })
+            }
+    }, [allowFetching])
     
     
     
     
     return (
-        <div key={id}
-             className={cardStyle[subCatIndex].main}
+        <div className={cardStyle[subCatIndex].main}
              onClick={() => {
                  setMarvelId(id);
                  if (setCatIndex) {setCatIndex(subCatIndex)} else {console.log("no setCatIndex !?")}
@@ -100,7 +152,7 @@ export default function Card({name, setMarvelId, setCatIndex, setItemCatName, da
         >
             <div className={`flex border-b`}>
                 <div className={`p-2 shrink-0`}><div className={cardStyle[subCatIndex].img}>
-                    <img src={(data && data.thumbnail) ? `${data.thumbnail?.path}.${data.thumbnail?.extension}` : noImgSrc}
+                    <img src={(freshData && freshData.thumbnail) ? `${freshData.thumbnail?.path}.${freshData.thumbnail?.extension}` : noImgSrc}
                          alt={name} className={`bg-dark border-none`}/></div>
                 </div>
                 <p className={cardStyle[subCatIndex].title}>
@@ -110,7 +162,7 @@ export default function Card({name, setMarvelId, setCatIndex, setItemCatName, da
             <div className={cardStyle[subCatIndex].bottom}>
                 <div className={`flex justify-start`}>
                     <p className={`uppercase mr-1`}>Date :</p>
-                    <p className={``}>{resource.modified}</p>
+                    <p className={``}>{freshData?.modified}</p>
                 </div>
                 <div className={`flex justify-start justify-self-end`}>
                     <p className={`uppercase text-2xs mr-1`}>marvel id: </p>
@@ -123,3 +175,5 @@ export default function Card({name, setMarvelId, setCatIndex, setItemCatName, da
         </div>
     )
 }
+
+export default React.memo(Card)

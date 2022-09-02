@@ -5,7 +5,7 @@ import axios from "axios";
 import {api} from "../credentials";
 
 
-export default function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId, dico, setItemCatName}) {
+function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId, dico, setItemCatName}) {
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
     //const [matches, setMatches] = useState([])
@@ -180,3 +180,5 @@ export default function Header({catIndex, setCatIndex, categories, availableItem
     
     )
 }
+
+export default React.memo(Header)
