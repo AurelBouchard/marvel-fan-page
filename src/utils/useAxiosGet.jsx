@@ -17,31 +17,30 @@ const axiosReducer = (state, action) => {
     }
 }
 
-export default function useAxiosGet(callback) {
+export default function useAxiosGet(param) {
     const [state, dispatch] = useReducer(axiosReducer, {
         data: null,
         //status: null,
         error: null
     }, a=>a)
     
-    useEffect(()=> {
-        const promise = callback()
-        if (!promise) { return }
+    //useEffect(()=> {
         
         dispatch({type: 'fetching'})
         
         console.log("useAxiosGet callback")
         
-        axios.get(`${api.url}${categories[catIndex||0].name}${api.credentials}&offset=${pageOffset}`)
+        //`${api.url}${categories[catIndex||0].name}${api.credentials}&offset=${pageOffset}`
+        axios.get(param)
             .then( response => {
                 console.log("catResult => ",response.data?.data?.results)
-                setCatResult(response.data?.data?.results)
+                //setCatResult(response.data?.data?.results)
             } ).catch(err => {
                 console.log("error while fetching data :", err)
             })
         
         // eslint-disable-next-line
-    }, [callback])
+    //}, [param])
     
     return state
 }

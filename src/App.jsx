@@ -35,7 +35,7 @@ function App() {
      * http request the API each time a new category is selected in the header
      * or pageOffset change
      */
-    useEffect(()=> {refreshCatResult()}, [])
+    //useEffect(()=> {refreshCatResult()}, [])
     
     useEffect(() => {
         setPageOffset(0)
@@ -67,7 +67,7 @@ function App() {
     
     
     //const {data, error} = useAxiosGet(api.url.concat(categories[catIndex || 0].name), api.credentials, '&offset=${pageOffset}' )
-    //const {data, error} = useFindCategory(api.url.concat(categories[catIndex || 0].name), api.credentials, '&offset=${pageOffset}' )
+    const {data, error} = useFindCategory(api.url.concat(categories[catIndex || 0].name), api.credentials, '&offset=${pageOffset}' )
     //console.log('data', JSON.stringify(data))
     
 
