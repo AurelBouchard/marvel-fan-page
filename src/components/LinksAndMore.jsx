@@ -17,7 +17,7 @@ import Stats from "./Stats";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, itemCatName, setMarvelId, //setItemCat,
+function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, itemCatName, setMarvelId, //setItemCat,
                                      dico, setDico, catIndex, listSize, setItemCatName}) {
     //let data= "available soon"
     console.log("related", catIndex)
@@ -46,3 +46,6 @@ export default function LinksAndMore({listOfAllItems, setPageOffset, pageOffset,
         </div>
     )
 }
+
+
+export default React.memo(LinksAndMore)

@@ -15,7 +15,7 @@ import {api} from "./credentials";
 
 function App() {
     const [catIndex, setCatIndex] = useState(0)         // in header {number}
-    const [subCatIndex, setSubCatIndex] = useState(null)   // in sidebar {number}
+    const [subCatIndex, setSubCatIndex] = useState(0)   // in sidebar {number}
     const [searchResult, setSearchResult] = useState(null)  // {object}
     const [catResult, setCatResult] = useState()
     const [pageOffset, setPageOffset] = useState(0)     // {number}
@@ -29,11 +29,7 @@ function App() {
     
     console.log("apéro !")
     
-    /**
-     * http request the API each time a new category is selected in the header
-     * or pageOffset change
-     */
-    useEffect(()=> {refreshCatResult()})
+
     
     useEffect(() => {
         setPageOffset(0)
@@ -44,11 +40,20 @@ function App() {
         setCatResult(null)
     }, [pageOffset])
     
+    /**
+     * http request the API each time a new category is selected in the header
+     * or pageOffset change
+     */
+    useEffect(()=> {
+        if (catResult) {return}
+        refreshCatResult()
+    }, [catResult])
+    
     function refreshCatResult() {
-        if (!catResult) {
+        //if (!catResult) {
             console.log("refreshCatResult")
             // purge old results
-            setCatResult(null)
+            //setCatResult(null)
     
             //console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
     
@@ -60,7 +65,7 @@ function App() {
                 } ).catch(err => {
                     console.log("error while fetching data :", err)
             })
-        }
+        //}
     }
     
     
@@ -75,7 +80,7 @@ function App() {
                 } )
     
             // set view to top of overview
-            setSubCatIndex(0)
+            //setSubCatIndex(0)
             window.scrollTo(0, 0);
             
         }
@@ -105,7 +110,8 @@ function App() {
                               subCatIndex={subCatIndex}
                               setCatIndex={setCatIndex}
                               setMarvelId={setMarvelId}
-                              itemCatName={itemCatName} setItemCatName={setItemCatName}
+                              itemCatName={itemCatName}
+                              setItemCatName={setItemCatName}
                     />
                     <LinksAndMore setPageOffset={setPageOffset}
                                   pageOffset={pageOffset}
@@ -124,5 +130,6 @@ function App() {
         </div>
     )
 }
+
 
 export default App

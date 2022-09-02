@@ -11,7 +11,7 @@ import React, {useEffect, useState} from 'react';
  * @returns {JSX.Element}
  * @constructor
  */
-export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCatName, searchResult}) {
+function SideBar({subCatIndex, setSubCatIndex, categories, itemCatName, searchResult}) {
     const [visible, setVisible] = useState(false)
     const [collapsed, setCollapsed] = useState(true)
     const [hovered, setHovered] = useState(false)
@@ -20,6 +20,7 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
     
     useEffect(()=> {
         if (!visible && itemCatName) {
+            console.log("sidebar", itemCatName)
             setVisible(true)
         }
     }, [itemCatName])
@@ -35,13 +36,14 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
         selected:"text-dark-darkest bg-teal hover:bg-teal"
     }
     
-    useEffect(() => {
+/*    useEffect(() => {
         console.log("reset menu")
         setSubCatIndex(0)
         window.scrollTo(0, 0);
-    }, [])
+    }, [])*/
     
     useEffect(() => {
+        if (subCatIndex === null) {setSubCatIndex(0)}
         window.scrollTo(0, 0);
     }, [subCatIndex])
     
@@ -89,7 +91,7 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
                 {/* 1st ITEM : overview */}
                 <a key={0} className={`${style.item} ${0 === subCatIndex ? style.selected : null}`}
                    onClick={(e) => {
-                       setSubCatIndex(0)
+                       setSubCatIndex(-1)
                    }}
                 >
                     <div className={`mr-2`}>
@@ -111,9 +113,9 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
                     if (searchResult && !searchResult[cat.name]) {return null}
                     
                     return (
-                        <a key={index+1} className={`${style.item} ${index+1 === subCatIndex ? style.selected : null}`}
+                        <a key={index+1} className={`${style.item} ${index === subCatIndex ? style.selected : null}`}
                            onClick={(e) => {
-                               setSubCatIndex(index+1)
+                               setSubCatIndex(index)
                            }}
                         >
                             <div className={`mr-2`}>
@@ -137,3 +139,6 @@ export default function SideBar({subCatIndex, setSubCatIndex, categories, itemCa
         </div>
     )
 }
+
+
+export default React.memo(SideBar)
