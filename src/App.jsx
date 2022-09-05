@@ -15,7 +15,7 @@ import {api} from "./credentials";
 
 function App() {
     const [catIndex, setCatIndex] = useState(0)         // in header {number}
-    const [subCatIndex, setSubCatIndex] = useState(0)   // in sidebar {number}
+    const [subCatIndex, setSubCatIndex] = useState(-1)   // in sidebar {number}
     const [searchResult, setSearchResult] = useState(null)  // {object}
     const [catResult, setCatResult] = useState()
     const [pageOffset, setPageOffset] = useState(0)     // {number}
@@ -80,7 +80,7 @@ function App() {
                 } )
     
             // set view to top of overview
-            //setSubCatIndex(0)
+            setSubCatIndex(-1)
             window.scrollTo(0, 0);
             
         }

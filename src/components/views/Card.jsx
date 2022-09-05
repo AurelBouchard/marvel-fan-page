@@ -113,7 +113,7 @@ function Card({id, name, setMarvelId, setCatIndex, setItemCatName,
     
     
     useEffect(() => {
-        setTimeout(() => { setAllowFetching(true) }, 3000)
+        setTimeout(() => { setAllowFetching(true) }, latency)
     }, [])
 
     useEffect(() => {

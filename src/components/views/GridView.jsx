@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Card from "./Card";
 import {categories} from "../../models/categories";
 
-function GridView({data,
+function GridView({gridData,
                                      setItemCatName,
                                      setCatIndex,
                                      setMarvelId,
@@ -12,7 +12,7 @@ function GridView({data,
     //const [listOfCard, setListOfCard] = useState(data[categories[subCatIndex].name]?.items)
     
     //console.log("GridView",data[categories[subCatIndex].name]?.items)
-    console.log("GridView",data)
+    console.log("GridView",JSON.stringify(gridData))
     
 /*    useEffect(()=> {
         if (categories[subCatIndex).name {
@@ -28,9 +28,9 @@ function GridView({data,
     */
     return (
         <div className={`rr`}>
-            <p className={`font-bold uppercase mb-6`}>{data.length} {categories[subCatIndex].name}</p>
+            <p className={`font-bold uppercase mb-6`}>{gridData.total} {categories[subCatIndex].name}</p>
             <div className={`grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-4`}>
-                {data.map((elt, index) => {
+                {gridData.table.map((elt, index) => {
                     return (
                         <Card subCatIndex={subCatIndex} subCatName={categories[subCatIndex].name}
                               key={elt.resourceURI.substring(elt.resourceURI.lastIndexOf("/")+1)}
@@ -39,7 +39,7 @@ function GridView({data,
                                    name={elt.name || elt.title || elt.fullName}
                                    setMarvelId={setMarvelId}
                                    setItemCatName={setItemCatName} setCatIndex={setCatIndex}
-                                   latency={100 + index * 500}  //100+300
+                                   latency={10 + index * 200}  //100+300
                         />
                     )
                 })}

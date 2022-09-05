@@ -23,6 +23,7 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
     //const defaultView = <Overview data={searchResult} itemCat={itemCatName}/>
     //const [showView, setShowView] = useState(defaultView)
     
+    console.log("mainView", subCatIndex)
     
 /*    useEffect(() => {
         if (searchResult) {
@@ -66,10 +67,11 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
             //console.log(searchResult[categories[subCatIndex].name])
             //console.log(searchResult[categories[subCatIndex].name].items)
         }*/
-        return (!searchResult) ? null : searchResult[categories[subCatIndex].name]?.items
+        if (!searchResult || subCatIndex<0) {return null}
+        return {table: searchResult[categories[subCatIndex].name]?.items, total: searchResult[categories[subCatIndex].name]?.available}
     }, [searchResult, subCatIndex])
     
-    const alternative = <div className={`flex justify-between items-center`}>
+/*    const alternative = <div className={`flex justify-between items-center`}>
         <p>Please select an item</p>
         <div className={`animate-bounce md:animate-horiBounce`}>
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className={`rotate-90 md:rotate-0`}>
@@ -77,15 +79,25 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 12H4.75"/>
             </svg>
         </div>
-    </div>
+    </div>*/
     
     
     return (
         <div className={`flex flex-col flex-1 ${itemCatName ? 'ml-14' : null} md:ml-auto`}>
             <div id="showView" className="bg-dark rounded-xl p-4 z-0">
-                {!searchResult ? alternative :
-                    subCatIndex === 0 ? <Overview data={searchResult} itemCat={itemCatName}/> :
-                        <GridView data={gridData}
+                {!searchResult ?
+                    <div className={`flex justify-between items-center`}>
+                        <p>Please select an item</p>
+                        <div className={`animate-bounce md:animate-horiBounce`}>
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className={`rotate-90 md:rotate-0`}>
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13.75 6.75L19.25 12L13.75 17.25"/>
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 12H4.75"/>
+                            </svg>
+                        </div>
+                    </div>
+                    :
+                    subCatIndex === -1 ? <Overview data={searchResult} itemCat={itemCatName}/> :
+                        <GridView gridData={gridData}
                                   subCatIndex={subCatIndex}
                                   setItemCatName={setItemCatName}
                                   setMarvelId={setMarvelId}
