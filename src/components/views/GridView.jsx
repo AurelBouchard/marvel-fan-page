@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Card from "./Card";
 import {categories} from "../../models/categories";
 
@@ -8,24 +8,10 @@ function GridView({gridData,
                                      setMarvelId,
                                      subCatIndex}) {
     
-    //const [categories[subCatIndex,.name setSubCatName] = useState(categories[subCatIndex].name)
-    //const [listOfCard, setListOfCard] = useState(data[categories[subCatIndex].name]?.items)
     
-    //console.log("GridView",data[categories[subCatIndex].name]?.items)
     console.log("GridView",JSON.stringify(gridData))
     
-/*    useEffect(()=> {
-        if (categories[subCatIndex).name {
-            setListOfCard(data[categories[subCatIndex].name?.items)
-        }
-    }, [categories[subCatIndex].name)*/
     
-/*    useEffect(()=>{
-        setListOfCard(null)
-        //setSubCatName(categories[subCatIndex].name)
-    }, [subCatIndex])
-    
-    */
     return (
         <div className={`rr`}>
             <p className={`font-bold uppercase mb-6`}>{gridData.total} {categories[subCatIndex].name}</p>

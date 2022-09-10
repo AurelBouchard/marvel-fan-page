@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import ShowAll from "./ShowAll";
 import Rating from "./Rating";
 import Stats from "./Stats";
+import useAppParam from "../hooks/useAppParam";
 
 /**
  * Show a list of all items of current category.
@@ -17,10 +18,13 @@ import Stats from "./Stats";
  * @returns {JSX.Element}
  * @constructor
  */
-function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, itemCatName, setMarvelId, //setItemCat,
-                                     dico, setDico, catIndex, listSize, setItemCatName}) {
+function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, //catName,
+                          itemCatName, setMarvelId, //setItemCat,
+                                     dico, setDico, catIndex, setItemCatName}) {
     //let data= "available soon"
-    console.log("related", catIndex)
+    console.log("LinksAndMore", catIndex)
+    const [appParam, setAppParam] = useAppParam("LinksAndMore")
+    const catName = appParam.categories[catIndex || 0].name;
     
     const width = catName==="stories" ? 'md:w-6/12 w-auto' : 'md:w-3/12 w-auto';
     
@@ -32,12 +36,13 @@ function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, catName, itemC
                 <Stats data={data} />
             </div>*/}
             
-            <ShowAll catName={catName} listOfAllItems={listOfAllItems}
+            <ShowAll //catName={catName}
+                     listOfAllItems={listOfAllItems}
                      setMarvelId={setMarvelId} //setItemCat={setItemCat}
                      setItemCatName={setItemCatName}
                      setPageOffset={setPageOffset} pageOffset={pageOffset}
                      //dico={dico} setDico={setDico}
-                     catIndex={catIndex} listSize={listSize}
+                     catIndex={catIndex}
             />
             
             

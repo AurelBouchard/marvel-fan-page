@@ -1,19 +1,31 @@
 import React, {useState} from 'react';
-import SearchModal from "./SearchModal";
-import MainCatSelector from "./MainCatSelector";
 import axios from "axios";
 import {api} from "../credentials";
 
+// contexts
+import useAppParam from "../hooks/useAppParam";
 
-function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId, dico, setItemCatName}) {
+// components
+import SearchModal from "./SearchModal";
+import MainCatSelector from "./MainCatSelector";
+
+
+
+function Header({catIndex, setCatIndex, availableItems,
+                    setMarvelId, dico, setItemCatName}) {
+    console.log("header 1")
+    
+    const [appParam, setAppParam] = useAppParam("header")
+    const catName = appParam.categories[catIndex || 0].name;
+    
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
     //const [matches, setMatches] = useState([])
     const [errorMessage, setErrorMessage] = useState(null)
     
-    const catName = categories[catIndex || 0].name;
     
-    console.log("header")
+    
+    console.log("header 2")
     
     function closeSearchModal(e) {
         e.preventDefault()
@@ -63,7 +75,7 @@ function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId,
         else {
             let nameOrTitle = catIndex === (1 || 5) ? "title" : "name"; // only comics and stories endpoint uses titleStartsWith
             
-            axios.get(`${api.url}${categories[catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
+            axios.get(`${api.url}${appParam.categories[catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
                 .then( response => {
                     //console.log("searchResult => ",response.data?.data?.results[0])
                     if (response.data?.data?.results[0]?.id) {
@@ -74,7 +86,7 @@ function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId,
                     }
                 })
                 .then(()=> {
-                    setItemCatName(categories[catIndex||0].name)
+                    setItemCatName(appParam.categories[catIndex||0].name)
                 })
                 .catch(function(err) {
                     console.log(err)
@@ -124,7 +136,6 @@ function Header({catIndex, setCatIndex, categories, availableItems, setMarvelId,
                 ${searching ? "sm:flex-1 sm:-translate-x-44 md:-translate-x-52 sm:-mr-44" : "sm:translate-0"} duration-300`}>
                     
                     <MainCatSelector
-                        categories={categories}
                         catIndex={catIndex} setCatIndex={setCatIndex}
                         expandable={!searching}
                     />

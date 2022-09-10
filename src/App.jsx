@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {createContext, useEffect, useState} from 'react'
 import './App.css'
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
@@ -10,7 +10,20 @@ import {categories} from "./models/categories";
 import axios from "axios";
 import {api} from "./credentials";
 
+export const appParams = {
+    categories: categories,
+    listSize: 20
+}
 
+export const AppParam = createContext(appParams)
+
+// fucking don't work
+/*function AppParamProvider() {
+    const [params, setter] = useState(appParams)
+    const value = [params, setter]
+    
+    return <AppParam.Provider value={value} />
+}*/
 
 
 function App() {
@@ -25,9 +38,10 @@ function App() {
     //const [NVAM, setNVAM] = useState(false)     // boolean
     //const [dico, setDico] = useState(null)      // [[{object}...{}]...[]]
     
-    const listSize = 20;
+    //const listSize = 20; // now in context
     
     console.log("apéro !")
+    
     
 
     
@@ -86,21 +100,23 @@ function App() {
         }
     },[marvelId])
     
-    
+    // would be managed by AppParamProvider()
+    const [params, setParams] = useState(appParams)
+    const paramValue = [params, setParams]
+
     
     return (
         <div id="wholePage" className="text-grey animate-appear text-left">
-            <Header categories={categories}
-                    catIndex={catIndex || 0} setCatIndex={setCatIndex}
-                    //dico={dico}
-                    setMarvelId={setMarvelId}
-                    setItemCatName={setItemCatName}
-            />
-        
+            <AppParam.Provider value={paramValue}>
+                <Header catIndex={catIndex || 0} setCatIndex={setCatIndex}
+                        //dico={dico}
+                        setMarvelId={setMarvelId}
+                        setItemCatName={setItemCatName}
+                />
+                
             <main className="flex w-full relative">
             
-                <SideBar categories={categories}
-                         subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
+                <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
                          itemCatName={itemCatName}
                          searchResult={searchResult}
                 />
@@ -115,18 +131,19 @@ function App() {
                     />
                     <LinksAndMore setPageOffset={setPageOffset}
                                   pageOffset={pageOffset}
-                                  catName={categories[catIndex || 0].name}
+                                  //catName={categories[catIndex || 0].name}
                                   setMarvelId={setMarvelId}
                                   setItemCatName={setItemCatName}
                                   //dico={dico} setDico={setDico}
-                                  catIndex={catIndex} listSize={listSize} itemCatName={itemCatName}
+                                  catIndex={catIndex} itemCatName={itemCatName}
                                   listOfAllItems={catResult}
                     />
                 </MainContainer>
         
             </main>
         
-            <Footer/>
+                <Footer/>
+            </AppParam.Provider>
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import useAppParam from "../hooks/useAppParam";
 
 
 /**
@@ -7,11 +8,12 @@ import React, {useEffect, useState} from 'react';
  * @param subCatIndex
  * @param setSubCatIndex
  * @param categories
- * @param category
  * @returns {JSX.Element}
  * @constructor
  */
-function SideBar({subCatIndex, setSubCatIndex, categories, itemCatName, searchResult}) {
+function SideBar({subCatIndex, setSubCatIndex, itemCatName, searchResult}) {
+    const [appParam, setAppParam] = useAppParam("SideBar")
+    
     const [visible, setVisible] = useState(false)
     const [collapsed, setCollapsed] = useState(true)
     const [hovered, setHovered] = useState(false)
@@ -104,7 +106,7 @@ function SideBar({subCatIndex, setSubCatIndex, categories, itemCatName, searchRe
                     <p className={`transition-opacity duration-150 ${collapsed ? "opacity-0" : "delay-100 opacity-100"}`}>Overview</p>
                 </a>
                 
-                {categories.map((cat, index) => {
+                {appParam.categories.map((cat, index) => {
                     /* if (itemCat === cat.name) {return null}
                      if ((itemCat === "characters" && cat.name === "creators") ||
                          (itemCat === "comics" && cat.name === "series") ||

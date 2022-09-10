@@ -1,17 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import Loading from "./Loading";
+import useAppParam from "../hooks/useAppParam";
 
 function ShowAll({
-                                    catName,
+                                    //catName,
                                     listOfAllItems, // delete
                                     pageOffset,
                                     setPageOffset,
                                     setMarvelId, setItemCatName,
                                     //dico, setDico,
-                                    catIndex, listSize
+                                    catIndex
                                 }) {
     
     //const [catResult, setCatResult] = useState([])
+    const [appParam, setAppParam] = useAppParam("ShowAll")
+    const catName = appParam.categories[catIndex || 0].name;
+    const listSize = appParam.listSize
+    
     const [list, setList] = useState(nullArray(listSize))
     const [dicoCatSize, setDicoCatSize] = useState(0)
     

@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import Overview from "./views/Overview";
 import GridView from "./views/GridView";
-import {categories} from "../models/categories";
+import useAppParam from "../hooks/useAppParam";
 /*import Comics from "./views/Comics";
 import Characters from "./views/Characters";
 import Creators from "./views/Creators";
@@ -22,6 +22,9 @@ import Stories from "./views/Stories";*/
 export default function MainView({searchResult, subCatIndex, itemCatName, setCatIndex, setMarvelId, setItemCatName}) {
     //const defaultView = <Overview data={searchResult} itemCat={itemCatName}/>
     //const [showView, setShowView] = useState(defaultView)
+    const [appParam, setAppParam] = useAppParam("MainView")
+    console.log(searchResult, subCatIndex, itemCatName, setCatIndex, setMarvelId, setItemCatName)
+    const subCatName = appParam.categories[Math.max(subCatIndex,0)].name;
     
     console.log("mainView", subCatIndex)
     
@@ -68,7 +71,7 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
             //console.log(searchResult[categories[subCatIndex].name].items)
         }*/
         if (!searchResult || subCatIndex<0) {return null}
-        return {table: searchResult[categories[subCatIndex].name]?.items, total: searchResult[categories[subCatIndex].name]?.available}
+        return {table: searchResult[subCatName]?.items, total: searchResult[subCatName]?.available}
     }, [searchResult, subCatIndex])
     
 /*    const alternative = <div className={`flex justify-between items-center`}>

@@ -1,9 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {AppParam} from "../App";
 
 
 
-export default function MainCatSelector({catIndex, setCatIndex, categories, expandable}) {
+export default function MainCatSelector({catIndex, setCatIndex, expandable}) {
     const [collapsed, setCollapsed] = useState(true)
+    
+    const [appParam, setAppParam] = useContext(AppParam)
     
     
     function toggleCollapse() {
@@ -21,7 +24,7 @@ export default function MainCatSelector({catIndex, setCatIndex, categories, expa
                  h-12 px-2 outline-none cursor-pointer text-grey-alt`}>
                 <div className={`flex items-center justify-between w-10 `}>
                     <div>
-                        {categories[catIndex].logo}
+                        {appParam.categories[catIndex].logo}
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="8.686" height="14.785" viewBox="0 0 8.686 14.785">
                         <g transform="rotate(90 4.343 7.38)">
@@ -35,7 +38,7 @@ export default function MainCatSelector({catIndex, setCatIndex, categories, expa
             <div id="catSelector_DropDown"
                  className={`relative ${collapsed ? 'hidden' : 'block'} bg-dark-darkest text-grey-alt rounded-lg -mt-12 z-1000`}
                  onMouseLeave={() => {setCollapsed(true)}}>
-                {categories.map((cat, index) => {
+                {appParam.categories.map((cat, index) => {
                     return (
                         <div key={index} className={`h-8 flex items-center hover:bg-teal-light hover:text-dark-darkest px-3 cursor-pointer`}
                              onClick={()=>{
