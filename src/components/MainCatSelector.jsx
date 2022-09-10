@@ -1,18 +1,28 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {AppParam} from "../App";
+import React, {useState} from 'react';
+
+// contexts
+import useAppParam from "../hooks/useAppParam";
+import useItemContext from "../hooks/useItemContext";
 
 
 
-export default function MainCatSelector({catIndex, setCatIndex, expandable}) {
+export default function MainCatSelector({//catIndex, setCatIndex,
+                                            expandable}) {
+    //console.log("MainCatSelector")
+    
+    // USE CONTEXTS
+    const [appParam, setAppParam] = useAppParam("MainCatSelector")
+    const [item, setItem] = useItemContext("MainCatSelector")
+    
+    // INTERNAL STATES
     const [collapsed, setCollapsed] = useState(true)
-    
-    const [appParam, setAppParam] = useContext(AppParam)
-    
     
     function toggleCollapse() {
         if (expandable && collapsed) { setCollapsed(false) }
         else {setCollapsed(true)}
     }
+    
+    
     
     return (
         <div id="catSelector_Button"
@@ -24,7 +34,7 @@ export default function MainCatSelector({catIndex, setCatIndex, expandable}) {
                  h-12 px-2 outline-none cursor-pointer text-grey-alt`}>
                 <div className={`flex items-center justify-between w-10 `}>
                     <div>
-                        {appParam.categories[catIndex].logo}
+                        {appParam.categories[item.catIndex||0].logo}
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="8.686" height="14.785" viewBox="0 0 8.686 14.785">
                         <g transform="rotate(90 4.343 7.38)">
@@ -43,7 +53,8 @@ export default function MainCatSelector({catIndex, setCatIndex, expandable}) {
                         <div key={index} className={`h-8 flex items-center hover:bg-teal-light hover:text-dark-darkest px-3 cursor-pointer`}
                              onClick={()=>{
                                  console.log("mainCatSelector setCatIndex")
-                                 setCatIndex(index)
+                                 //setCatIndex(index)
+                                 setItem(item => ({item, ...{catIndex: index}}))
                              }}
                         >
                             {cat.logo}

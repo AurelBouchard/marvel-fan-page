@@ -1,8 +1,12 @@
-import React, {useEffect, useReducer, useState} from 'react';
-import noImgSrc from "../../assets/image_not_available.jpg"
+import React, {useEffect, useState} from 'react';
 import {api} from "../../credentials";
 import axios from "axios";
+
+// contexts
 import useItemContext from "../../hooks/useItemContext";
+
+// components
+import noImgSrc from "../../assets/image_not_available.jpg"
 
 
 /*
@@ -53,13 +57,15 @@ async function fetchMarvel(resource, param) {
 
 
 function Card({id, name, //setMarvelId,
-                  setCatIndex, setItemCatName,
+                  //setCatIndex,
+                  //setItemCatName,
                              subCatIndex, resource, subCatName, latency}) {
-    
-    const [item, setItem] = useItemContext("Card"+id.toString())
-    
     console.log("card render", id)
     
+    // USE CONTEXTS
+    const [item, setItem] = useItemContext("Card"+id.toString())
+    
+    // INTERNAL STATES
     const [freshData, setFreshData] = useState(null)
     const [allowFetching, setAllowFetching] = useState(false)
     const cardStyle = React.useMemo(()=> {
@@ -115,7 +121,6 @@ function Card({id, name, //setMarvelId,
     ] }, [])
     
     
-    
     useEffect(() => {
         setTimeout(() => { setAllowFetching(true) }, latency)
     }, [])
@@ -150,9 +155,9 @@ function Card({id, name, //setMarvelId,
         <div className={cardStyle[subCatIndex].main}
              onClick={() => {
                  //setMarvelId(id);
-                 setItem(item => ({item, ...{marvelId: id}}))
-                 if (setCatIndex) {setCatIndex(subCatIndex)} else {console.log("no setCatIndex !?")}
-                 if (setItemCatName) {setItemCatName(subCatName)} else {console.log("no setItemCatName !?")}
+                 setItem(item => ({item, ...{marvelId: id}, ...{catIndex: subCatIndex}}))
+                 //if (setCatIndex) {setCatIndex(subCatIndex)} else {console.log("no setCatIndex !?")}
+                 //if (setItemCatName) {setItemCatName(subCatName)} else {console.log("no setItemCatName !?")}
              }}
         >
             <div className={`flex border-b`}>

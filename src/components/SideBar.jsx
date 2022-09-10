@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
+
+// contexts
 import useAppParam from "../hooks/useAppParam";
+import useItemContext from "../hooks/useItemContext";
 
 
 /**
@@ -11,21 +14,29 @@ import useAppParam from "../hooks/useAppParam";
  * @returns {JSX.Element}
  * @constructor
  */
-function SideBar({subCatIndex, setSubCatIndex, itemCatName, searchResult}) {
-    const [appParam, setAppParam] = useAppParam("SideBar")
+function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
+                     searchResult
+}) {
+    //console.log("sidebar")
     
+    // USE CONTEXTS
+    const [appParam, setAppParam] = useAppParam("SideBar")
+    const [item, setItem] = useItemContext("SideBar")
+    // shortcuts
+    const itemCatName = appParam.categories[item.catIndex || 0].name;
+    
+    // INTERNAL STATES
     const [visible, setVisible] = useState(false)
     const [collapsed, setCollapsed] = useState(true)
     const [hovered, setHovered] = useState(false)
     
-    //console.log("sidebar")
     
     useEffect(()=> {
         if (!visible && itemCatName) {
             console.log("sidebar", itemCatName)
             setVisible(true)
         }
-    }, [itemCatName])
+    }, [item.catIndex])
     
     
     function toggleCollapse() {
@@ -105,6 +116,8 @@ function SideBar({subCatIndex, setSubCatIndex, itemCatName, searchResult}) {
                     </div>
                     <p className={`transition-opacity duration-150 ${collapsed ? "opacity-0" : "delay-100 opacity-100"}`}>Overview</p>
                 </a>
+    
+                {item.marvelId}
                 
                 {appParam.categories.map((cat, index) => {
                     /* if (itemCat === cat.name) {return null}

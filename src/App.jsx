@@ -45,10 +45,10 @@ function App() {
     const itemValue = [currentItem, setCurrentItem]
     
     // item context
-    const [catIndex, setCatIndex] = useState(0)         // in header {number}
+    //const [catIndex, setCatIndex] = useState(0)         // in header {number}
     const [searchResult, setSearchResult] = useState(null)  // {object}
-    const [marvelId, setMarvelId] = useState(null)      // {number}
-    const [itemCatName, setItemCatName] = useState(null)    // catName {string}
+    //const [marvelId, setMarvelId] = useState(null)      // {number}
+    //const [itemCatName, setItemCatName] = useState(null)    // catName {string}
     
     
     // view context
@@ -69,7 +69,7 @@ function App() {
     useEffect(() => {
         setPageOffset(0)
         setCatResult(null);
-    }, [catIndex])
+    }, [currentItem.catIndex])
     
     useEffect(()=> {
         setCatResult(null)
@@ -90,10 +90,10 @@ function App() {
             // purge old results
             //setCatResult(null)
     
-            //console.log("ask api : ",`${api.url}${categories[catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
+            //console.log("ask api : ",`${api.url}${categories[item.catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
     
             // renew results
-            axios.get(`${api.url}${categories[catIndex||0].name}${api.credentials}&offset=${pageOffset}`)
+            axios.get(`${api.url}${params.categories[currentItem.catIndex||0].name}${api.credentials}&offset=${pageOffset}`)
                 .then( response => {
                     console.log("catResult => ",response.data?.data?.results)
                     setCatResult(response.data?.data?.results)
@@ -106,9 +106,12 @@ function App() {
     
 
     useEffect(() => {
-        if (item.marvelId) {
+        if (currentItem.marvelId) {
             console.log("specific call with marvel ID")
-            axios.get(`${api.url}${categories[catIndex].name}/${item.marvelId}${api.credentials}`)
+            console.log(currentItem.item.catIndex)
+            console.log(currentItem.item)
+            console.log(params.categories)
+            axios.get(`${api.url}${params.categories[currentItem.item.catIndex].name}/${currentItem.item.marvelId}${api.credentials}`)
                 .then( response => {
                     console.log("searchResult => ",response.data?.data?.results[0])
                     setSearchResult(response.data?.data?.results[0])
@@ -119,44 +122,46 @@ function App() {
             window.scrollTo(0, 0);
             
         }
-    },[item.marvelId])
+    },[currentItem.marvelId])
 
     
     return (
         <div id="wholePage" className="text-grey animate-appear text-left">
             <AppParam.Provider value={paramValue}>
                 <ItemContext.Provider value={itemValue}>
-                    <Header catIndex={catIndex || 0} setCatIndex={setCatIndex}
+                    <Header //catIndex={catIndex || 0} => ItemContext
+                        // setCatIndex={setCatIndex} => ItemContext
                         //dico={dico}
                         //setMarvelId={setMarvelId} => ItemContext
-                            setItemCatName={setItemCatName}
+                            //setItemCatName={setItemCatName} => ItemContext
                     />
         
                     <main className="flex w-full relative">
             
                         <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
-                                 itemCatName={itemCatName}
+                                 //itemCatName={itemCatName} => ItemContext
                                  searchResult={searchResult}
                         />
             
                         <MainContainer>
                             <MainView searchResult={searchResult}
                                       subCatIndex={subCatIndex}
-                                      setCatIndex={setCatIndex}
+                                //setCatIndex={setCatIndex} => ItemContext
                                 //setMarvelId={setMarvelId} => ItemContext
-                                      itemCatName={itemCatName}
-                                      setItemCatName={setItemCatName}
+                                      //itemCatName={itemCatName} => ItemContext
+                                      //setItemCatName={setItemCatName} => ItemContext
                 
                             />
-{/*                            <LinksAndMore setPageOffset={setPageOffset}
+                            <LinksAndMore setPageOffset={setPageOffset}
                                           pageOffset={pageOffset}
                                 //setMarvelId={setMarvelId} => ItemContext
-                                          setItemCatName={setItemCatName}
+                                          //setItemCatName={setItemCatName} => ItemContext
                                 //dico={dico} setDico={setDico}
-                                          catIndex={catIndex} itemCatName={itemCatName}
+                                // catIndex={catIndex} => ItemContext
+                                          //itemCatName={itemCatName} => ItemContext
                                           listOfAllItems={catResult}
                 
-                            />*/}
+                            />
                         </MainContainer>
         
                     </main>

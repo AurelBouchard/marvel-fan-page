@@ -1,13 +1,26 @@
-import React, {useState} from 'react';
-import Loading from "../Loading";
+import React from 'react';
+
+// contexts
+import useAppParam from "../../hooks/useAppParam";
 import useItemContext from "../../hooks/useItemContext";
 
-export default function Overview({data, itemCat}) {
+// components
+import Loading from "../Loading";
+
+
+
+export default function Overview({data, //itemCat
+}) {
+    
+    // USE CONTEXTS
+    const [appParam, setAppParam] = useAppParam("header")
     const [item, setItem] = useItemContext("Overview")
+    // shortcuts
+    const itemCatName = appParam.categories[item.catIndex || 0].name;
     
     
     function findLink(arr=[], type="wiki") {
-        let output = "https://www.marvel.com/"+itemCat;
+        let output = "https://www.marvel.com/"+itemCatName;
         
         arr.forEach((obj)=> {
             if (obj.type.toString() === type) {output = obj.url.toString()}

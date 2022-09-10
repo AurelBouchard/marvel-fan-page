@@ -1,13 +1,20 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
+
+// contexts
+import useAppParam from "../hooks/useAppParam";
+import useItemContext from "../hooks/useItemContext";
+
+// components
 import Overview from "./views/Overview";
 import GridView from "./views/GridView";
-import useAppParam from "../hooks/useAppParam";
 /*import Comics from "./views/Comics";
 import Characters from "./views/Characters";
 import Creators from "./views/Creators";
 import Events from "./views/Events";
 import Series from "./views/Series";
 import Stories from "./views/Stories";*/
+
+
 
 /**
  * Show main data of the selected item.
@@ -19,45 +26,20 @@ import Stories from "./views/Stories";*/
  * @returns {JSX.Element}
  * @constructor
  */
-export default function MainView({searchResult, subCatIndex, itemCatName, setCatIndex, setMarvelId, setItemCatName}) {
-    //const defaultView = <Overview data={searchResult} itemCat={itemCatName}/>
-    //const [showView, setShowView] = useState(defaultView)
+function MainView({searchResult, subCatIndex, //itemCatName,// setCatIndex, setMarvelId,
+                      //setItemCatName
+}) {
+    //console.log("MainView", subCatIndex)
+    
+    // USE CONTEXTS
     const [appParam, setAppParam] = useAppParam("MainView")
-    console.log(searchResult, subCatIndex, itemCatName, setCatIndex, setMarvelId, setItemCatName)
+    const [item, setItem] = useItemContext("MainView")
+    
+    // shortcuts
+    const itemCatName = appParam.categories[item.catIndex || 0].name;
     const subCatName = appParam.categories[Math.max(subCatIndex,0)].name;
     
-    console.log("mainView", subCatIndex)
-    
-/*    useEffect(() => {
-        if (searchResult) {
-            if (subCatIndex && searchResult) {
-                console.log("show",categories[subCatIndex].name, "of",searchResult.name)
-                setShowView(<GridView data={searchResult[categories[subCatIndex].name].items}
-                                      subCatIndex={subCatIndex}
-                                      setItemCatName={setItemCatName}
-                                      setMarvelId={setMarvelId}
-                                      setCatIndex={setCatIndex}/>)
-            } else {
-                setShowView(defaultView)
-            }
-        }
-    }, [subCatIndex])*/
-/*
-    useEffect(() => {
-        if (searchResult) {
-            if (subCatIndex) {
-                console.log("show",categories[subCatIndex].name, "of",searchResult.name)
-                setShowView(<GridView data={searchResult}
-                                      subCatIndex={subCatIndex}
-                                      setItemCatName={setItemCatName}
-                                      setMarvelId={setMarvelId}
-                                      setCatIndex={setCatIndex}/>)
-            } else {
-                setShowView(defaultView)
-            }
-        }
-    }, [searchResult])
-    */
+
     
     const gridData = useMemo(()=> {
 /*        console.log(subCatIndex)
@@ -74,15 +56,6 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
         return {table: searchResult[subCatName]?.items, total: searchResult[subCatName]?.available}
     }, [searchResult, subCatIndex])
     
-/*    const alternative = <div className={`flex justify-between items-center`}>
-        <p>Please select an item</p>
-        <div className={`animate-bounce md:animate-horiBounce`}>
-            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className={`rotate-90 md:rotate-0`}>
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13.75 6.75L19.25 12L13.75 17.25"/>
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 12H4.75"/>
-            </svg>
-        </div>
-    </div>*/
     
     
     return (
@@ -103,8 +76,9 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
                         <GridView gridData={gridData}
                                   subCatIndex={subCatIndex}
                                   setItemCatName={setItemCatName}
-                                  setMarvelId={setMarvelId}
-                                  setCatIndex={setCatIndex}/>
+                                  //setMarvelId={setMarvelId}
+                                  //setCatIndex={setCatIndex}
+                        />
                 }
             </div>
             <div className={`hidden md:block md:flex-1`}/>
@@ -112,4 +86,4 @@ export default function MainView({searchResult, subCatIndex, itemCatName, setCat
     )
 }
 
-//export default React.memo(MainView)
+export default React.memo(MainView)

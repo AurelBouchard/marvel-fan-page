@@ -1,8 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+
+// contexts
+import useAppParam from "../hooks/useAppParam";
+import useItemContext from "../hooks/useItemContext";
+
+// components
 import ShowAll from "./ShowAll";
 import Rating from "./Rating";
 import Stats from "./Stats";
-import useAppParam from "../hooks/useAppParam";
+
+
 
 /**
  * Show a list of all items of current category.
@@ -12,24 +19,28 @@ import useAppParam from "../hooks/useAppParam";
  * @param setPageOffset
  * @param pageOffset
  * @param searchResult
- * @param category
- * @param setMarvelId
- * @param setItemCat
  * @returns {JSX.Element}
  * @constructor
  */
 function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, //catName,
-                          itemCatName, setMarvelId, //setItemCat,
-                                     dico, setDico, catIndex, setItemCatName}) {
-    //let data= "available soon"
-    console.log("LinksAndMore", catIndex)
-    const [appParam, setAppParam] = useAppParam("LinksAndMore")
-    const catName = appParam.categories[catIndex || 0].name;
+                          //itemCatName, //setMarvelId, //setItemCat,
+                                     dico, setDico, //catIndex,
+                          setItemCatName}) {
+    //console.log("LinksAndMore")
     
+    // USE CONTEXTS
+    const [appParam, setAppParam] = useAppParam("LinksAndMore")
+    const [item, setItem] = useItemContext("LinksAndMore")
+    // shortcuts
+    const catName = appParam.categories[item.catIndex || 0].name;
+    
+    // style
     const width = catName==="stories" ? 'md:w-6/12 w-auto' : 'md:w-3/12 w-auto';
     
+    
+    
     return (
-        <div className={`flex flex-col ${width} shrink-0 ${itemCatName ? 'ml-14' : null} md:ml-0 flex-1 md:flex-none`}>
+        <div className={`flex flex-col ${width} shrink-0 ${catName ? 'ml-14' : null} md:ml-0 flex-1 md:flex-none`}>
             
             {/*<div className={`transition-all duration-300 ${searchResult ? "opacity-100 h-auto mb-6" : "opacity-0 h-0 mb-0" } space-y-6`}>
                 <Rating data={data} />
@@ -38,11 +49,12 @@ function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, //catName,
             
             <ShowAll //catName={catName}
                      listOfAllItems={listOfAllItems}
-                     setMarvelId={setMarvelId} //setItemCat={setItemCat}
-                     setItemCatName={setItemCatName}
+                //setMarvelId={setMarvelId}
+                // setItemCat={setItemCat}
+                     //setItemCatName={setItemCatName}
                      setPageOffset={setPageOffset} pageOffset={pageOffset}
                      //dico={dico} setDico={setDico}
-                     catIndex={catIndex}
+                     //catIndex={catIndex}
             />
             
             

@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import Loading from "./Loading";
+
+// contexts
 import useAppParam from "../hooks/useAppParam";
 import useItemContext from "../hooks/useItemContext";
+
+// components
+import Loading from "./Loading";
+
+
 
 function ShowAll({
                                     //catName,
@@ -9,20 +15,22 @@ function ShowAll({
                                     pageOffset,
                                     setPageOffset,
                                     //setMarvelId,
-                     setItemCatName, // <===========================try to remove this one
+                     //setItemCatName, // <===========================try to remove this one
                                     //dico, setDico,
                                     catIndex
                                 }) {
+    //console.log("ShowAll", listOfAllItems)
     
-    //const [catResult, setCatResult] = useState([])
+    // USE CONTEXTS
     const [appParam, setAppParam] = useAppParam("ShowAll")
-    const catName = appParam.categories[catIndex || 0].name;
+    const [item, setItem] = useItemContext("ShowAll")
+    // shortcuts
+    const catName = appParam.categories[item.catIndex || 0].name;
     const listSize = appParam.listSize
     
-    const [item, setItem] = useItemContext("ShowAll")
-    
+    // INTERNAL STATES
     const [list, setList] = useState(nullArray(listSize))
-    const [dicoCatSize, setDicoCatSize] = useState(0)
+    //const [dicoCatSize, setDicoCatSize] = useState(0)
     
     function nullArray(n) { return new Array(n) }
     
@@ -33,12 +41,11 @@ function ShowAll({
             setList(listOfAllItems)}
     }, [listOfAllItems])
     
+    // go on top of list if item changes
     useEffect(() => {
         setPageOffset(0)
-    }, [catIndex])
+    }, [item])
     
-    
-    console.log("show all : ", listOfAllItems)
     
     
     return (
@@ -58,10 +65,10 @@ function ShowAll({
                             console.log("select an item in show all")
                             //setMarvelId(elt.id);
                             setItem(item => ({item, ...{marvelId: elt.id}}))
-                            setItemCatName(catName);
+                            //setItemCatName(catName);
                         }}
                     >
-                        {elt.name || elt.title || elt.fullName}
+                        {elt.id ||elt.name || elt.title || elt.fullName}
                     </p>
                 )
             })}

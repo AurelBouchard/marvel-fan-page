@@ -12,24 +12,24 @@ import useItemContext from "../hooks/useItemContext";
 
 
 
-function Header({catIndex, setCatIndex, availableItems,
-                    //setMarvelId, dico,
+function Header({//catIndex, setCatIndex,
+                    availableItems, dico,
+                    //setMarvelId
                     setItemCatName}) {
-    console.log("header 1")
+    //console.log("Header")
     
+    // USE CONTEXTS
     const [appParam, setAppParam] = useAppParam("header")
-    const catName = appParam.categories[catIndex || 0].name;
-    
     const [item, setItem] = useItemContext("Header")
+    const itemCatName = appParam.categories[item.catIndex || 0].name;
     
+    // INTERNAL STATES
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
     //const [matches, setMatches] = useState([])
     const [errorMessage, setErrorMessage] = useState(null)
     
     
-    
-    console.log("header 2")
     
     function closeSearchModal(e) {
         e.preventDefault()
@@ -69,7 +69,7 @@ function Header({catIndex, setCatIndex, availableItems,
         console.log("input submit", name)
         
         
-        //let itemInDico = dico[catIndex].filter(item => item.name.toLowerCase() === name.toLowerCase())
+        //let itemInDico = dico[item.catIndex].filter(item => item.name.toLowerCase() === name.toLowerCase())
         const itemInDico = [false]
         
         if (itemInDico[0]) {
@@ -77,9 +77,9 @@ function Header({catIndex, setCatIndex, availableItems,
             //setSearching(false)
         }
         else {
-            let nameOrTitle = catIndex === (1 || 5) ? "title" : "name"; // only comics and stories endpoint uses titleStartsWith
+            let nameOrTitle = item.catIndex === (1 || 5) ? "title" : "name"; // only comics and stories endpoint uses titleStartsWith
             
-            axios.get(`${api.url}${appParam.categories[catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
+            axios.get(`${api.url}${appParam.categories[item.catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
                 .then( response => {
                     //console.log("searchResult => ",response.data?.data?.results[0])
                     if (response.data?.data?.results[0]?.id) {
@@ -91,7 +91,7 @@ function Header({catIndex, setCatIndex, availableItems,
                     }
                 })
                 .then(()=> {
-                    setItemCatName(appParam.categories[catIndex||0].name)
+                    setItemCatName(appParam.categories[item.catIndex||0].name)
                 })
                 .catch(function(err) {
                     console.log(err)
@@ -141,7 +141,7 @@ function Header({catIndex, setCatIndex, availableItems,
                 ${searching ? "sm:flex-1 sm:-translate-x-44 md:-translate-x-52 sm:-mr-44" : "sm:translate-0"} duration-300`}>
                     
                     <MainCatSelector
-                        catIndex={catIndex} setCatIndex={setCatIndex}
+                        //catIndex={catIndex} setCatIndex={setCatIndex}
                         expandable={!searching}
                     />
                     
@@ -153,7 +153,7 @@ function Header({catIndex, setCatIndex, availableItems,
                            w-full origin-left basis-auto ${searching ? "placeholder:text-grey-darker mir-2" : "placeholder:text-grey-dark -kmr-16"}
                            px-2 caret-teal sm:mr-auto
                            outline-none`}
-                               placeholder={`Search for any Marvel ${catName}`}
+                               placeholder={`Search for any Marvel ${itemCatName}`}
                                onChange={(e) => {
                                    e.preventDefault()
                                    handleInputChange(e.target.value)
@@ -189,7 +189,8 @@ function Header({catIndex, setCatIndex, availableItems,
                 </div>
             
             </div>
-            { !searching ? null : <SearchModal catName={catName} catIndex={catIndex} onClick={closeSearchModal}
+            { !searching ? null : <SearchModal catName={itemCatName} //catIndex={catIndex}
+                                               onClick={closeSearchModal}
                                                //matches={matches}
                                                errorMessage={errorMessage}
             /> }
