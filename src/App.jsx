@@ -10,7 +10,8 @@ import {categories} from "./models/categories";
 import axios from "axios";
 import {api} from "./credentials";
 
-export const appParams = {
+// default parameters
+export let appParams = {
     categories: categories,
     listSize: 20
 }
@@ -25,15 +26,35 @@ export const AppParam = createContext(appParams)
     return <AppParam.Provider value={value} />
 }*/
 
+// default item
+export let item = {
+    marvelId: null,
+    catIndex: 0,
+    data: null
+}
+
+export const ItemContext = createContext(null)
+
 
 function App() {
+    
+    // would be managed by 'contextProvider()'
+    const [params, setParams] = useState(appParams)
+    const paramValue = [params, setParams]
+    const [currentItem, setCurrentItem] = useState(item)
+    const itemValue = [currentItem, setCurrentItem]
+    
+    // item context
     const [catIndex, setCatIndex] = useState(0)         // in header {number}
-    const [subCatIndex, setSubCatIndex] = useState(-1)   // in sidebar {number}
     const [searchResult, setSearchResult] = useState(null)  // {object}
-    const [catResult, setCatResult] = useState()
-    const [pageOffset, setPageOffset] = useState(0)     // {number}
     const [marvelId, setMarvelId] = useState(null)      // {number}
     const [itemCatName, setItemCatName] = useState(null)    // catName {string}
+    
+    
+    // view context
+    const [subCatIndex, setSubCatIndex] = useState(-1)   // in sidebar {number}
+    const [catResult, setCatResult] = useState()
+    const [pageOffset, setPageOffset] = useState(0)     // {number}
     
     //const [NVAM, setNVAM] = useState(false)     // boolean
     //const [dico, setDico] = useState(null)      // [[{object}...{}]...[]]
@@ -85,9 +106,9 @@ function App() {
     
 
     useEffect(() => {
-        if (marvelId) {
+        if (item.marvelId) {
             console.log("specific call with marvel ID")
-            axios.get(`${api.url}${categories[catIndex].name}/${marvelId}${api.credentials}`)
+            axios.get(`${api.url}${categories[catIndex].name}/${item.marvelId}${api.credentials}`)
                 .then( response => {
                     console.log("searchResult => ",response.data?.data?.results[0])
                     setSearchResult(response.data?.data?.results[0])
@@ -98,49 +119,48 @@ function App() {
             window.scrollTo(0, 0);
             
         }
-    },[marvelId])
-    
-    // would be managed by AppParamProvider()
-    const [params, setParams] = useState(appParams)
-    const paramValue = [params, setParams]
+    },[item.marvelId])
 
     
     return (
         <div id="wholePage" className="text-grey animate-appear text-left">
             <AppParam.Provider value={paramValue}>
-                <Header catIndex={catIndex || 0} setCatIndex={setCatIndex}
+                <ItemContext.Provider value={itemValue}>
+                    <Header catIndex={catIndex || 0} setCatIndex={setCatIndex}
                         //dico={dico}
-                        setMarvelId={setMarvelId}
-                        setItemCatName={setItemCatName}
-                />
-                
-            <main className="flex w-full relative">
-            
-                <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
-                         itemCatName={itemCatName}
-                         searchResult={searchResult}
-                />
-            
-                <MainContainer>
-                    <MainView searchResult={searchResult}
-                              subCatIndex={subCatIndex}
-                              setCatIndex={setCatIndex}
-                              setMarvelId={setMarvelId}
-                              itemCatName={itemCatName}
-                              setItemCatName={setItemCatName}
+                        //setMarvelId={setMarvelId} => ItemContext
+                            setItemCatName={setItemCatName}
                     />
-                    <LinksAndMore setPageOffset={setPageOffset}
-                                  pageOffset={pageOffset}
-                                  //catName={categories[catIndex || 0].name}
-                                  setMarvelId={setMarvelId}
-                                  setItemCatName={setItemCatName}
-                                  //dico={dico} setDico={setDico}
-                                  catIndex={catIndex} itemCatName={itemCatName}
-                                  listOfAllItems={catResult}
-                    />
-                </MainContainer>
         
-            </main>
+                    <main className="flex w-full relative">
+            
+                        <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
+                                 itemCatName={itemCatName}
+                                 searchResult={searchResult}
+                        />
+            
+                        <MainContainer>
+                            <MainView searchResult={searchResult}
+                                      subCatIndex={subCatIndex}
+                                      setCatIndex={setCatIndex}
+                                //setMarvelId={setMarvelId} => ItemContext
+                                      itemCatName={itemCatName}
+                                      setItemCatName={setItemCatName}
+                
+                            />
+{/*                            <LinksAndMore setPageOffset={setPageOffset}
+                                          pageOffset={pageOffset}
+                                //setMarvelId={setMarvelId} => ItemContext
+                                          setItemCatName={setItemCatName}
+                                //dico={dico} setDico={setDico}
+                                          catIndex={catIndex} itemCatName={itemCatName}
+                                          listOfAllItems={catResult}
+                
+                            />*/}
+                        </MainContainer>
+        
+                    </main>
+                </ItemContext.Provider>
         
                 <Footer/>
             </AppParam.Provider>

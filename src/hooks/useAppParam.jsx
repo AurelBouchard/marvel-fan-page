@@ -6,12 +6,12 @@ import isIterable from "../utils/isIterable";
 
 export default function useAppParam(callerName) {
     //console.log("useParam by", callerName || 'any')
-    const param = useContext(AppParam)
+    const context = useContext(AppParam)
     
-    if (!isIterable(param)) {
-        console.log("composant hors du AppParamProvider")
+    if (!isIterable(context)) {
+        console.log("component is out of AppParamProvider")
         return fallback
     }
     
-    return param
+    return context
 }

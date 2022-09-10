@@ -2,6 +2,7 @@ import React, {useEffect, useReducer, useState} from 'react';
 import noImgSrc from "../../assets/image_not_available.jpg"
 import {api} from "../../credentials";
 import axios from "axios";
+import useItemContext from "../../hooks/useItemContext";
 
 
 /*
@@ -51,8 +52,11 @@ async function fetchMarvel(resource, param) {
 }*/
 
 
-function Card({id, name, setMarvelId, setCatIndex, setItemCatName,
+function Card({id, name, //setMarvelId,
+                  setCatIndex, setItemCatName,
                              subCatIndex, resource, subCatName, latency}) {
+    
+    const [item, setItem] = useItemContext("Card"+id.toString())
     
     console.log("card render", id)
     
@@ -145,7 +149,8 @@ function Card({id, name, setMarvelId, setCatIndex, setItemCatName,
     return (
         <div className={cardStyle[subCatIndex].main}
              onClick={() => {
-                 setMarvelId(id);
+                 //setMarvelId(id);
+                 setItem(item => ({item, ...{marvelId: id}}))
                  if (setCatIndex) {setCatIndex(subCatIndex)} else {console.log("no setCatIndex !?")}
                  if (setItemCatName) {setItemCatName(subCatName)} else {console.log("no setItemCatName !?")}
              }}

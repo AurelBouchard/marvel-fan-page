@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import Loading from "../Loading";
+import useItemContext from "../../hooks/useItemContext";
 
 export default function Overview({data, itemCat}) {
+    const [item, setItem] = useItemContext("Overview")
     
     
     function findLink(arr=[], type="wiki") {

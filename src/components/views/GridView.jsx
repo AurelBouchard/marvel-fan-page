@@ -1,12 +1,15 @@
 import React from 'react';
 import Card from "./Card";
 import {categories} from "../../models/categories";
+import useItemContext from "../../hooks/useItemContext";
 
 function GridView({gridData,
                                      setItemCatName,
                                      setCatIndex,
-                                     setMarvelId,
+                                     //setMarvelId,
                                      subCatIndex}) {
+    
+    const [item, setItem] = useItemContext("GridView")
     
     
     console.log("GridView",JSON.stringify(gridData))
@@ -23,7 +26,7 @@ function GridView({gridData,
                               id={elt.resourceURI.substring(elt.resourceURI.lastIndexOf("/")+1)}
                                    resource={elt.resourceURI}
                                    name={elt.name || elt.title || elt.fullName}
-                                   setMarvelId={setMarvelId}
+                                   //setMarvelId={setMarvelId}
                                    setItemCatName={setItemCatName} setCatIndex={setCatIndex}
                                    latency={10 + index * 200}  //100+300
                         />

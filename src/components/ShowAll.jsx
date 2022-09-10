@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import Loading from "./Loading";
 import useAppParam from "../hooks/useAppParam";
+import useItemContext from "../hooks/useItemContext";
 
 function ShowAll({
                                     //catName,
                                     listOfAllItems, // delete
                                     pageOffset,
                                     setPageOffset,
-                                    setMarvelId, setItemCatName,
+                                    //setMarvelId,
+                     setItemCatName, // <===========================try to remove this one
                                     //dico, setDico,
                                     catIndex
                                 }) {
@@ -16,6 +18,8 @@ function ShowAll({
     const [appParam, setAppParam] = useAppParam("ShowAll")
     const catName = appParam.categories[catIndex || 0].name;
     const listSize = appParam.listSize
+    
+    const [item, setItem] = useItemContext("ShowAll")
     
     const [list, setList] = useState(nullArray(listSize))
     const [dicoCatSize, setDicoCatSize] = useState(0)
@@ -52,7 +56,8 @@ function ShowAll({
                 `}
                         onClick={() => {
                             console.log("select an item in show all")
-                            setMarvelId(elt.id);
+                            //setMarvelId(elt.id);
+                            setItem(item => ({item, ...{marvelId: elt.id}}))
                             setItemCatName(catName);
                         }}
                     >

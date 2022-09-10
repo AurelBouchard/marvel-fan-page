@@ -8,15 +8,19 @@ import useAppParam from "../hooks/useAppParam";
 // components
 import SearchModal from "./SearchModal";
 import MainCatSelector from "./MainCatSelector";
+import useItemContext from "../hooks/useItemContext";
 
 
 
 function Header({catIndex, setCatIndex, availableItems,
-                    setMarvelId, dico, setItemCatName}) {
+                    //setMarvelId, dico,
+                    setItemCatName}) {
     console.log("header 1")
     
     const [appParam, setAppParam] = useAppParam("header")
     const catName = appParam.categories[catIndex || 0].name;
+    
+    const [item, setItem] = useItemContext("Header")
     
     const [searching, setSearching] = useState(false)
     const [showLens, setShowLens] = useState(true)
@@ -69,8 +73,8 @@ function Header({catIndex, setCatIndex, availableItems,
         const itemInDico = [false]
         
         if (itemInDico[0]) {
-            setMarvelId(itemInDico[0].id)
-            setSearching(false)
+            //setMarvelId(itemInDico[0].id)
+            //setSearching(false)
         }
         else {
             let nameOrTitle = catIndex === (1 || 5) ? "title" : "name"; // only comics and stories endpoint uses titleStartsWith
@@ -79,7 +83,8 @@ function Header({catIndex, setCatIndex, availableItems,
                 .then( response => {
                     //console.log("searchResult => ",response.data?.data?.results[0])
                     if (response.data?.data?.results[0]?.id) {
-                        setMarvelId(response.data?.data?.results[0].id)
+                        const newId = {marvelId: response.data?.data?.results[0].id}
+                        setItem(item => ({item, ...newId}) )
                         setSearching(false)
                     } else {
                         throw {response:"or are you miserably confusing with DC comics ?"}
@@ -186,7 +191,8 @@ function Header({catIndex, setCatIndex, availableItems,
             </div>
             { !searching ? null : <SearchModal catName={catName} catIndex={catIndex} onClick={closeSearchModal}
                                                //matches={matches}
-                                               setMarvelId={setMarvelId} errorMessage={errorMessage}/> }
+                                               errorMessage={errorMessage}
+            /> }
         </>
     
     )
