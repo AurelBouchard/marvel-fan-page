@@ -15,7 +15,7 @@ import useItemContext from "../hooks/useItemContext";
  * @constructor
  */
 function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
-                     searchResult
+                     //searchResult
 }) {
     //console.log("sidebar")
     
@@ -32,11 +32,11 @@ function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
     
     
     useEffect(()=> {
-        if (!visible && itemCatName) {
+        if (!visible && item.marvelId) {
             console.log("sidebar", itemCatName)
             setVisible(true)
         }
-    }, [item.catIndex])
+    })
     
     
     function toggleCollapse() {
@@ -117,7 +117,6 @@ function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
                     <p className={`transition-opacity duration-150 ${collapsed ? "opacity-0" : "delay-100 opacity-100"}`}>Overview</p>
                 </a>
     
-                {item.marvelId}
                 
                 {appParam.categories.map((cat, index) => {
                     /* if (itemCat === cat.name) {return null}
@@ -125,7 +124,7 @@ function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
                          (itemCat === "comics" && cat.name === "series") ||
                          (itemCat === "creators" && cat.name === "characters")) {return null }*/
                     
-                    if (searchResult && !searchResult[cat.name]) {return null}
+                    if (item.data && !item.data[cat.name]) {return null}
                     
                     return (
                         <a key={index+1} className={`${style.item} ${index === subCatIndex ? style.selected : null}`}
@@ -138,10 +137,10 @@ function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
                             </div>
                             <div className={`flex flex-1 pr-4 justify-between items-center transition-opacity duration-150 ${collapsed ? "opacity-0" : "delay-100 opacity-100"}`}>
                                 <p>{cat.name}</p>
-                                {!searchResult ? null :
-                                    searchResult[cat.name].available ?
+                                {!item.data ? null :
+                                    item.data[cat.name].available ?
                                         <span className={`text-teal text-xs py-0.5 px-2 border border-teal rounded-full bg-dark-darkest`}>
-                                            {searchResult[cat.name].available }</span>
+                                            {item.data[cat.name].available }</span>
                                         :
                                         <span className={`text-teal text-xs py-0.5 px-2 border border-teal rounded-full bg-dark-darkest`}>0</span>
                                 }

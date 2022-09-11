@@ -46,7 +46,7 @@ function App() {
     
     // item context
     //const [catIndex, setCatIndex] = useState(0)         // in header {number}
-    const [searchResult, setSearchResult] = useState(null)  // {object}
+    //const [searchResult, setSearchResult ] = useState(null)  // {object}
     //const [marvelId, setMarvelId] = useState(null)      // {number}
     //const [itemCatName, setItemCatName] = useState(null)    // catName {string}
     
@@ -108,13 +108,14 @@ function App() {
     useEffect(() => {
         if (currentItem.marvelId) {
             console.log("specific call with marvel ID")
-            console.log(currentItem.item.catIndex)
-            console.log(currentItem.item)
-            console.log(params.categories)
-            axios.get(`${api.url}${params.categories[currentItem.item.catIndex].name}/${currentItem.item.marvelId}${api.credentials}`)
+            console.log(currentItem.catIndex)
+            console.log(currentItem.marvelId)
+            //console.log(params.categories)
+            axios.get(`${api.url}${params.categories[currentItem.catIndex].name}/${currentItem.marvelId}${api.credentials}`)
                 .then( response => {
                     console.log("searchResult => ",response.data?.data?.results[0])
-                    setSearchResult(response.data?.data?.results[0])
+                    let newData = (response.data?.data?.results[0])
+                    setCurrentItem(item => ({...item, ...{data: newData}}))
                 } )
     
             // set view to top of overview
@@ -140,11 +141,11 @@ function App() {
             
                         <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
                                  //itemCatName={itemCatName} => ItemContext
-                                 searchResult={searchResult}
+                                 //searchResult={searchResult} => ItemContext
                         />
             
                         <MainContainer>
-                            <MainView searchResult={searchResult}
+                            <MainView //searchResult={searchResult} => ItemContext
                                       subCatIndex={subCatIndex}
                                 //setCatIndex={setCatIndex} => ItemContext
                                 //setMarvelId={setMarvelId} => ItemContext

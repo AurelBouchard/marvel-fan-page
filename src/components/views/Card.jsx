@@ -63,7 +63,7 @@ function Card({id, name, //setMarvelId,
     console.log("card render", id)
     
     // USE CONTEXTS
-    const [item, setItem] = useItemContext("Card"+id.toString())
+    const [item, setItem] = useItemContext("Card "+id.toString())
     
     // INTERNAL STATES
     const [freshData, setFreshData] = useState(null)
@@ -155,7 +155,7 @@ function Card({id, name, //setMarvelId,
         <div className={cardStyle[subCatIndex].main}
              onClick={() => {
                  //setMarvelId(id);
-                 setItem(item => ({item, ...{marvelId: id}, ...{catIndex: subCatIndex}}))
+                 setItem(item => ({...item, ...{marvelId: id}, ...{catIndex: subCatIndex}}))
                  //if (setCatIndex) {setCatIndex(subCatIndex)} else {console.log("no setCatIndex !?")}
                  //if (setItemCatName) {setItemCatName(subCatName)} else {console.log("no setItemCatName !?")}
              }}

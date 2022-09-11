@@ -64,11 +64,11 @@ function ShowAll({
                         onClick={() => {
                             console.log("select an item in show all")
                             //setMarvelId(elt.id);
-                            setItem(item => ({item, ...{marvelId: elt.id}}))
+                            setItem(item => ({...item, ...{marvelId: elt.id}}))
                             //setItemCatName(catName);
                         }}
                     >
-                        {elt.id ||elt.name || elt.title || elt.fullName}
+                        {elt.name || elt.title || elt.fullName}
                     </p>
                 )
             })}

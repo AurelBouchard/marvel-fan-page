@@ -20,13 +20,14 @@ import Stories from "./views/Stories";*/
  * Show main data of the selected item.
  * Look will change according to selected subcat (if so)
  *
- * @param searchResult
+ * @param item.data
  * @param subCatIndex
  * @param categories
  * @returns {JSX.Element}
  * @constructor
  */
-function MainView({searchResult, subCatIndex, //itemCatName,// setCatIndex, setMarvelId,
+function MainView({//sear chResult,
+                      subCatIndex, //itemCatName,// setCatIndex, setMarvelId,
                       //setItemCatName
 }) {
     //console.log("MainView", subCatIndex)
@@ -47,21 +48,21 @@ function MainView({searchResult, subCatIndex, //itemCatName,// setCatIndex, setM
         if (subCatIndex !== -1) {
             console.log(categories[subCatIndex].name)
         }
-        if (searchResult) {
-            console.log(searchResult)
-            //console.log(searchResult[categories[subCatIndex].name])
-            //console.log(searchResult[categories[subCatIndex].name].items)
+        if (item.data) {
+            console.log(item.data)
+            //console.log(item.data[categories[subCatIndex].name])
+            //console.log(item.data[categories[subCatIndex].name].items)
         }*/
-        if (!searchResult || subCatIndex<0) {return null}
-        return {table: searchResult[subCatName]?.items, total: searchResult[subCatName]?.available}
-    }, [searchResult, subCatIndex])
+        if (!item.data || subCatIndex<0) {return null}
+        return {table: item.data[subCatName]?.items, total: item.data[subCatName]?.available}
+    }, [item, subCatIndex])
     
     
     
     return (
         <div className={`flex flex-col flex-1 ${itemCatName ? 'ml-14' : null} md:ml-auto`}>
             <div id="showView" className="bg-dark rounded-xl p-4 z-0">
-                {!searchResult ?
+                {!item.data ?
                     <div className={`flex justify-between items-center`}>
                         <p>Please select an item</p>
                         <div className={`animate-bounce md:animate-horiBounce`}>
@@ -72,10 +73,10 @@ function MainView({searchResult, subCatIndex, //itemCatName,// setCatIndex, setM
                         </div>
                     </div>
                     :
-                    subCatIndex === -1 ? <Overview data={searchResult} itemCat={itemCatName}/> :
+                    subCatIndex === -1 ? <Overview data={item.data} itemCat={itemCatName}/> :
                         <GridView gridData={gridData}
                                   subCatIndex={subCatIndex}
-                                  setItemCatName={setItemCatName}
+                                  //setItemCatName={setItemCatName}
                                   //setMarvelId={setMarvelId}
                                   //setCatIndex={setCatIndex}
                         />

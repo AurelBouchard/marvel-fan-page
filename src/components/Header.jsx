@@ -84,7 +84,7 @@ function Header({//catIndex, setCatIndex,
                     //console.log("searchResult => ",response.data?.data?.results[0])
                     if (response.data?.data?.results[0]?.id) {
                         const newId = {marvelId: response.data?.data?.results[0].id}
-                        setItem(item => ({item, ...newId}) )
+                        setItem(item => ({...item, ...newId}) )
                         setSearching(false)
                     } else {
                         throw {response:"or are you miserably confusing with DC comics ?"}
