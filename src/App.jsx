@@ -36,6 +36,12 @@ export let item = {
 export const ItemContext = createContext(null)
 
 
+// default view
+export let view = {
+
+}
+
+
 function App() {
     
     // would be managed by 'contextProvider()'
@@ -50,9 +56,10 @@ function App() {
     //const [marvelId, setMarvelId] = useState(null)      // {number}
     //const [itemCatName, setItemCatName] = useState(null)    // catName {string}
     
-    
-    // view context
+    // subcat context
     const [subCatIndex, setSubCatIndex] = useState(-1)   // in sidebar {number}
+    
+    // cat context
     const [catResult, setCatResult] = useState()
     const [pageOffset, setPageOffset] = useState(0)     // {number}
     
@@ -130,38 +137,40 @@ function App() {
         <div id="wholePage" className="text-grey animate-appear text-left">
             <AppParam.Provider value={paramValue}>
                 <ItemContext.Provider value={itemValue}>
-                    <Header //catIndex={catIndex || 0} => ItemContext
+                    <Header
+                        //catIndex={catIndex || 0} => ItemContext
                         // setCatIndex={setCatIndex} => ItemContext
                         //dico={dico}
                         //setMarvelId={setMarvelId} => ItemContext
-                            //setItemCatName={setItemCatName} => ItemContext
+                        // setItemCatName={setItemCatName} => ItemContext
                     />
         
                     <main className="flex w-full relative">
             
-                        <SideBar subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
-                                 //itemCatName={itemCatName} => ItemContext
-                                 //searchResult={searchResult} => ItemContext
+                        <SideBar
+                            //itemCatName={itemCatName} => ItemContext
+                            // searchResult={searchResult} => ItemContext
+                            subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex}
                         />
             
                         <MainContainer>
-                            <MainView //searchResult={searchResult} => ItemContext
-                                      subCatIndex={subCatIndex}
+                            <MainView
+                                //searchResult={searchResult} => ItemContext
                                 //setCatIndex={setCatIndex} => ItemContext
                                 //setMarvelId={setMarvelId} => ItemContext
-                                      //itemCatName={itemCatName} => ItemContext
-                                      //setItemCatName={setItemCatName} => ItemContext
-                
+                                // itemCatName={itemCatName} => ItemContext
+                                // setItemCatName={setItemCatName} => ItemContext
+                                subCatIndex={subCatIndex}
                             />
-                            <LinksAndMore setPageOffset={setPageOffset}
-                                          pageOffset={pageOffset}
+                            <LinksAndMore
                                 //setMarvelId={setMarvelId} => ItemContext
-                                          //setItemCatName={setItemCatName} => ItemContext
+                                // setItemCatName={setItemCatName} => ItemContext
                                 //dico={dico} setDico={setDico}
                                 // catIndex={catIndex} => ItemContext
-                                          //itemCatName={itemCatName} => ItemContext
-                                          listOfAllItems={catResult}
-                
+                                // itemCatName={itemCatName} => ItemContext
+                                setPageOffset={setPageOffset}
+                                pageOffset={pageOffset}
+                                listOfAllItems={catResult}
                             />
                         </MainContainer>
         
