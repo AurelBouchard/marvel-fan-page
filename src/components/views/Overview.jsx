@@ -6,6 +6,7 @@ import useItemContext from "../../hooks/useItemContext";
 
 // components
 import Loading from "../Loading";
+import setSingle from "../../utils/setSingle";
 
 
 
@@ -33,7 +34,10 @@ export default function Overview({data, //itemCat
     
     return (
         data ? <div className={`flex flex-col space-y-6`}>
-            <p className={`text-2xl `}>{data.name || data.title || data.fullName}</p>
+            <p className={`text-2xl `}>
+                <span className={`font-bold capitalize`}>{`${setSingle(itemCatName)}: `}</span>
+                <span>{data.name || data.title || data.fullName}</span>
+            </p>
             <div className={`flex justify-center`} >
                 <img className={`h-auto`}
                      src={`${data.thumbnail?.path}.${data.thumbnail?.extension}`} alt={data.name || data.title || data.fullName}/>

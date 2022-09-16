@@ -53,7 +53,7 @@ function ShowAll({
     
     return (
         <div className="bg-dark rounded-xl p-4 flex flex-col ">
-            <p className={`uppercase font-bold pb-4`}>all {catName}</p>
+            <p className={`uppercase font-bold pb-4`}>other {catName}</p>
             
             {!list || !list[0] ? <Loading/> : null}
             {list?.map((elt, index) => {
