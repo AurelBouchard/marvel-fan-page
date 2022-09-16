@@ -52,7 +52,7 @@ export default function MainCatSelector({//catIndex, setCatIndex,
                     return (
                         <div key={index} className={`h-8 flex items-center hover:bg-teal-light hover:text-dark-darkest px-3 cursor-pointer`}
                              onClick={()=>{
-                                 console.log("mainCatSelector setCatIndex")
+                                 console.log("mainCatSelector setCatIndex", index)
                                  //setCatIndex(index)
                                  setItem(item => ({item, ...{catIndex: index}}))
                              }}

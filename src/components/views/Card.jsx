@@ -59,7 +59,11 @@ async function fetchMarvel(resource, param) {
 function Card({id, name, //setMarvelId,
                   //setCatIndex,
                   //setItemCatName,
-                             subCatIndex, resource, subCatName, latency}) {
+                             //subCatIndex,
+                  resource,
+                  //subCatName,
+                  latency
+}) {
     console.log("card render", id)
     
     // USE CONTEXTS
@@ -122,7 +126,9 @@ function Card({id, name, //setMarvelId,
     
     
     useEffect(() => {
-        setTimeout(() => { setAllowFetching(true) }, latency)
+        setTimeout(() => { setAllowFetching(true) },
+            0 //latency
+        )
     }, [])
 
     useEffect(() => {
@@ -152,24 +158,24 @@ function Card({id, name, //setMarvelId,
     
     
     return (
-        <div className={cardStyle[subCatIndex].main}
+        <div className={cardStyle[item.subCatIndex].main}
              onClick={() => {
                  //setMarvelId(id);
-                 setItem(item => ({...item, ...{marvelId: id}, ...{catIndex: subCatIndex}}))
+                 setItem(item => ({...item, ...{marvelId: id}, ...{catIndex: item.subCatIndex}, ...{subCatIndex: -1}}))
                  //if (setCatIndex) {setCatIndex(subCatIndex)} else {console.log("no setCatIndex !?")}
                  //if (setItemCatName) {setItemCatName(subCatName)} else {console.log("no setItemCatName !?")}
              }}
         >
             <div className={`flex border-b`}>
-                <div className={`p-2 shrink-0`}><div className={cardStyle[subCatIndex].img}>
+                <div className={`p-2 shrink-0`}><div className={cardStyle[item.subCatIndex].img}>
                     <img src={(freshData && freshData.thumbnail) ? `${freshData.thumbnail?.path}.${freshData.thumbnail?.extension}` : noImgSrc}
                          alt={name} className={`bg-dark border-none`}/></div>
                 </div>
-                <p className={cardStyle[subCatIndex].title}>
+                <p className={cardStyle[item.subCatIndex].title}>
                     {name}
                 </p>
             </div>
-            <div className={cardStyle[subCatIndex].bottom}>
+            <div className={cardStyle[item.subCatIndex].bottom}>
                 <div className={`flex justify-start`}>
                     <p className={`uppercase mr-1`}>Date :</p>
                     <p className={``}>{ freshData?.modified && freshData?.modified[0] !== '-' ? (freshData?.modified).substring(0,10) : "?" }</p>

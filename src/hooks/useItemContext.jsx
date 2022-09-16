@@ -5,7 +5,7 @@ import isIterable from "../utils/isIterable";
 
 
 export default function useItemContext(callerName) {
-    console.log("useItemContext by", callerName || 'any')
+    //console.log("useItemContext by", callerName || 'any')
     const context = useContext(ItemContext)
     
     if (!isIterable(context)) {

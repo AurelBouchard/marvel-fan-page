@@ -27,7 +27,7 @@ import Stories from "./views/Stories";*/
  * @constructor
  */
 function MainView({//sear chResult,
-                      subCatIndex, //itemCatName,// setCatIndex, setMarvelId,
+                      //subCatIndex, //itemCatName,// setCatIndex, setMarvelId,
                       //setItemCatName
 }) {
     //console.log("MainView", subCatIndex)
@@ -38,7 +38,7 @@ function MainView({//sear chResult,
     
     // shortcuts
     const itemCatName = appParam.categories[item.catIndex || 0].name;
-    const subCatName = appParam.categories[Math.max(subCatIndex,0)].name;
+    const subCatName = appParam.categories[Math.max(item.subCatIndex,0) || 0].name;
     
 
     
@@ -53,9 +53,14 @@ function MainView({//sear chResult,
             //console.log(item.data[categories[subCatIndex].name])
             //console.log(item.data[categories[subCatIndex].name].items)
         }*/
-        if (!item.data || subCatIndex<0) {return null}
+        if (!item.data || item.subCatIndex<0) {return null}
+        
+        console.log("prepa gridData.table avec item.data[", subCatName, "].items")
+        console.log(item.data[subCatName]?.items)
+        
+        
         return {table: item.data[subCatName]?.items, total: item.data[subCatName]?.available}
-    }, [item, subCatIndex])
+    }, [item])
     
     
     
@@ -73,9 +78,9 @@ function MainView({//sear chResult,
                         </div>
                     </div>
                     :
-                    subCatIndex === -1 ? <Overview data={item.data} itemCat={itemCatName}/> :
+                    item.subCatIndex === -1 ? <Overview data={item.data} itemCat={itemCatName}/> :
                         <GridView gridData={gridData}
-                                  subCatIndex={subCatIndex}
+                                  //subCatIndex={subCatIndex}
                                   //setItemCatName={setItemCatName}
                                   //setMarvelId={setMarvelId}
                                   //setCatIndex={setCatIndex}

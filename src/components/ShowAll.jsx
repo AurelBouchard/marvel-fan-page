@@ -6,24 +6,26 @@ import useItemContext from "../hooks/useItemContext";
 
 // components
 import Loading from "./Loading";
+import useCategoryContext from "../hooks/useCategoryContext";
 
 
 
 function ShowAll({
                                     //catName,
-                                    listOfAllItems, // delete
-                                    pageOffset,
-                                    setPageOffset,
+                                    //listOfAll Items, // delete
+                                    //pageOffset,
+                                    //setPageOffset,
                                     //setMarvelId,
                      //setItemCatName, // <===========================try to remove this one
                                     //dico, setDico,
                                     catIndex
                                 }) {
-    //console.log("ShowAll", listOfAllItems)
+    //console.log("ShowAll", category.data)
     
     // USE CONTEXTS
     const [appParam, setAppParam] = useAppParam("ShowAll")
     const [item, setItem] = useItemContext("ShowAll")
+    const [category, setCategory] = useCategoryContext("ShowAll")
     // shortcuts
     const catName = appParam.categories[item.catIndex || 0].name;
     const listSize = appParam.listSize
@@ -36,14 +38,15 @@ function ShowAll({
     
     
     useEffect(()=> {
-        if (listOfAllItems) {
-            console.log("listOfAllItems",listOfAllItems)
-            setList(listOfAllItems)}
-    }, [listOfAllItems])
+        console.log("category.data",category.data)
+        //if (category.data) {
+            setList(category.data)//}
+    }, [category.data, item.catIndex])//item.catIndex, category.pageOffset
     
-    // go on top of list if item changes
+    // go on top of list if category of item changes
     useEffect(() => {
-        setPageOffset(0)
+        //setPageOffset(0)
+        setCategory(category => ({...category, ...{pageOffset: 0}}))
     }, [item])
     
     
@@ -78,7 +81,8 @@ function ShowAll({
                 <div id="previousPage"
                      onClick={(e)=>{
                          e.preventDefault()
-                        setPageOffset(Math.max(0, pageOffset-20))
+                        //setPageOffset(Math.max(0, pageOffset-20))
+                         setCategory(cat => ({...cat, ...{pageOffset: Math.max(0, category.pageOffset-20)}}))
                         setList(nullArray(20))
                     }}
                 >
@@ -88,12 +92,13 @@ function ShowAll({
                     </svg>
                 </div>
     
-                <p className={`text-sm pb-0.5 mx-1`}>{`${pageOffset+1} ... ${Math.min(100000, pageOffset+listSize)}`}</p>
+                <p className={`text-sm pb-0.5 mx-1`}>{`${category.pageOffset+1} ... ${Math.min(100000, category.pageOffset+listSize)}`}</p>
     
                 <div id="nextPage"
                      onClick={(e)=>{
                         e.preventDefault()
-                        setPageOffset(Math.min(100000, pageOffset+20))
+                        //setPageOffset(Math.min(100000, pageOffset+20))
+                         setCategory(cat => ({...cat, ...{pageOffset: Math.min(100000000, category.pageOffset+20)}}))
                         setList(nullArray(20))
                     }}
                 >

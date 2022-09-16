@@ -8,6 +8,7 @@ import useItemContext from "../hooks/useItemContext";
 import ShowAll from "./ShowAll";
 import Rating from "./Rating";
 import Stats from "./Stats";
+import useCategoryContext from "../hooks/useCategoryContext";
 
 
 
@@ -22,7 +23,7 @@ import Stats from "./Stats";
  * @returns {JSX.Element}
  * @constructor
  */
-function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, //catName,
+function LinksAndMore({//listOfAllItems, setPageOffset, pageOffset, //catName,
                           //itemCatName, //setMarvelId, //setItemCat,
                                      dico, setDico, //catIndex,
                           setItemCatName}) {
@@ -48,11 +49,11 @@ function LinksAndMore({listOfAllItems, setPageOffset, pageOffset, //catName,
             </div>*/}
             
             <ShowAll //catName={catName}
-                     listOfAllItems={listOfAllItems}
+                     //listOfAllItems={listOfAllItems}
                 //setMarvelId={setMarvelId}
                 // setItemCat={setItemCat}
                      //setItemCatName={setItemCatName}
-                     setPageOffset={setPageOffset} pageOffset={pageOffset}
+                     //setPageOffset={setPageOffset} pageOffset={pageOffset}
                      //dico={dico} setDico={setDico}
                      //catIndex={catIndex}
             />

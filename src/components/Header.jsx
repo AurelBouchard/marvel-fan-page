@@ -66,7 +66,7 @@ function Header({//catIndex, setCatIndex,
      * @param name {string}
      */
     function handleSubmit(name) {
-        console.log("input submit", name)
+        console.log("input submit '", name, "' catIndex", item.catIndex)
         
         
         //let itemInDico = dico[item.catIndex].filter(item => item.name.toLowerCase() === name.toLowerCase())
@@ -77,7 +77,9 @@ function Header({//catIndex, setCatIndex,
             //setSearching(false)
         }
         else {
-            let nameOrTitle = item.catIndex === (1 || 5) ? "title" : "name"; // only comics and stories endpoint uses titleStartsWith
+            //let nameOrTitle = item.catIndex === (1 || 5) ? "title" : "name"; // only comics and stories endpoint uses titleStartsWith
+            let nameOrTitle = "name"
+            if (item.catIndex.toString() == ("5" || "1")) {nameOrTitle="title"}
             
             axios.get(`${api.url}${appParam.categories[item.catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
                 .then( response => {

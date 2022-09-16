@@ -9,12 +9,10 @@ import useItemContext from "../hooks/useItemContext";
  * Select the category of data to display in the mainContainer
  *
  * @param subCatIndex
- * @param setSubCatIndex
- * @param categories
  * @returns {JSX.Element}
  * @constructor
  */
-function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
+function SideBar({//subCatIndex, setSubCatIndex, //itemCatName,
                      //searchResult
 }) {
     //console.log("sidebar")
@@ -55,10 +53,13 @@ function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
         window.scrollTo(0, 0);
     }, [])*/
     
+    
     useEffect(() => {
-        if (subCatIndex === null) {setSubCatIndex(0)}
+        /*if (item.subCatIndex === (-1 || null)) {
+            setSubCatIndex(0)}*/
         window.scrollTo(0, 0);
-    }, [subCatIndex])
+        setCollapsed(true)
+    }, [item.subCatIndex])
     
     
     return (
@@ -102,9 +103,11 @@ function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
                 </a>
                 
                 {/* 1st ITEM : overview */}
-                <a key={0} className={`${style.item} ${0 === subCatIndex ? style.selected : null}`}
+                <a key={0} className={`${style.item} ${item.subCatIndex === -1 ? style.selected : null}`}
                    onClick={(e) => {
-                       setSubCatIndex(-1)
+                       //setSubCatIndex(-1)
+                       console.log("select overview")
+                       setItem(item => ({...item, ...{subCatIndex: -1}}))
                    }}
                 >
                     <div className={`mr-2`}>
@@ -127,9 +130,11 @@ function SideBar({subCatIndex, setSubCatIndex, //itemCatName,
                     if (item.data && !item.data[cat.name]) {return null}
                     
                     return (
-                        <a key={index+1} className={`${style.item} ${index === subCatIndex ? style.selected : null}`}
+                        <a key={index+1} className={`${style.item} ${index === item.subCatIndex ? style.selected : null}`}
                            onClick={(e) => {
-                               setSubCatIndex(index)
+                               //setSubCatIndex(index)
+                               console.log("select subCatIndex",index, item.data)
+                               setItem(item => ({...item, ...{subCatIndex: index}}))
                            }}
                         >
                             <div className={`mr-2`}>

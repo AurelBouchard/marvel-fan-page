@@ -13,22 +13,26 @@ function GridView({gridData,
                                      //setItemCatName,
                                      //setCatIndex,
                                      //setMarvelId,
-                                     subCatIndex}) {
+                                     //subCatIndex
+}) {
     console.log("GridView",JSON.stringify(gridData))
     
     // USE CONTEXTS
     const [appParam, setAppParam] = useAppParam("GridView")
     const [item, setItem] = useItemContext("GridView")
+    // shortcuts
+    const subCatName = appParam.categories[item.subCatIndex].name;
     
     
     
     return (
         <div className={`rr`}>
-            <p className={`font-bold uppercase mb-6`}>{gridData.total} {appParam.categories[subCatIndex].name}</p>
+            <p className={`font-bold uppercase mb-6`}>{gridData.total} {subCatName}</p>
             <div className={`grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-4`}>
-                {gridData.table.map((elt, index) => {
+                {gridData.table?.map((elt, index) => {
                     return (
-                        <Card subCatIndex={subCatIndex} subCatName={appParam.categories[subCatIndex].name}
+                        <Card //subCatIndex={subCatIndex}
+                              //subCatName={subCatName}
                               key={elt.resourceURI.substring(elt.resourceURI.lastIndexOf("/")+1)}
                               id={elt.resourceURI.substring(elt.resourceURI.lastIndexOf("/")+1)}
                                    resource={elt.resourceURI}

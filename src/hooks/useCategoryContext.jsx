@@ -1,0 +1,17 @@
+import React, {useContext} from 'react';
+import {CategoryContext} from "../App";
+import {category as fallback} from "../App";
+import isIterable from "../utils/isIterable";
+
+
+export default function useCategoryContext(callerName) {
+    //console.log("useItemContext by", callerName || 'any')
+    const context = useContext(CategoryContext)
+    
+    if (!isIterable(context)) {
+        console.log("component is out of CategoryContextProvider")
+        return fallback
+    }
+    
+    return context
+}
