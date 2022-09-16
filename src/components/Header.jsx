@@ -4,18 +4,15 @@ import {api} from "../credentials";
 
 // contexts
 import useAppParam from "../hooks/useAppParam";
+import useItemContext from "../hooks/useItemContext";
 
 // components
 import SearchModal from "./SearchModal";
 import MainCatSelector from "./MainCatSelector";
-import useItemContext from "../hooks/useItemContext";
 
 
 
-function Header({//catIndex, setCatIndex,
-                    availableItems, dico,
-                    //setMarvelId
-                    setItemCatName}) {
+function Header() {
     //console.log("Header")
     
     // USE CONTEXTS
@@ -79,7 +76,7 @@ function Header({//catIndex, setCatIndex,
         else {
             //let nameOrTitle = item.catIndex === (1 || 5) ? "title" : "name"; // only comics and stories endpoint uses titleStartsWith
             let nameOrTitle = "name"
-            if (item.catIndex.toString() == ("5" || "1")) {nameOrTitle="title"}
+            if (item.catIndex.toString() === ("5" || "1")) {nameOrTitle="title"}
             
             axios.get(`${api.url}${appParam.categories[item.catIndex].name}${api.credentials}&${nameOrTitle}StartsWith=${name}`)
                 .then( response => {
@@ -91,9 +88,6 @@ function Header({//catIndex, setCatIndex,
                     } else {
                         throw {response:"or are you miserably confusing with DC comics ?"}
                     }
-                })
-                .then(()=> {
-                    setItemCatName(appParam.categories[item.catIndex||0].name)
                 })
                 .catch(function(err) {
                     console.log(err)
@@ -142,10 +136,7 @@ function Header({//catIndex, setCatIndex,
                 <div id="searchBar" className={`flex flex-nowrap items-center py-3 z-90 flex-1 sm:flex-none
                 ${searching ? "sm:flex-1 sm:-translate-x-44 md:-translate-x-52 sm:-mr-44" : "sm:translate-0"} duration-300`}>
                     
-                    <MainCatSelector
-                        //catIndex={catIndex} setCatIndex={setCatIndex}
-                        expandable={!searching}
-                    />
+                    <MainCatSelector expandable={!searching} />
                     
                     <div className={`flex w-full sm:w-full ml-16 sm:ml-14 sm:mr-auto ${searching ? "grow" : null}`}>
                         <input id="searchField" name="searchField" onClick={() => {
@@ -191,10 +182,7 @@ function Header({//catIndex, setCatIndex,
                 </div>
             
             </div>
-            { !searching ? null : <SearchModal catName={itemCatName} //catIndex={catIndex}
-                                               onClick={closeSearchModal}
-                                               //matches={matches}
-                                               errorMessage={errorMessage}
+            { !searching ? null : <SearchModal catName={itemCatName} onClick={closeSearchModal} errorMessage={errorMessage}
             /> }
         </>
     

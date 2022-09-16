@@ -9,62 +9,9 @@ import useItemContext from "../../hooks/useItemContext";
 import noImgSrc from "../../assets/image_not_available.jpg"
 
 
-/*
-const genericStateReducer = (state, action) => ({...state, ...action})
 
-
-function useFetchResource(resource) {
-    const [state, dispatch] = useReducer(genericStateReducer, {
-        data: null,
-        error: null
-    }, a=>a)
-    
-    useEffect(()=>{
-        if (!resource) { return }
-        
-        dispatch({data: null, error: null})
-
-        fetchMarvel(resource)
-            .then( res => dispatch({data: res}))
-            .catch(e => dispatch({error: e.toString()}))
-        
-    }, [resource])
-    
-    return state
-}
-
-async function fetchMarvel(resource, param) {
-    if (!resource) {return}
-    
-    // use https
-    let uri = resource;
-    if (uri.indexOf('https')!==0) {
-        uri = 'https'+resource.substring(4)
-    }
-    
-    console.log(`fetching ${uri}${api.credentials}`)
-    await axios.get(`${uri}${api.credentials}`)
-        .then( response => {
-            //console.log("fetchMarvel resp => ",response.data?.data?.results[0])
-            return response.data?.data?.results[0]
-        })
-        .catch(e => {
-            return Promise.reject(
-                new Error(`erreur lors de la requete : ${e}`),
-            )
-        })
-}*/
-
-
-function Card({id, name, //setMarvelId,
-                  //setCatIndex,
-                  //setItemCatName,
-                             //subCatIndex,
-                  resource,
-                  //subCatName,
-                  latency
-}) {
-    console.log("card render", id)
+function Card({id, name, resource, latency}) {
+    //console.log("card render", id)
     
     // USE CONTEXTS
     const [item, setItem] = useItemContext("Card "+id.toString())
@@ -140,10 +87,10 @@ function Card({id, name, //setMarvelId,
                     uri = 'https'+resource.substring(4)
                 }
             
-                console.log(`fetching ${uri}${api.credentials}`)
+                //console.log(`fetching ${uri}${api.credentials}`)
                 axios.get(`${uri}${api.credentials}`)
                     .then( response => {
-                        console.log("fetchMarvel resp => ",response.data?.data?.results[0])
+                        //console.log("fetchMarvel resp => ",response.data?.data?.results[0])
                         setFreshData(response.data?.data?.results[0])
                     })
                     .catch(e => {
@@ -160,10 +107,7 @@ function Card({id, name, //setMarvelId,
     return (
         <div className={cardStyle[item.subCatIndex].main}
              onClick={() => {
-                 //setMarvelId(id);
                  setItem(item => ({...item, ...{marvelId: id}, ...{catIndex: item.subCatIndex}, ...{subCatIndex: -1}}))
-                 //if (setCatIndex) {setCatIndex(subCatIndex)} else {console.log("no setCatIndex !?")}
-                 //if (setItemCatName) {setItemCatName(subCatName)} else {console.log("no setItemCatName !?")}
              }}
         >
             <div className={`flex border-b`}>

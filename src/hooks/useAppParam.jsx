@@ -1,6 +1,10 @@
 import React, {useContext} from 'react';
+
+// data
 import {AppParam} from "../App";
 import {appParams as fallback} from "../App";
+
+// helper
 import isIterable from "../utils/isIterable";
 
 

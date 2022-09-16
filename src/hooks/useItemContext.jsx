@@ -1,6 +1,10 @@
 import React, {useContext} from 'react';
+
+// data
 import {ItemContext} from "../App";
 import {item as fallback} from "../App";
+
+// helper
 import isIterable from "../utils/isIterable";
 
 

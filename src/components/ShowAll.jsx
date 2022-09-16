@@ -3,23 +3,15 @@ import React, {useEffect, useState} from 'react';
 // contexts
 import useAppParam from "../hooks/useAppParam";
 import useItemContext from "../hooks/useItemContext";
+import useCategoryContext from "../hooks/useCategoryContext";
 
 // components
 import Loading from "./Loading";
-import useCategoryContext from "../hooks/useCategoryContext";
 
 
 
-function ShowAll({
-                                    //catName,
-                                    //listOfAll Items, // delete
-                                    //pageOffset,
-                                    //setPageOffset,
-                                    //setMarvelId,
-                     //setItemCatName, // <===========================try to remove this one
-                                    //dico, setDico,
-                                    catIndex
-                                }) {
+function ShowAll({//dico, setDico
+ }) {
     //console.log("ShowAll", category.data)
     
     // USE CONTEXTS
@@ -38,14 +30,12 @@ function ShowAll({
     
     
     useEffect(()=> {
-        console.log("category.data",category.data)
-        //if (category.data) {
-            setList(category.data)//}
-    }, [category.data, item.catIndex])//item.catIndex, category.pageOffset
+        //console.log("category.data",category.data)
+        setList(category.data)
+    }, [category.data, item.catIndex])
     
     // go on top of list if category of item changes
     useEffect(() => {
-        //setPageOffset(0)
         setCategory(category => ({...category, ...{pageOffset: 0}}))
     }, [item])
     
@@ -65,10 +55,8 @@ function ShowAll({
                 ${elt ? 'h-6 animate-appear bg-grey-slate mb-px' : 'h-0 duration-0 animate-none bg-none -mb-1 h-0'}
                 `}
                         onClick={() => {
-                            console.log("select an item in show all")
-                            //setMarvelId(elt.id);
+                            //console.log("select an item in show all")
                             setItem(item => ({...item, ...{marvelId: elt.id}}))
-                            //setItemCatName(catName);
                         }}
                     >
                         {elt.name || elt.title || elt.fullName}
@@ -81,7 +69,6 @@ function ShowAll({
                 <div id="previousPage"
                      onClick={(e)=>{
                          e.preventDefault()
-                        //setPageOffset(Math.max(0, pageOffset-20))
                          setCategory(cat => ({...cat, ...{pageOffset: Math.max(0, category.pageOffset-20)}}))
                         setList(nullArray(20))
                     }}
@@ -97,7 +84,6 @@ function ShowAll({
                 <div id="nextPage"
                      onClick={(e)=>{
                         e.preventDefault()
-                        //setPageOffset(Math.min(100000, pageOffset+20))
                          setCategory(cat => ({...cat, ...{pageOffset: Math.min(100000000, category.pageOffset+20)}}))
                         setList(nullArray(20))
                     }}

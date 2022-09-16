@@ -6,8 +6,7 @@ import useItemContext from "../hooks/useItemContext";
 
 
 
-export default function MainCatSelector({//catIndex, setCatIndex,
-                                            expandable}) {
+export default function MainCatSelector({expandable}) {
     //console.log("MainCatSelector")
     
     // USE CONTEXTS
@@ -53,7 +52,6 @@ export default function MainCatSelector({//catIndex, setCatIndex,
                         <div key={index} className={`h-8 flex items-center hover:bg-teal-light hover:text-dark-darkest px-3 cursor-pointer`}
                              onClick={()=>{
                                  console.log("mainCatSelector setCatIndex", index)
-                                 //setCatIndex(index)
                                  setItem(item => ({item, ...{catIndex: index}}))
                              }}
                         >

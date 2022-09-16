@@ -12,9 +12,7 @@ import useItemContext from "../hooks/useItemContext";
  * @returns {JSX.Element}
  * @constructor
  */
-function SideBar({//subCatIndex, setSubCatIndex, //itemCatName,
-                     //searchResult
-}) {
+function SideBar() {
     //console.log("sidebar")
     
     // USE CONTEXTS
@@ -31,7 +29,7 @@ function SideBar({//subCatIndex, setSubCatIndex, //itemCatName,
     
     useEffect(()=> {
         if (!visible && item.marvelId) {
-            console.log("sidebar", itemCatName)
+            //console.log("sidebar", itemCatName)
             setVisible(true)
         }
     })
@@ -47,16 +45,8 @@ function SideBar({//subCatIndex, setSubCatIndex, //itemCatName,
         selected:"text-dark-darkest bg-teal hover:bg-teal"
     }
     
-/*    useEffect(() => {
-        console.log("reset menu")
-        setSubCatIndex(0)
-        window.scrollTo(0, 0);
-    }, [])*/
-    
     
     useEffect(() => {
-        /*if (item.subCatIndex === (-1 || null)) {
-            setSubCatIndex(0)}*/
         window.scrollTo(0, 0);
         setCollapsed(true)
     }, [item.subCatIndex])
@@ -105,8 +95,7 @@ function SideBar({//subCatIndex, setSubCatIndex, //itemCatName,
                 {/* 1st ITEM : overview */}
                 <a key={0} className={`${style.item} ${item.subCatIndex === -1 ? style.selected : null}`}
                    onClick={(e) => {
-                       //setSubCatIndex(-1)
-                       console.log("select overview")
+                       //console.log("select overview")
                        setItem(item => ({...item, ...{subCatIndex: -1}}))
                    }}
                 >
@@ -122,18 +111,13 @@ function SideBar({//subCatIndex, setSubCatIndex, //itemCatName,
     
                 
                 {appParam.categories.map((cat, index) => {
-                    /* if (itemCat === cat.name) {return null}
-                     if ((itemCat === "characters" && cat.name === "creators") ||
-                         (itemCat === "comics" && cat.name === "series") ||
-                         (itemCat === "creators" && cat.name === "characters")) {return null }*/
                     
                     if (item.data && !item.data[cat.name]) {return null}
                     
                     return (
                         <a key={index+1} className={`${style.item} ${index === item.subCatIndex ? style.selected : null}`}
                            onClick={(e) => {
-                               //setSubCatIndex(index)
-                               console.log("select subCatIndex",index, item.data)
+                               //console.log("select subCatIndex",index, item.data)
                                setItem(item => ({...item, ...{subCatIndex: index}}))
                            }}
                         >

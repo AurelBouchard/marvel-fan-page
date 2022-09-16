@@ -6,12 +6,13 @@ import useItemContext from "../../hooks/useItemContext";
 
 // components
 import Loading from "../Loading";
+
+// helpers
 import setSingle from "../../utils/setSingle";
 
 
 
-export default function Overview({data, //itemCat
-}) {
+export default function Overview({data}) {
     
     // USE CONTEXTS
     const [appParam, setAppParam] = useAppParam("header")

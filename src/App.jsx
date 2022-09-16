@@ -1,15 +1,21 @@
 import React, {createContext, useEffect, useState} from 'react'
+import axios from "axios";
+
+// styling
 import './App.css'
+
+// helpers
+import {categories} from "./models/categories";
+import {api} from "./credentials";
+
+// components
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
 import MainView from "./components/MainView";
 import MainContainer from "./components/MainContainer";
 import LinksAndMore from "./components/LinksAndMore";
 import Footer from "./components/Footer";
-import {categories} from "./models/categories";
-import axios from "axios";
-import {api} from "./credentials";
-import useCategoryContext from "./hooks/useCategoryContext";
+
 
 // default parameters
 export let appParams = {
@@ -57,31 +63,12 @@ function App() {
     const [workingCategory, setWorkingCategory] = useState(category)
     const categoryValue = [workingCategory, setWorkingCategory]
     
-    
-    // item context
-    //const [catIndex, setCatIndex] = useState(0)         // in header {number}
-    //const [searchResult, setSearchResult ] = useState(null)  // {object}
-    //const [marvelId, setMarvelId] = useState(null)      // {number}
-    //const [itemCatName, setItemCatName] = useState(null)    // catName {string}
-    //const [subCatIndex, setSubCatIndex] = useState(-1)   // in sidebar {number}
-    
-    // cat context
-    //const [catResult, setCatResult] = useState()
-    //const [pageOffset, setPageOffset] = useState(0)     // {number}
-    
-    //const [NVAM, setNVAM] = useState(false)     // boolean
-    //const [dico, setDico] = useState(null)      // [[{object}...{}]...[]]
-    
-    //const listSize = 20; // now in context
-    
-    console.log("apéro !")
+    //console.log("apéro !")
     
     
 
     
     useEffect(() => {
-        //setPageOffset(0)
-        //setCatResult(null);
         setWorkingCategory(category => ({data: null, pageOffset:0}))
     }, [currentItem.catIndex])
     
@@ -95,54 +82,38 @@ function App() {
      * or pageOffset change
      */
     useEffect(()=> {
-        console.log("refresh data ?", item.catIndex)
+        //console.log("refresh data ?", item.catIndex)
         if (category.data) {return}
         refreshCatResult()
-    }, [//category.data
-        currentItem.catIndex,
-        workingCategory.pageOffset
-    ])
+    }, [currentItem.catIndex, workingCategory.pageOffset ])
     
     function refreshCatResult() {
-        //if (!catResult) {
-            console.log("refreshCatResult")
-            // purge old results
-            //setCatResult(null)
+        //console.log("refresh data")
     
-            //console.log("ask api : ",`${api.url}${categories[item.catIndex].name}?apikey=${api.pubKey}&hash=${api.hash}&ts=${api.ts}&offset=${pageOffset}`)
-    
-            // renew results
-            axios.get(`${api.url}${params.categories[currentItem.catIndex||0].name}${api.credentials}&offset=${workingCategory.pageOffset}`)
-                .then( response => {
-                    console.log("catResult => ",response.data?.data?.results)
-                    //setCatResult(response.data?.data?.results)
-                    let newData = response.data?.data?.results
-                    setWorkingCategory(category => ({...category, ...{data: newData}}))
-                } ).catch(err => {
-                    console.log("error while fetching data :", err)
-            })
-        //}
+        // renew results
+        axios.get(`${api.url}${params.categories[currentItem.catIndex||0].name}${api.credentials}&offset=${workingCategory.pageOffset}`)
+            .then( response => {
+                //console.log("new data => ",response.data?.data?.results)
+                let newData = response.data?.data?.results
+                setWorkingCategory(category => ({...category, ...{data: newData}}))
+            } ).catch(err => {
+                console.log("error while fetching data :", err)
+        })
     }
     
     
 
     useEffect(() => {
         if (currentItem.marvelId) {
-            console.log("specific call with marvel ID")
-            console.log(currentItem.catIndex)
-            console.log(currentItem.marvelId)
-            //console.log(params.categories)
+            //console.log("specific call with marvel ID")
             axios.get(`${api.url}${params.categories[currentItem.catIndex].name}/${currentItem.marvelId}${api.credentials}`)
                 .then( response => {
-                    console.log("searchResult => ",response.data?.data?.results[0])
+                    //console.log("searchResult => ",response.data?.data?.results[0])
                     let newData = (response.data?.data?.results[0])
                     setCurrentItem(item => ({...item, ...{subCatIndex: -1}, ...{data: newData}}))
                 } )
     
-            // set view to top of overview
-            //setSubCatIndex(-1)
             window.scrollTo(0, 0);
-            
         }
     },[currentItem.marvelId])
 
@@ -151,42 +122,16 @@ function App() {
         <div id="wholePage" className="text-grey animate-appear text-left">
             <AppParam.Provider value={paramValue}>
                 <ItemContext.Provider value={itemValue}>
-                    <Header
-                        //catIndex={catIndex || 0} => ItemContext
-                        // setCatIndex={setCatIndex} => ItemContext
-                        //dico={dico}
-                        //setMarvelId={setMarvelId} => ItemContext
-                        // setItemCatName={setItemCatName} => ItemContext
-                    />
+                    <Header />
         
                     <main className="flex w-full relative">
             
-                        <SideBar
-                            //itemCatName={itemCatName} => ItemContext
-                            // searchResult={searchResult} => ItemContext
-                            //subCatIndex={subCatIndex} setSubCatIndex={setSubCatIndex} => ItemContext
-                        />
+                        <SideBar />
             
                         <MainContainer>
-                            <MainView
-                                //searchResult={searchResult} => ItemContext
-                                //setCatIndex={setCatIndex} => ItemContext
-                                //setMarvelId={setMarvelId} => ItemContext
-                                // itemCatName={itemCatName} => ItemContext
-                                // setItemCatName={setItemCatName} => ItemContext
-                                //subCatIndex={subCatIndex} => ItemContext
-                            />
+                            <MainView />
                             <CategoryContext.Provider value={categoryValue}>
-                                <LinksAndMore
-                                    //setMarvelId={setMarvelId} => ItemContext
-                                    // setItemCatName={setItemCatName} => ItemContext
-                                    //dico={dico} setDico={setDico}
-                                    // catIndex={catIndex} => ItemContext
-                                    // itemCatName={itemCatName} => ItemContext
-                                    //setPageOffset={setPageOffset} => CategoryContext
-                                    //pageOffset={pageOffset} => CategoryContext
-                                    //listOfAllItems={catResult} => CategoryContext
-                                />
+                                <LinksAndMore />
                             </CategoryContext.Provider>
                         </MainContainer>
         

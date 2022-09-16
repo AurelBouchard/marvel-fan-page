@@ -1,6 +1,10 @@
 import React, {useContext} from 'react';
+
+// data
 import {CategoryContext} from "../App";
 import {category as fallback} from "../App";
+
+// helper
 import isIterable from "../utils/isIterable";
 
 

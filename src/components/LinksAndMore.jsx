@@ -8,7 +8,6 @@ import useItemContext from "../hooks/useItemContext";
 import ShowAll from "./ShowAll";
 import Rating from "./Rating";
 import Stats from "./Stats";
-import useCategoryContext from "../hooks/useCategoryContext";
 
 
 
@@ -16,17 +15,10 @@ import useCategoryContext from "../hooks/useCategoryContext";
  * Show a list of all items of current category.
  * If a specific item is selected, show rating, stats
  *
- * @param listOfAllItems
- * @param setPageOffset
- * @param pageOffset
- * @param searchResult
  * @returns {JSX.Element}
  * @constructor
  */
-function LinksAndMore({//listOfAllItems, setPageOffset, pageOffset, //catName,
-                          //itemCatName, //setMarvelId, //setItemCat,
-                                     dico, setDico, //catIndex,
-                          setItemCatName}) {
+function LinksAndMore() {
     //console.log("LinksAndMore")
     
     // USE CONTEXTS
@@ -48,15 +40,7 @@ function LinksAndMore({//listOfAllItems, setPageOffset, pageOffset, //catName,
                 <Stats data={data} />
             </div>*/}
             
-            <ShowAll //catName={catName}
-                     //listOfAllItems={listOfAllItems}
-                //setMarvelId={setMarvelId}
-                // setItemCat={setItemCat}
-                     //setItemCatName={setItemCatName}
-                     //setPageOffset={setPageOffset} pageOffset={pageOffset}
-                     //dico={dico} setDico={setDico}
-                     //catIndex={catIndex}
-            />
+            <ShowAll  />
             
             
             <div className={`flex-1`}/>
