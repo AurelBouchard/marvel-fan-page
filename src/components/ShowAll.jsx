@@ -37,7 +37,7 @@ function ShowAll({//dico, setDico
     // go on top of list if category of item changes
     useEffect(() => {
         setCategory(category => ({...category, ...{pageOffset: 0}}))
-    }, [item])
+    }, [item.catIndex])
     
     
     

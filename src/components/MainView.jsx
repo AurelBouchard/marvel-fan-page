@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useMemo, useState} from 'react';
 
 // contexts
 import useAppParam from "../hooks/useAppParam";
@@ -48,23 +48,23 @@ function MainView() {
     
     
     return (
-        <div className={`flex flex-col flex-1 ${itemCatName ? 'ml-14' : null} md:ml-auto`}>
-            <div id="showView" className="bg-dark rounded-xl p-4 z-0">
-                {!item.data ?
-                    <div className={`flex justify-between items-center`}>
-                        <p>Please select an item</p>
-                        <div className={`animate-bounce md:animate-horiBounce`}>
-                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className={`rotate-90 md:rotate-0`}>
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13.75 6.75L19.25 12L13.75 17.25"/>
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 12H4.75"/>
-                            </svg>
-                        </div>
+        <div id="showView" className={`flex flex-col flex-1 ${itemCatName ? 'ml-14' : null} md:ml-auto mt-2 md:mt-8`}>
+            
+            {!item.data ?
+                <div className={`flex justify-between items-center`}>
+                    <p>Please select an item</p>
+                    <div className={`animate-bounce md:animate-horiBounce`}>
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className={`rotate-90 md:rotate-0`}>
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13.75 6.75L19.25 12L13.75 17.25"/>
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 12H4.75"/>
+                        </svg>
                     </div>
-                    :
-                    item.subCatIndex === -1 ? <Overview data={item.data} itemCat={itemCatName}/> :
-                        <GridView gridData={gridData} />
-                }
-            </div>
+                </div>
+                :
+                item.subCatIndex === -1 ? <Overview data={item.data} itemCat={itemCatName}/> :
+                    <GridView gridData={gridData} />
+            }
+            
             <div className={`hidden md:block md:flex-1`}/>
         </div>
     )

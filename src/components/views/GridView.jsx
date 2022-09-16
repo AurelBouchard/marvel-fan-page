@@ -21,8 +21,8 @@ function GridView({gridData}) {
     
     
     return (
-        <div className={`rr`}>
-            <p className={`font-bold uppercase mb-6`}>{gridData.total} {subCatName}</p>
+        <div className={`mt-16 md:mt-12`}>
+            <p className={`font-bold uppercase mb-4 md:mb-6`}>{gridData.total} {subCatName}</p>
             <div className={`grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-4`}>
                 {gridData.table?.map((elt, index) => {
                     return (

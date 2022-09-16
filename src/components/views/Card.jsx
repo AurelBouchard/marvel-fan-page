@@ -111,9 +111,11 @@ function Card({id, name, resource, latency}) {
              }}
         >
             <div className={`flex border-b`}>
-                <div className={`p-2 shrink-0`}><div className={cardStyle[item.subCatIndex].img}>
-                    <img src={(freshData && freshData.thumbnail) ? `${freshData.thumbnail?.path}.${freshData.thumbnail?.extension}` : noImgSrc}
-                         alt={name} className={`bg-dark border-none`}/></div>
+                <div className={`p-2 shrink-0`}>
+                    <div className={cardStyle[item.subCatIndex].img}>
+                        <img src={(freshData && freshData.thumbnail) ? `${freshData.thumbnail?.path}.${freshData.thumbnail?.extension}` : noImgSrc}
+                             alt={name} className={`bg-dark border-none`}/>
+                    </div>
                 </div>
                 <p className={cardStyle[item.subCatIndex].title}>
                     {name}
