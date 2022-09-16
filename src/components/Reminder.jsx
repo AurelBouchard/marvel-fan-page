@@ -30,7 +30,7 @@ export default function Reminder({props}) {
                     {appParam.categories[item.catIndex||0].logo}
                 </div>
                 <div className={`capitalize`}>
-                    {item.data.name}
+                    {item.data.name || item.data.title || item.data.fullName}
                 </div>
             </div>
         </div>

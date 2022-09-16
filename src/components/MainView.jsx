@@ -51,7 +51,7 @@ function MainView() {
         <div id="showView" className={`flex flex-col flex-1 ${itemCatName ? 'ml-14' : null} md:ml-auto mt-2 md:mt-8`}>
             
             {!item.data ?
-                <div className={`flex justify-between items-center`}>
+                <div className={`flex justify-between items-center rounded-lg p-4 bg-dark`}>
                     <p>Please select an item</p>
                     <div className={`animate-bounce md:animate-horiBounce`}>
                         <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className={`rotate-90 md:rotate-0`}>
