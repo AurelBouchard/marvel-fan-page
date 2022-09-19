@@ -47,6 +47,7 @@ export const ItemContext = createContext(initialItem)
 
 // initial category
 export let initialCategory = {
+    total: 0,
     data: null,
     pageOffset: 0
 }
@@ -101,9 +102,10 @@ function App() {
         
         axios.get(`${api.url}${params.categories[currentItem.catIndex||0].name}${api.credentials}&offset=${workingCategory.pageOffset}`)
             .then( response => {
-                //console.log("new data => ",response.data?.data?.results)
+                console.log("new data => ",response.data?.data)
                 let newData = response.data?.data?.results
-                setWorkingCategory(category => ({...category, ...{data: newData}}))
+                let newTotal = response.data?.data?.total
+                setWorkingCategory(category => ({...category, ...{total: newTotal}, ...{data: newData}}))
             } ).catch(err => {
                 console.log("error while fetching data :", err)
         })

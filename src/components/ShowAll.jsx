@@ -18,7 +18,6 @@ import Loading from "./Loading";
  */
 function ShowAll({//dico, setDico
  }) {
-    //console.log("ShowAll", category.data)
     
     // USE CONTEXTS
     const [appParam, setAppParam] = useAppParam("ShowAll")
@@ -32,6 +31,7 @@ function ShowAll({//dico, setDico
     const [list, setList] = useState(nullArray(listSize))
     //const [dicoCatSize, setDicoCatSize] = useState(0)
     
+    //console.log("ShowAll", category)
     
     /**
      * Return an array of n null
@@ -44,9 +44,9 @@ function ShowAll({//dico, setDico
      * Refresh showed list if data changes
      */
     useEffect(()=> {
-        //console.log("category.data",category.data)
+        //console.log("category.data",category.data, category.total)
         setList(category.data)
-    }, [category.data, ])
+    }, [category.data])
     
 
     
@@ -54,7 +54,7 @@ function ShowAll({//dico, setDico
         <div className="bg-dark rounded-xl p-4 flex flex-col ">
             <p className={`uppercase font-bold pb-4`}>other {catName}</p>
             
-            {!list || !list[0] ? <Loading/> : null}
+            {!list || !list[0] ? <Loading/> : null }
             {list?.map((elt, index) => {
                 return (
                     <p key={index}
@@ -63,46 +63,50 @@ function ShowAll({//dico, setDico
                 transition-h delay-0 duration-700 text-ellipsis overflow-hidden break-normal
                 ${elt ? 'h-6 animate-appear bg-grey-slate mb-px' : 'h-0 duration-0 animate-none bg-none -mb-1 h-0'}
                 `}
-                        onClick={() => {
-                            //console.log("select an item in show all")
-                            setItem(item => ({...item, ...{marvelId: elt.id}}))
-                        }}
+                       onClick={() => {
+                           //console.log("select an item in show all")
+                           setItem(item => ({...item, ...{marvelId: elt.id}}))
+                       }}
                     >
                         {elt.name || elt.title || elt.fullName}
                     </p>
                 )
-            })}
-            
-            
-            <div className={`flex justify-center items-center text-lime pt-2`}>
-                <div id="previousPage"
-                     onClick={(e)=>{
-                         e.preventDefault()
-                         setCategory(cat => ({...cat, ...{pageOffset: Math.max(0, category.pageOffset-20)}}))
-                        setList(nullArray(20))
-                    }}
-                >
-                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 12L18.25 5.75V18.25L9.75 12Z"/>
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5.75 5.75V18.25"/>
-                    </svg>
-                </div>
+            })
+        
+            }
     
-                <p className={`text-sm pb-0.5 mx-1`}>{`${category.pageOffset+1} ... ${Math.min(100000, category.pageOffset+listSize)}`}</p>
-    
-                <div id="nextPage"
-                     onClick={(e)=>{
-                        e.preventDefault()
-                         setCategory(cat => ({...cat, ...{pageOffset: Math.min(100000000, category.pageOffset+20)}}))
-                        setList(nullArray(20))
-                    }}
-                >
-                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.25 12L5.75 5.75V18.25L14.25 12Z"/>
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M18.25 5.75V18.25"/>
-                    </svg>
+            {!category.data ? null :
+                <div className={`flex justify-center items-center text-lime pt-2`}>
+                    <div id="previousPage"
+                         onClick={(e)=>{
+                             e.preventDefault()
+                             setCategory(cat => ({...cat, ...{pageOffset: Math.max(0, category.pageOffset-listSize)}}))
+                             if (category.pageOffset > 0 ) { setList(nullArray(listSize)) }
+                         }}
+                    >
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 12L18.25 5.75V18.25L9.75 12Z"/>
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5.75 5.75V18.25"/>
+                        </svg>
+                    </div>
+        
+                    <p className={`text-sm pb-0.5 mx-1`}>{`${category.pageOffset+1} ... ${Math.min(category.total, category.pageOffset+listSize)}`}</p>
+        
+                    <div id="nextPage"
+                         onClick={(e)=>{
+                             e.preventDefault()
+                             setCategory(cat => ({...cat, ...{pageOffset: Math.min(Math.trunc(category.total/listSize)*listSize, category.pageOffset+appParam.listSize)}}))
+                             if (category.pageOffset+listSize <= category.total) setList(nullArray(appParam.listSize))
+                         }}
+                    >
+                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.25 12L5.75 5.75V18.25L14.25 12Z"/>
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M18.25 5.75V18.25"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
+            }
+            
             
         </div>
     )
