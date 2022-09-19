@@ -34,14 +34,14 @@ export const AppParam = createContext(appParams)
 }*/
 
 // default item
-export let item = {
+export const defaultItem = {
     marvelId: null,
     catIndex: 0,
     subCatIndex: -1,
     data: null
 }
 
-export const ItemContext = createContext(item)
+export const ItemContext = createContext(defaultItem)
 
 
 // default category
@@ -58,7 +58,7 @@ function App() {
     // would be managed by 'contextProvider()'
     const [params, setParams] = useState(appParams)
     const paramValue = [params, setParams]
-    const [currentItem, setCurrentItem] = useState(item)
+    const [currentItem, setCurrentItem] = useState(defaultItem)
     const itemValue = [currentItem, setCurrentItem]
     const [workingCategory, setWorkingCategory] = useState(category)
     const categoryValue = [workingCategory, setWorkingCategory]
@@ -136,9 +136,9 @@ function App() {
                         </MainContainer>
         
                     </main>
+    
+                    <Footer/>
                 </ItemContext.Provider>
-        
-                <Footer/>
             </AppParam.Provider>
         </div>
     )

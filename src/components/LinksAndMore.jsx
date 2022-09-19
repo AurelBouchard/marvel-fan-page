@@ -33,7 +33,7 @@ function LinksAndMore() {
     
     
     return (
-        <div className={`flex flex-col ${width} shrink-0 ${catName ? 'ml-14' : null} md:ml-0 flex-1 md:flex-none mt-2 ${item.subCatIndex === -1 ? 'md:mt-8' : 'md:mt-18'}`}>
+        <div className={`flex flex-col ${width} shrink-0 ${catName ? 'ml-14' : null} md:ml-0 flex-1 md:flex-none mt-2 ${item.subCatIndex > -1 ? 'md:mt-18' : 'md:mt-8'}`}>
             
             {/*<div className={`transition-all duration-300 ${searchResult ? "opacity-100 h-auto mb-6" : "opacity-0 h-0 mb-0" } space-y-6`}>
                 <Rating data={data} />

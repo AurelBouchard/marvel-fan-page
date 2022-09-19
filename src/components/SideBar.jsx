@@ -8,7 +8,6 @@ import useItemContext from "../hooks/useItemContext";
 /**
  * Select the category of data to display in the mainContainer
  *
- * @param subCatIndex
  * @returns {JSX.Element}
  * @constructor
  */
@@ -32,7 +31,8 @@ function SideBar() {
             //console.log("sidebar", itemCatName)
             setVisible(true)
         }
-    })
+        if (visible && !item.marvelId) { setVisible(false) }
+    }, [item.marvelId])
     
     
     function toggleCollapse() {
