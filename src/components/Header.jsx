@@ -113,8 +113,8 @@ function Header() {
     
     return (
         <>
-            <div className={`sticky top-0 flex flex-col flex-nowrap sm:flex-row sm:items-center flex-wrap overflow-x-hidden
-             px-8 bg-dark h-36 sm:h-18 w-screen shadow-md shadow-black z-50`}>
+            <div className={`sticky top-0 flex flex-col flex-nowrap sm:flex-row sm:items-center flex-wrap ovegrflow-x-hidden
+             px-8 bg-dark h-36 sm:h-18 w-screen shadow-md shadow-black z-80`}>
                 
                 <div className={`flex items-center h-18`}>
                     <div id="logo" className={`shrink-0 ${searching ? "text-marvel" : "text-teal"}`}>
@@ -136,9 +136,9 @@ function Header() {
                 <div id="searchBar" className={`flex flex-nowrap items-center py-3 z-90 flex-1 sm:flex-none
                 ${searching ? "sm:flex-1 sm:-translate-x-44 md:-translate-x-52 sm:-mr-44" : "sm:translate-0"} duration-300`}>
                     
-                    <MainCatSelector expandable={!searching} />
+                    <MainCatSelector />
                     
-                    <div className={`flex w-full sm:w-full ml-16 sm:ml-14 sm:mr-auto ${searching ? "grow" : null}`}>
+                    <div className={`flex w-full sm:w-full -ml-px sm:mr-auto ${searching ? "grow" : null}`}>
                         <input id="searchField" name="searchField" onClick={() => {
                             setSearching(true)
                         }}

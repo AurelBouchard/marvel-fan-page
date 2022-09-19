@@ -9,8 +9,9 @@ import {defaultItem} from '../App.jsx'
 
 
 
-export default function MainCatSelector({expandable}) {
+export default function MainCatSelector() {
     //console.log("MainCatSelector")
+    const expandable = true
     
     // USE CONTEXTS
     const [appParam, setAppParam] = useAppParam("MainCatSelector")
@@ -20,7 +21,7 @@ export default function MainCatSelector({expandable}) {
     const [collapsed, setCollapsed] = useState(true)
     
     function toggleCollapse() {
-        if (expandable && collapsed) { setCollapsed(false) }
+        if (collapsed) { setCollapsed(false) }
         else {setCollapsed(true)}
     }
     
@@ -28,7 +29,7 @@ export default function MainCatSelector({expandable}) {
     
     return (
         <div id="catSelector_Button"
-             className={`fixed top-21 left-10 sm:top-3 sm:left-auto`}
+             className={`relative`}
              onClick={toggleCollapse}>
             
             <div id="catSelector_Img"
@@ -48,7 +49,7 @@ export default function MainCatSelector({expandable}) {
             </div>
             
             <div id="catSelector_DropDown"
-                 className={`relative ${collapsed ? 'hidden' : 'block'} bg-dark-darkest text-grey-alt rounded-lg -mt-12 z-1000`}
+                 className={`absolute top-12 ${collapsed ? 'hidden' : 'block'} bg-dark-darkest text-grey-alt rounded-lg -mt-12 z-90`}
                  onMouseLeave={() => {setCollapsed(true)}}>
                 {appParam.categories.map((cat, index) => {
                     return (
