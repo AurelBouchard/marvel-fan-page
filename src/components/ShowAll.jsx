@@ -77,7 +77,7 @@ function ShowAll({//dico, setDico
     
             {!category.data ? null :
                 <div className={`flex justify-center items-center text-lime pt-2`}>
-                    <div id="previousPage"
+                    <div id="previousPage" className={`${category.pageOffset === 0 ? 'text-grey-darker' : 'text-inherit cursor-pointer'}`}
                          onClick={(e)=>{
                              e.preventDefault()
                              setCategory(cat => ({...cat, ...{pageOffset: Math.max(0, category.pageOffset-listSize)}}))
@@ -92,11 +92,11 @@ function ShowAll({//dico, setDico
         
                     <p className={`text-sm pb-0.5 mx-1`}>{`${category.pageOffset+1} ... ${Math.min(category.total, category.pageOffset+listSize)}`}</p>
         
-                    <div id="nextPage"
+                    <div id="nextPage" className={`${category.pageOffset+listSize > category.total ? 'text-grey-darker' : 'text-inherit cursor-pointer'}`}
                          onClick={(e)=>{
                              e.preventDefault()
                              setCategory(cat => ({...cat, ...{pageOffset: Math.min(Math.trunc(category.total/listSize)*listSize, category.pageOffset+appParam.listSize)}}))
-                             if (category.pageOffset+listSize <= category.total) setList(nullArray(appParam.listSize))
+                             if (category.pageOffset+listSize <= category.total) { setList(nullArray(appParam.listSize)) }
                          }}
                     >
                         <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
