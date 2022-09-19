@@ -3,6 +3,14 @@ import useItemContext from "../hooks/useItemContext";
 import noImgSrc from "../assets/image_not_available.jpg";
 import useAppParam from "../hooks/useAppParam";
 
+/**
+ * Will contain some data related to item : thumbnail, category, name or title
+ * not visible in "Overview" unless scroll down enough
+ *
+ * @param props
+ * @returns {null|JSX.Element}
+ * @constructor
+ */
 export default function Reminder({props}) {
     
     // USE CONTEXTS
@@ -12,6 +20,9 @@ export default function Reminder({props}) {
     // INTERNAL STATES
     const [posY, setPosY] = useState(0)
     
+    /**
+     * listen scroll Y
+     */
     useEffect(() => {
         window.addEventListener('scroll', ()=> setPosY(window.scrollY))
         return () => window.removeEventListener('scroll', ()=> setPosY(window.scrollY))

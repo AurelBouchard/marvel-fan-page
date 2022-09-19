@@ -11,7 +11,11 @@ import SearchModal from "./SearchModal";
 import MainCatSelector from "./MainCatSelector";
 
 
-
+/**
+ * Will contain logo, title, MainCatSelector and search input field
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function Header() {
     //console.log("Header")
     
@@ -34,6 +38,7 @@ function Header() {
     }
     
     /**
+     * /!\ DICO IS HELD ON FEATURE /!\
      * search for input into dico then update matches state
      * don't try fetch because of too much queries
      *
@@ -56,6 +61,7 @@ function Header() {
     }
     
     /**
+     * /!\ DICO IS HELD ON FEATURE /!\
      * search for input into dico then show possible matches in the modal
      * if nothing to show : maybe dico is not complete so
      * fetch API and return response on modal

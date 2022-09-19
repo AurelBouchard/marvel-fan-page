@@ -13,6 +13,7 @@ import Stats from "./Stats";
 
 /**
  * Show a list of all items of current category.
+ * Next feature :
  * If a specific item is selected, show rating, stats
  *
  * @returns {JSX.Element}

@@ -9,7 +9,13 @@ import useCategoryContext from "../hooks/useCategoryContext";
 import Loading from "./Loading";
 
 
-
+/**
+ * Will show a list of items tha can be fetched by clicking on it
+ * List size is set in initialAppParams
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function ShowAll({//dico, setDico
  }) {
     //console.log("ShowAll", category.data)
@@ -26,20 +32,23 @@ function ShowAll({//dico, setDico
     const [list, setList] = useState(nullArray(listSize))
     //const [dicoCatSize, setDicoCatSize] = useState(0)
     
+    
+    /**
+     * Return an array of n null
+     * @param n
+     * @returns {any[]}
+     */
     function nullArray(n) { return new Array(n) }
     
-    
+    /**
+     * Refresh showed list if data changes
+     */
     useEffect(()=> {
         //console.log("category.data",category.data)
         setList(category.data)
-    }, [category.data, item.catIndex])
+    }, [category.data, ])
     
-    // go on top of list if category of item changes
-    useEffect(() => {
-        setCategory(category => ({...category, ...{pageOffset: 0}}))
-    }, [item.catIndex])
-    
-    
+
     
     return (
         <div className="bg-dark rounded-xl p-4 flex flex-col ">
