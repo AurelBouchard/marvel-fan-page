@@ -34,7 +34,7 @@ export const AppParam = createContext(appParams)
 }*/
 
 // default item
-export const defaultItem = {
+export let defaultItem = {
     marvelId: null,
     catIndex: 0,
     subCatIndex: -1,
