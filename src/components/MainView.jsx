@@ -35,7 +35,7 @@ function MainView() {
     const subCatName = appParam.categories[Math.max(item.subCatIndex,0) || 0].name;
     
 
-    
+/*
     const gridData = useMemo(()=> {
         if (!item.data || item.subCatIndex<0) {return null}
         
@@ -45,7 +45,7 @@ function MainView() {
         return {table: item.data[subCatName]?.items, total: item.data[subCatName]?.available}
     }, [item])
     
-    
+    */
     
     return (
         <div id="showView" className={`flex flex-col flex-1 ${itemCatName ? 'ml-14' : null} md:ml-auto mt-2 md:mt-8`}>
@@ -62,7 +62,7 @@ function MainView() {
                 </div>
                 :
                 item.subCatIndex === -1 ? <Overview data={item.data} itemCat={itemCatName}/> :
-                    <GridView gridData={gridData} />
+                    <GridView available={item.data[subCatName].available} collectionURI={item.data[subCatName].collectionURI}/>
             }
             
             <div className={`hidden md:block md:flex-1`}/>

@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {api} from "../../credentials";
-import axios from "axios";
 
 // contexts
+import useAppParam from "../../hooks/useAppParam";
 import useItemContext from "../../hooks/useItemContext";
 
 // components
@@ -10,128 +9,129 @@ import noImgSrc from "../../assets/image_not_available.jpg"
 
 
 
-function Card({id, name, resource, latency}) {
-    //console.log("card render", id)
+function Card({data, latency}) {
+    //console.log("card render", data)
     
     // USE CONTEXTS
-    const [item, setItem] = useItemContext("Card "+id.toString())
+    const [appParam, setAppParam] = useAppParam("Card")
+    const [item, setItem] = useItemContext("Card "+data.id.toString())
     
     // INTERNAL STATES
-    const [freshData, setFreshData] = useState(null)
-    const [allowFetching, setAllowFetching] = useState(false)
+    const [nOfLinks, setNOfLinks] = useState(null)
+    
     const cardStyle = React.useMemo(()=> {
         return [
             {   // characters
-                main:`uppercase font-light text-sm bg-grey-slate transition-colors
+                main:`uppercase flex flex-col space-between font-light text-sm bg-grey-slate transition-colors
                             rounded
                             hover:bg-grey-darker cursor-pointer
                             animate-appear`,
-                img:`rounded w-12 h-12 overflow-hidden`,
-                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden h-12`,
-                bottom:`flex flex-1 w-full items-center space-x-8 p-1 text-xs`},
+                img:`w-12 h-12 bg-dark border-none object-cover`,
+                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden max-h-12`,
+                description:`normal-case truncate break-words m-2 mt-0 ml-4`,
+                bottom:`flex w-full items-center border-t p-1 px-4 text-xs`
+            },
             {   // comics
-                main:`uppercase font-light text-sm bg-grey-slate transition-colors
+                main:`uppercase flex flex-col space-between font-light text-sm bg-grey-slate transition-colors
                             rounded
                             hover:bg-grey-darker cursor-pointer
                             animate-appear`,
-                img:`rounded w-12 h-12 overflow-hidden`,
-                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden h-12`,
-                bottom:`flex flex-1 w-full items-center space-x-8 p-1 text-xs`},
+                img:`w-12 h-12 bg-dark border-none object-cover`,
+                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden max-h-12`,
+                description:`normal-case truncate break-words m-2 mt-0 ml-4`,
+                bottom:`flex w-full items-center border-t p-1 px-4 text-xs`
+            },
             {   // creators
-                main:`uppercase font-light text-sm bg-grey-slate transition-colors
+                main:`uppercase flex flex-col space-between font-light text-sm bg-grey-slate transition-colors
                             rounded
                             hover:bg-grey-darker cursor-pointer
                             animate-appear`,
-                img:`rounded w-12 h-12 overflow-hidden`,
-                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden h-12`,
-                bottom:`flex flex-1 w-full items-center space-x-8 p-1 text-xs`},
+                img:`w-12 h-12 bg-dark border-none object-cover`,
+                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden max-h-12`,
+                description:`normal-case truncate break-words m-2 mt-0 ml-4`,
+                bottom:`flex w-full items-center border-t p-1 px-4 text-xs`
+            },
             {   // events
-                main:`uppercase font-light text-sm bg-grey-slate transition-colors
+                main:`uppercase flex flex-col space-between font-light text-sm bg-grey-slate transition-colors
                             rounded
                             hover:bg-grey-darker cursor-pointer
                             animate-appear`,
-                img:`rounded w-12 h-12 overflow-hidden`,
-                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden h-12`,
-                bottom:`flex flex-1 w-full items-center space-x-8 p-1 text-xs`},
+                img:`w-12 h-12 bg-dark border-none object-cover`,
+                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden max-h-12`,
+                description:`normal-case truncate break-words m-2 mt-0 ml-4`,
+                bottom:`flex w-full items-center border-t p-1 px-4 text-xs`
+            },
             {   // series
-                main:`uppercase font-light text-sm bg-grey-slate transition-colors
+                main:`uppercase flex flex-col space-between font-light text-sm bg-grey-slate transition-colors
                             rounded
                             hover:bg-grey-darker cursor-pointer
                             animate-appear`,
-                img:`rounded w-12 h-12 overflow-hidden`,
-                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden h-12`,
-                bottom:`flex flex-1 w-full items-center space-x-8 p-1 text-xs`},
+                img:`w-12 h-12 bg-dark border-none object-cover`,
+                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden max-h-12`,
+                description:`normal-case truncate break-words m-2 mt-0 ml-4`,
+                bottom:`flex w-full items-center border-t p-1 px-4 text-xs`
+            },
             {   // stories
-            main:`uppercase font-light text-sm bg-grey-slate transition-colors
-                        rounded
-                        hover:bg-grey-darker cursor-pointer
-                        animate-appear`,
-            img:`rounded w-12 h-12 overflow-hidden`,
-            title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden h-12`,
-            bottom:`flex flex-1 w-full items-center space-x-8 p-1 text-xs`}
-    ] }, [])
-    
-    
-    useEffect(() => {
-        setTimeout(() => { setAllowFetching(true) },
-            0 //latency
-        )
-    }, [])
-
-    useEffect(() => {
-            setAllowFetching(false)
-            if (resource && allowFetching) {
-                // use https
-                let uri = resource;
-                if (uri.indexOf('https')!==0) {
-                    uri = 'https'+resource.substring(4)
-                }
-            
-                //console.log(`fetching ${uri}${api.credentials}`)
-                axios.get(`${uri}${api.credentials}`)
-                    .then( response => {
-                        //console.log("fetchMarvel resp => ",response.data?.data?.results[0])
-                        setFreshData(response.data?.data?.results[0])
-                    })
-                    .catch(e => {
-                        return Promise.reject(
-                            new Error(`erreur lors de la requete : ${e}`),
-                        )
-                    })
+                main:`uppercase flex flex-col space-between font-light text-sm bg-grey-slate transition-colors
+                            rounded
+                            hover:bg-grey-darker cursor-pointer
+                            animate-appear`,
+                img:`w-12 h-12 bg-dark border-none object-cover`,
+                title:`m-4 normal-case font-bold text-base text-ellipsis overflow-hidden max-h-12`,
+                description:`normal-case truncate break-words m-2 mt-0 ml-4`,
+                bottom:`flex w-full items-center border-t p-1 px-4 text-xs`
             }
-    }, [allowFetching])
+    ] }, [])
+
     
+    useEffect(() => {
+        let q=0
+        if (nOfLinks === null) {
+            appParam.categories.forEach(cat => {
+                if (data[cat.name]?.available) {
+                    q += data[cat.name].available
+                }
+            })
+            setNOfLinks(q)
+        }
+    }, [])
     
     
     
     return (
         <div className={cardStyle[item.subCatIndex].main}
              onClick={() => {
-                 setItem(item => ({...item, ...{marvelId: id}, ...{catIndex: item.subCatIndex}, ...{subCatIndex: -1}}))
+                 setItem(item => ({...item, ...{marvelId: data.id}, ...{catIndex: item.subCatIndex}, ...{subCatIndex: -1}}))
              }}
         >
-            <div className={`flex border-b`}>
-                <div className={`p-2 shrink-0`}>
-                    <div className={cardStyle[item.subCatIndex].img}>
-                        <img src={(freshData && freshData.thumbnail) ? `${freshData.thumbnail?.path}.${freshData.thumbnail?.extension}` : noImgSrc}
-                             alt={name} className={`bg-dark border-none`}/>
+            <div className={`flex flex-1`}>
+                <div className={`${item.subCatIndex===5 ? 'hidden' : 'block'} p-2 shrink-0`}>
+                    <div className={`rounded overflow-hidden`}>
+                        <img src={data.thumbnail ? `${data.thumbnail?.path}.${data.thumbnail?.extension}` : noImgSrc}
+                             alt={data.name || data.title || data.fullName} className={cardStyle[item.subCatIndex].img}/>
                     </div>
                 </div>
-                <p className={cardStyle[item.subCatIndex].title}>
-                    {name}
-                </p>
+                <div className={`flex flex-col overflow-hidden`}>
+                    <p className={cardStyle[item.subCatIndex].title}>
+                        {data.name || data.title || data.fullName}
+                    </p>
+                    <p className={cardStyle[item.subCatIndex].description}>
+                        {data.description ? data.description.substring(0,80) : null}
+                    </p>
+                </div>
             </div>
             <div className={cardStyle[item.subCatIndex].bottom}>
-                <div className={`flex justify-start`}>
+                <div className={`flex flex-1`}>
                     <p className={`uppercase mr-1`}>Date :</p>
-                    <p className={``}>{ freshData?.modified && freshData?.modified[0] !== '-' ? (freshData?.modified).substring(0,10) : "?" }</p>
+                    <p className={``}>{ data?.modified && data?.modified[0] !== '-' ? (data?.modified).substring(0,10) : "?" }</p>
                 </div>
-                <div className={`flex justify-start justify-self-end`}>
-                    <p className={`uppercase text-2xs mr-1`}>marvel id: </p>
-                    <p className={`text-lime text-2xs`}>{id}</p>
+                <div className={`flex mr-6`}>
+                    <p className={`uppercase text-2xs mr-1`}>id: </p>
+                    <p className={`text-lime text-2xs`}>{data.id}</p>
                 </div>
-                <div className={`flex justify-self-end`}>
-                    <a className={`normal-case hover:text-teal`}>MM</a>
+                <div className={`flex`}>
+                    <span className={`normal-case mr-1`}>Links</span>
+                    <span className={`${nOfLinks > 20 ? 'text-lime' : (nOfLinks > 9 ? 'text-orange-500' : 'text-red-600') }`}>{nOfLinks}</span>
                 </div>
             </div>
         </div>

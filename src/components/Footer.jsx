@@ -5,7 +5,7 @@ import useAppParam from "../hooks/useAppParam";
 import useItemContext from "../hooks/useItemContext";
 
 // data
-import {defaultItem} from "../App";
+import {initialItem} from "../App";
 
 
 export default function Footer() {
@@ -49,7 +49,7 @@ export default function Footer() {
                                 <li className={`cursor-pointer py-2 hover:text-teal`} key={index}
                                     onClick={()=>{
                                         if (index !== item.catIndex) {
-                                            setItem({defaultItem, ...{catIndex: index}})
+                                            setItem({defaultItem: initialItem, ...{catIndex: index}})
                                         } }}
                                 >
                                     <div className={`flex items-center`}>

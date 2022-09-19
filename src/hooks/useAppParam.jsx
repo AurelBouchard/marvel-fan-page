@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 
 // data
 import {AppParam} from "../App";
-import {defaultAppParams as fallback} from "../App";
+import {initialAppParams as fallback} from "../App";
 
 // helper
 import isIterable from "../utils/isIterable";

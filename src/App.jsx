@@ -17,13 +17,14 @@ import LinksAndMore from "./components/LinksAndMore";
 import Footer from "./components/Footer";
 
 
-// default parameters
-export let defaultAppParams = {
+// initial parameters
+export let initialAppParams = {
     categories: categories,
-    listSize: 20
+    listSize: 20,
+    collecSize: 20
 }
 
-export const AppParam = createContext(defaultAppParams)
+export const AppParam = createContext(initialAppParams)
 
 // fucking don't work
 /*function AppParamProvider() {
@@ -33,37 +34,42 @@ export const AppParam = createContext(defaultAppParams)
     return <AppParam.Provider value={value} />
 }*/
 
-// default item
-export let defaultItem = {
+// initial item
+export let initialItem = {
     marvelId: null,
     catIndex: 0,
     subCatIndex: -1,
     data: null
 }
 
-export const ItemContext = createContext(defaultItem)
+export const ItemContext = createContext(initialItem)
 
 
-// default category
-export let defaultCategory = {
+// initial category
+export let initialCategory = {
     data: null,
     pageOffset: 0
 }
 
-export const CategoryContext = createContext(defaultCategory)
+export const CategoryContext = createContext(initialCategory)
+
+
+
 
 
 function App() {
     
     // would be managed by 'contextProvider()'
-    const [params, setParams] = useState(defaultAppParams)
+    const [params, setParams] = useState(initialAppParams)
     const paramValue = [params, setParams]
-    const [currentItem, setCurrentItem] = useState(defaultItem)
+    const [currentItem, setCurrentItem] = useState(initialItem)
     const itemValue = [currentItem, setCurrentItem]
-    const [workingCategory, setWorkingCategory] = useState(defaultCategory)
+    const [workingCategory, setWorkingCategory] = useState(initialCategory)
     const categoryValue = [workingCategory, setWorkingCategory]
     
     //console.log("apéro !")
+    
+    
     
     
     /**
@@ -71,7 +77,7 @@ function App() {
      * then refresh list of items
      */
     useEffect(() => {
-        setWorkingCategory(defaultCategory)
+        setWorkingCategory(initialCategory)
         refreshCatResult()
     }, [currentItem.catIndex])
     

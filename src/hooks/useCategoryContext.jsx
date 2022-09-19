@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 
 // data
 import {CategoryContext} from "../App";
-import {defaultCategory as fallback} from "../App";
+import {initialCategory as fallback} from "../App";
 
 // helper
 import isIterable from "../utils/isIterable";

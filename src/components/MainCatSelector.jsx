@@ -5,7 +5,7 @@ import useAppParam from "../hooks/useAppParam";
 import useItemContext from "../hooks/useItemContext";
 
 // data
-import {defaultItem} from '../App.jsx'
+import {initialItem} from '../App.jsx'
 
 
 /**
@@ -63,7 +63,7 @@ export default function MainCatSelector() {
                              onClick={()=>{
                                  //console.log("mainCatSelector setCatIndex", index)
                                  if (index !== item.catIndex) {
-                                     setItem({defaultItem, ...{catIndex: index}})
+                                     setItem({defaultItem: initialItem, ...{catIndex: index}})
                                  }
                              }}
                         >
