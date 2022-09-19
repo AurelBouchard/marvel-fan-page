@@ -102,7 +102,7 @@ function App() {
         
         axios.get(`${api.url}${params.categories[currentItem.catIndex||0].name}${api.credentials}&offset=${workingCategory.pageOffset}`)
             .then( response => {
-                console.log("new data => ",response.data?.data)
+                //console.log("new data => ",response.data?.data)
                 let newData = response.data?.data?.results
                 let newTotal = response.data?.data?.total
                 setWorkingCategory(category => ({...category, ...{total: newTotal}, ...{data: newData}}))

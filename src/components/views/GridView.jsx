@@ -43,7 +43,7 @@ function GridView({available, collectionURI}) {
                 uri = 'https'+collectionURI.substring(4)
             }
             
-            console.log(`fetching ${uri}${api.credentials}&offset=${collecPageOffset}&limit=${maxView}`)
+            //console.log(`fetching ${uri}${api.credentials}&offset=${collecPageOffset}&limit=${maxView}`)
             axios.get(`${uri}${api.credentials}&offset=${collecPageOffset}&limit=${maxView}`)
                 .then( response => {
                     //console.log("fetchMarvel resp => ",response.data?.data?.results)
@@ -63,52 +63,53 @@ function GridView({available, collectionURI}) {
     return (
         <div className={`mt-16 md:mt-12`}>
             <p className={`font-bold uppercase mb-4 md:mb-6`}>{available} {subCatName}</p>
-            <div className={`grid grid-cols-1 ${item.catIndex===5 ? 'lg:grid-cols-1  xl:grid-cols-2 3xl:grid-cols-3' : 'lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4' } gap-4`}>
     
-                {!freshData ? <Loading/> :
-                    <>
+            {!freshData ? <Loading/> :
+                <>
+                    <div className={`grid grid-cols-1 ${item.catIndex===5 ? 'lg:grid-cols-1  xl:grid-cols-2 3xl:grid-cols-3' : 'lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4' } gap-4`}>
+        
                         {freshData?.map((elt, index) => {
                             return (
                                 <Card key={elt.id}
                                       data={elt}/>
                             )
                         })}
-            
-            
-                        <div className={`flex justify-center items-center text-lime pt-2`}>
-                            <div id="previousItems"
-                                 onClick={(e) => {
-                                     e.preventDefault()
-                                     if (collecPageOffset>0) { setFreshData(null) }
-                                     setCollecPageOffset(Math.max(0, collecPageOffset - maxView))
-                                 }}
-                            >
-                                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 12L18.25 5.75V18.25L9.75 12Z"/>
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5.75 5.75V18.25"/>
-                                </svg>
-                            </div>
-                
-                            <p className={`text-sm pb-0.5 mx-1`}>{`${collecPageOffset + 1} ... ${Math.min(available, collecPageOffset + maxView)}`}</p>
-                
-                            <div id="nextItems"
-                                 onClick={(e) => {
-                                     e.preventDefault()
-                                     if (collecPageOffset+maxView <= available) setFreshData(null)
-                                     setCollecPageOffset(Math.min(Math.trunc(available/maxView)*maxView, collecPageOffset + maxView))
-                                 }}
-                            >
-                                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.25 12L5.75 5.75V18.25L14.25 12Z"/>
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M18.25 5.75V18.25"/>
-                                </svg>
-                            </div>
+                    </div>
+                    
+                    <div className={`flex justify-center items-center text-lime pt-4`}>
+                        <div id="previousItems" className={`${collecPageOffset === 0 ? 'text-grey-darker' : 'text-inherit cursor-pointer'}`}
+                             onClick={(e) => {
+                                 e.preventDefault()
+                                 if (collecPageOffset>0) { setFreshData(null) }
+                                 setCollecPageOffset(Math.max(0, collecPageOffset - maxView))
+                             }}
+                        >
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 12L18.25 5.75V18.25L9.75 12Z"/>
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5.75 5.75V18.25"/>
+                            </svg>
                         </div>
         
-                    </>}
-            </div>
+                        <p className={`text-sm pb-0.5 mx-1`}>{`${collecPageOffset + 1} ... ${Math.min(available, collecPageOffset + maxView)}`}</p>
+        
+                        <div id="nextItems" className={`${collecPageOffset+maxView > available ? 'text-grey-darker' : 'text-inherit cursor-pointer'}`}
+                             onClick={(e) => {
+                                 e.preventDefault()
+                                 if (collecPageOffset+maxView <= available) setFreshData(null)
+                                 setCollecPageOffset(Math.min(Math.trunc(available/maxView)*maxView, collecPageOffset + maxView))
+                             }}
+                        >
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.25 12L5.75 5.75V18.25L14.25 12Z"/>
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M18.25 5.75V18.25"/>
+                            </svg>
+                        </div>
+                    </div>
+                </> }
+
         </div>
     )
 }
 
 export default React.memo(GridView)
+
