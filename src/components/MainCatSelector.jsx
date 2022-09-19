@@ -8,7 +8,13 @@ import useItemContext from "../hooks/useItemContext";
 import {defaultItem} from '../App.jsx'
 
 
-
+/**
+ * Will contain a dropdown menu
+ * Allow to change ItemContext catIndex
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function MainCatSelector() {
     //console.log("MainCatSelector")
     const expandable = true

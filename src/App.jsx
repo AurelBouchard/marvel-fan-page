@@ -18,12 +18,12 @@ import Footer from "./components/Footer";
 
 
 // default parameters
-export let appParams = {
+export let defaultAppParams = {
     categories: categories,
     listSize: 20
 }
 
-export const AppParam = createContext(appParams)
+export const AppParam = createContext(defaultAppParams)
 
 // fucking don't work
 /*function AppParamProvider() {
@@ -45,52 +45,54 @@ export const ItemContext = createContext(defaultItem)
 
 
 // default category
-export let category = {
+export let defaultCategory = {
     data: null,
     pageOffset: 0
 }
 
-export const CategoryContext = createContext(category)
+export const CategoryContext = createContext(defaultCategory)
 
 
 function App() {
     
     // would be managed by 'contextProvider()'
-    const [params, setParams] = useState(appParams)
+    const [params, setParams] = useState(defaultAppParams)
     const paramValue = [params, setParams]
     const [currentItem, setCurrentItem] = useState(defaultItem)
     const itemValue = [currentItem, setCurrentItem]
-    const [workingCategory, setWorkingCategory] = useState(category)
+    const [workingCategory, setWorkingCategory] = useState(defaultCategory)
     const categoryValue = [workingCategory, setWorkingCategory]
     
     //console.log("apéro !")
     
     
-
-    
+    /**
+     * When choosing an item from a other category or directly change category
+     * then refresh list of items
+     */
     useEffect(() => {
-        setWorkingCategory(category => ({data: null, pageOffset:0}))
+        setWorkingCategory(defaultCategory)
+        refreshCatResult()
     }, [currentItem.catIndex])
     
-    useEffect(()=> {
-        //setCatResult(null)
-        setWorkingCategory(category => ({...category, ...{data: null}}))
-    }, [category.pageOffset])
-    
     /**
-     * http request the API each time a new category is selected in the header
-     * or pageOffset change
+     * When browsing list of items with Next/previous buttons
+     * then refresh list of items
      */
     useEffect(()=> {
-        //console.log("refresh data ?", item.catIndex)
-        if (category.data) {return}
+        setWorkingCategory(category => ({...category, ...{data: null}}))
         refreshCatResult()
-    }, [currentItem.catIndex, workingCategory.pageOffset ])
+    }, [workingCategory.pageOffset])
     
+    
+    /**
+     * SIDE EFFECT
+     * Fetch Marvel API with category name, pageOffset (page limit ?)
+     * then set CategoryContext with new data
+     */
     function refreshCatResult() {
         //console.log("refresh data")
-    
-        // renew results
+        
         axios.get(`${api.url}${params.categories[currentItem.catIndex||0].name}${api.credentials}&offset=${workingCategory.pageOffset}`)
             .then( response => {
                 //console.log("new data => ",response.data?.data?.results)
@@ -102,7 +104,11 @@ function App() {
     }
     
     
-
+    /**
+     * When selecting an item
+     * then fetch Marvel API with category name and id
+     * then set ItemContext with new data
+     */
     useEffect(() => {
         if (currentItem.marvelId) {
             //console.log("specific call with marvel ID")

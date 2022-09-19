@@ -8,7 +8,14 @@ import useItemContext from "../../hooks/useItemContext";
 import Card from "./Card";
 
 
-
+/**
+ * Will contain cards of related items
+ * according to subCatIndex (view)
+ *
+ * @param gridData
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function GridView({gridData}) {
     //console.log("GridView",JSON.stringify(gridData))
     

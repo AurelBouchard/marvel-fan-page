@@ -40,7 +40,7 @@ function SideBar() {
     }
     
     const style = {
-        item:"flex items-center text-grey bg-transparent hover:text-dark-darkest hover:bg-teal-dark h-12 pl-4",
+        item:"flex items-center text-grey bg-transparent hover:text-dark-darkest hover:bg-teal-dark h-12 pl-4 cursor-pointer",
         //selected:"flex items-center text-dark-darkest bg-teal hover:bg-teal h-12 pl-4"
         selected:"text-dark-darkest bg-teal hover:bg-teal"
     }
@@ -64,7 +64,7 @@ function SideBar() {
         >
             <div className={`fixed bg-dark transition-all ${visible ? collapsed ? "w-14" : "w-56" : 'w-0'} overflow-hidden`}>
                 {/* TITLE line : MENU with collapse button */}
-                <a className="flex w-full justify-between items-center text-teal h-8 pl-4 pr-2 relative right-0">
+                <div className="flex w-full justify-between items-center text-teal h-8 pl-4 pr-2 relative right-0">
                     
                     <p className={collapsed ? 'hidden m-0' : `block mr-12`}>Menu</p>
                     
@@ -90,10 +90,10 @@ function SideBar() {
                             </svg>
                         </div>
                     </div>
-                </a>
+                </div>
                 
                 {/* 1st ITEM : overview */}
-                <a key={0} className={`${style.item} ${item.subCatIndex === -1 ? style.selected : null}`}
+                <div key={0} className={`${style.item} ${item.subCatIndex === -1 ? style.selected : null}`}
                    onClick={(e) => {
                        //console.log("select overview")
                        setItem(item => ({...item, ...{subCatIndex: -1}}))
@@ -107,7 +107,7 @@ function SideBar() {
                     
                     </div>
                     <p className={`transition-opacity duration-150 ${collapsed ? "opacity-0" : "delay-100 opacity-100"}`}>Overview</p>
-                </a>
+                </div>
     
                 
                 {appParam.categories.map((cat, index) => {
@@ -115,7 +115,7 @@ function SideBar() {
                     if (item.data && !item.data[cat.name]) {return null}
                     
                     return (
-                        <a key={index+1} className={`${style.item} ${index === item.subCatIndex ? style.selected : null}`}
+                        <div key={index+1} className={`${style.item} ${index === item.subCatIndex ? style.selected : null}`}
                            onClick={(e) => {
                                //console.log("select subCatIndex",index, item.data)
                                setItem(item => ({...item, ...{subCatIndex: index}}))
@@ -135,7 +135,7 @@ function SideBar() {
                                 }
                             
                             </div>
-                        </a>
+                        </div>
                     )
                 })}
             </div>
